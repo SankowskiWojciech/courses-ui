@@ -1,0 +1,29 @@
+<div class="container">
+  <form ngNativeValidate #form="ngForm">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="email" id="emailAddress" name="emailAddress" class="form-control" placeholder="Adres e-mail"
+          required pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="userCredentials.emailAddress"
+          #emailAddressField="ngModel" />
+        <div *ngIf="emailAddressField.invalid && emailAddressField.touched && emailAddressField.pristine"
+          class="alert alert-danger">
+          Podaj adres e-mail
+        </div>
+        <div *ngIf="emailAddressField.invalid && emailAddressField.touched && emailAddressField.dirty"
+          class="alert alert-danger">
+          Podany adres e-mail jest niepoprawny
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Hasło" required
+          [(ngModel)]="userCredentials.password" #passwordField="ngModel" />
+        <div *ngIf="passwordField.touched && passwordField.pristine" class="alert alert-danger">
+          Podaj hasło
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Zaloguj się</button>
+  </form>
+</div>
