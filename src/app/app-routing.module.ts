@@ -6,17 +6,23 @@ import { SubdomainComponent } from './subdomain/component/subdomain.component';
 import { PageNotFoundComponent } from './error-handling-components/page-not-found.component';
 import { AppComponent } from './app.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
+import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent},
   { path: '404', component: PageNotFoundComponent },
   { path: '403', component: ForbiddenComponent },
+  { path: '401', component: UnauthorizedComponent },
   {
     path: ':subdomainName',
     component: SubdomainComponent,
     resolve: { subdomainInformation: SubdomainResolver }
   },
-  { path: ':subdomainName/login', component: LoginComponent },
+  {
+    path: ':subdomainName/login',
+    component: LoginComponent,
+    resolve: { subdomainInformation: SubdomainResolver }
+  },
   { path: '**', redirectTo: '404' }
 ];
 

@@ -1,4 +1,4 @@
-enum AccountType {
+export enum AccountType {
   ORGANIZATION,
   TUTOR,
   STUDENT,

@@ -9,12 +9,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PageNotFoundComponent } from './error-handling-components/page-not-found.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
 import { AuthorizationHeaderInterceptor } from './interceptors/authorization-header.interceptor';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { AuthorizationHeaderInterceptor } from './interceptors/authorization-hea
     AppRoutingModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizationHeaderInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizationHeaderInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
