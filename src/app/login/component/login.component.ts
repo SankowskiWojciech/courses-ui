@@ -5,6 +5,7 @@ import { LoginService } from '../service/login.service';
 import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Token } from '../model/token.model';
+import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 
 @Component({
   templateUrl: './login.component.html',
@@ -36,9 +37,9 @@ export class LoginComponent implements OnInit {
   }
 
   private handleSuccessfulLogin(token: Token, userEmailAddress: string, subdomainName: string) {
-    localStorage.setItem('userEmailAddress', userEmailAddress);
-    localStorage.setItem('token', token.tokenValue);
-    localStorage.setItem('subdomainName', subdomainName);
+    localStorage.setItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS, userEmailAddress);
+    localStorage.setItem(LocalStorageKeyNames.TOKEN, token.tokenValue);
+    localStorage.setItem(LocalStorageKeyNames.SUBDOMAIN_NAME, subdomainName);
     this.router.navigateByUrl(`${subdomainName}/${token.accountType.toString().toLowerCase()}`)
     this.isLoginSuccessful = true;
   }
