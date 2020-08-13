@@ -20,8 +20,9 @@ export class LoginService {
   }
 
   loginUser(subdomainName: string, loginCredentials: LoginCredentials): Observable<Token> {
-    loginCredentials.password = btoa(loginCredentials.password);
-    return this.http.post<Token>(this.prepareLoginUrl(subdomainName), loginCredentials);
+    const loginCredentialsWithEncodedPassword = {...loginCredentials};
+    loginCredentialsWithEncodedPassword.password = btoa(loginCredentialsWithEncodedPassword.password);
+    return this.http.post<Token>(this.prepareLoginUrl(subdomainName), loginCredentialsWithEncodedPassword);
   }
 
   private prepareLoginUrl(subdomainName: string): string {
