@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './error-handling-components/page-not-foun
 import { AppComponent } from './app.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
+import { TutorComponent } from './tutor/component/tutor.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
     component: LoginComponent,
     resolve: { subdomainInformation: SubdomainResolver }
   },
+  { path: ':subdomainName/tutor', component: TutorComponent },
   { path: '**', redirectTo: '404' }
 ];
 

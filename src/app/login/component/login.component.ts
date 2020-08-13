@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
   private handleSuccessfulLogin(token: Token, userEmailAddress: string, subdomainName: string) {
     localStorage.setItem('userEmailAddress', userEmailAddress);
     localStorage.setItem('token', token.tokenValue);
-    // this.router.navigateByUrl(`${subdomainName}/${token.accountType.toString().toLowerCase()}`)
-    console.log(`Navigating to ${subdomainName}/${token.accountType.toString().toLowerCase()} url.`);
+    localStorage.setItem('subdomainName', subdomainName);
+    this.router.navigateByUrl(`${subdomainName}/${token.accountType.toString().toLowerCase()}`)
     this.isLoginSuccessful = true;
   }
 
