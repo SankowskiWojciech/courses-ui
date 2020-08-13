@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 import { TutorComponent } from './tutor/component/tutor.component';
+import { AuthorizationGuard } from './login/guard/authorization.guard';
 
 const routes: Routes = [
-  { path: '', component: AppComponent},
+  { path: '', component: AppComponent },
   { path: '404', component: PageNotFoundComponent },
   { path: '403', component: ForbiddenComponent },
   { path: '401', component: UnauthorizedComponent },
@@ -24,7 +25,11 @@ const routes: Routes = [
     component: LoginComponent,
     resolve: { subdomainInformation: SubdomainResolver }
   },
-  { path: ':subdomainName/tutor', component: TutorComponent },
+  {
+    path: ':subdomainName/tutor',
+    component: TutorComponent,
+    canActivate: [AuthorizationGuard]
+  },
   { path: '**', redirectTo: '404' }
 ];
 
