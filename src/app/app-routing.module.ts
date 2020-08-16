@@ -28,6 +28,7 @@ const routes: Routes = [
   {
     path: ':subdomainName/tutor',
     component: TutorComponent,
+    resolve: { subdomainInformation: SubdomainResolver },
     canActivate: [AuthorizationGuard]
   },
   { path: '**', redirectTo: '404' }

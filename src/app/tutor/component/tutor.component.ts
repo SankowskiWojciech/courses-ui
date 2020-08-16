@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 
 @Component({
   selector: 'courses-tutor',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorComponent implements OnInit {
 
-  constructor() { }
+  subdomainInformation: Subdomain;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.subdomainInformation = this.route.snapshot.data.subdomainInformation;
   }
 
 }
