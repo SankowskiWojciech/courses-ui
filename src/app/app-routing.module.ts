@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SubdomainResolver } from './subdomain/service/subdomain-resolver.service';
-import { SubdomainComponent } from './subdomain/component/subdomain.component';
 import { PageNotFoundComponent } from './error-handling-components/page-not-found.component';
 import { AppComponent } from './app.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
