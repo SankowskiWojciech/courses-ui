@@ -12,6 +12,7 @@ import { AuthorizationHeaderInterceptor } from './interceptors/authorization-hea
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 import { TutorModule } from './tutor/tutor.module';
+import { IndividualLessonModule } from './individual-lesson/individual-lesson.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TutorModule } from './tutor/tutor.module';
     SubdomainModule,
     LoginModule,
     TutorModule,
+    IndividualLessonModule,
     AppRoutingModule
   ],
   providers: [
