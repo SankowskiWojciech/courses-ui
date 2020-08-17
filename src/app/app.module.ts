@@ -11,6 +11,7 @@ import { ForbiddenComponent } from './error-handling-components/forbidden.compon
 import { AuthorizationHeaderInterceptor } from './interceptors/authorization-header.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
+import { TutorModule } from './tutor/tutor.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UnauthorizedComponent } from './error-handling-components/unauthorized.
     HttpClientModule,
     SubdomainModule,
     LoginModule,
+    TutorModule,
     AppRoutingModule
   ],
   providers: [
