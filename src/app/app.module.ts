@@ -13,6 +13,7 @@ import { ErrorHandlerInterceptor } from './interceptors/error-handler.intercepto
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 import { TutorModule } from './tutor/tutor.module';
 import { IndividualLessonModule } from './individual-lesson/individual-lesson.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { IndividualLessonModule } from './individual-lesson/individual-lesson.mo
     LoginModule,
     TutorModule,
     IndividualLessonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizationHeaderInterceptor, multi: true},

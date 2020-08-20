@@ -1,18 +1,24 @@
-<table class="table table-light table-hover table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Tytuł</th>
-      <th scope="col">Data zajęć</th>
-      <th scope="col">Student</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let individualLesson of individualLessons; let i = index">
-      <th scope="row">{{i + 1}}</th>
-      <td>{{individualLesson.title}}</td>
-      <td>{{individualLesson.dateOfLesson}}</td>
-      <td>{{individualLesson.studentId}}</td>
-    </tr>
-  </tbody>
+<table mat-table [dataSource]="individualLessons" multiTemplateDataRows class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToRender">
+    <th mat-header-cell *matHeaderCellDef> {{displayValues[column]}} </th>
+    <td mat-cell *matCellDef="let individualLesson"> {{individualLesson[column]}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <td mat-cell *matCellDef="let individualLesson" [attr.colspan]="columnsToRender.length">
+      <div class="individual-lesson-detail"
+           [@detailExpand]="individualLesson == expandedIndividualLesson ? 'expanded' : 'collapsed'">
+        <div class="individual-lesson-description">
+          {{individualLesson.description}}
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToRender"></tr>
+  <tr mat-row *matRowDef="let individualLesson; columns: columnsToRender;" class="individual-lesson-row"
+    [class.example-expanded-row]="expandedIndividualLesson === individualLesson"
+    (click)="expandedIndividualLesson = expandedIndividualLesson === individualLesson ? null : individualLesson">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['description']" class="individual-lesson-detail-row"></tr>
 </table>

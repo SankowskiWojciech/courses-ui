@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constants';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

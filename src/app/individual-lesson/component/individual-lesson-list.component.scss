@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+tr.individual-lesson-detail-row {
+  height: 0;
+}
+
+tr.individual-lesson-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.individual-lesson-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.individual-lesson-row td {
+  border-bottom-width: 0;
+}
+
+.individual-lesson-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.individual-lesson-description {
+  padding: 16px;
+}
