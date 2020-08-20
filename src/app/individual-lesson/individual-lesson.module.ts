@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 import { IndividualLessonListComponent } from './component/individual-lesson-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [IndividualLessonListComponent],
   imports: [
     CommonModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class IndividualLessonModule { }
