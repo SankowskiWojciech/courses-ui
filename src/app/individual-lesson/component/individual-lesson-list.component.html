@@ -11,7 +11,7 @@
   </ng-container>
   <ng-container matColumnDef="dateOfLesson">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Data zajęć</th>
-    <td mat-cell *matCellDef="let individualLesson">{{individualLesson.dateOfLesson}}</td>
+    <td mat-cell *matCellDef="let individualLesson">{{individualLesson.dateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
   </ng-container>
   <ng-container matColumnDef="studentId">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Adres e-mail studenta</th>
