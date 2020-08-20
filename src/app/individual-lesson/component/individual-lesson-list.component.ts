@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IndividualLesson } from '../model/individual-lesson.model';
+import { IndividualLessonService } from '../service/individual-lesson.service';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndividualLessonListComponent implements OnInit {
 
-  constructor() { }
+  individualLessons: IndividualLesson[];
+
+  constructor(private individualLessonService: IndividualLessonService) { }
 
   ngOnInit(): void {
+    this.individualLessonService.getIndividualLessons().subscribe(
+      individualLessons => this.individualLessons = individualLessons
+    );
   }
-
 }

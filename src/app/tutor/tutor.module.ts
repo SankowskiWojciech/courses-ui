@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: ':subdomainName/tutor',
     component: TutorComponent,
-    resolve: { subdomainInformation: SubdomainResolver },
+    // resolve: { subdomainInformation: SubdomainResolver },
     canActivate: [AuthorizationGuard],
     children: [
       {
