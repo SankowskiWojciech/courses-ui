@@ -20,7 +20,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 })
 export class IndividualLessonListComponent implements OnInit {
 
-  columnsToRender = ['title', 'dateOfLesson', 'studentId'];
+  columnsToRender = ['title', 'dateOfLesson', 'studentFullName', 'studentEmailAddress'];
   expandedIndividualLesson: IndividualLesson | null;
   dataSource: MatTableDataSource<IndividualLesson>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

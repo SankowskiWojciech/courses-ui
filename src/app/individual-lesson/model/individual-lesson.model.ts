@@ -3,6 +3,7 @@ export interface IndividualLesson {
   dateOfLesson: Date;
   description: string;
   subdomainName: string;
-  tutorId: string;
-  studentId: string;
+  tutorEmailAddress: string;
+  studentFullName: string;
+  studentEmailAddress: string;
 }
