@@ -1,6 +1,7 @@
-<table mat-table [dataSource]="individualLessons" multiTemplateDataRows class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8">
+
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToRender">
-    <th mat-header-cell *matHeaderCellDef> {{displayValues[column]}} </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{displayValues[column]}} </th>
     <td mat-cell *matCellDef="let individualLesson"> {{individualLesson[column]}} </td>
   </ng-container>
 
