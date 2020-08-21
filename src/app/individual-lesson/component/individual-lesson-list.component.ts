@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -25,7 +26,9 @@ export class IndividualLessonListComponent implements OnInit {
   expandedIndividualLesson: IndividualLesson | null;
   individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private individualLessonService: IndividualLessonService) { }
 
@@ -33,9 +36,7 @@ export class IndividualLessonListComponent implements OnInit {
     this.individualLessonService.getIndividualLessons().subscribe(
       individualLessons => {
         this.individualLessons = individualLessons;
-        this.dataSource = new MatTableDataSource();
-        this.dataSource.sort = this.sort;
-        this.dataSource.data = this.getOnlyUnfinishedIndividualLessons();
+        this.prepareDataSource();
       }
     );
   }
@@ -56,5 +57,12 @@ export class IndividualLessonListComponent implements OnInit {
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {
     const currentDate = new Date();
     return this.individualLessons.filter(individualLesson => new Date(individualLesson.dateOfLesson) >= currentDate);
+  }
+
+  private prepareDataSource() {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.data = this.getOnlyUnfinishedIndividualLessons();
   }
 }
