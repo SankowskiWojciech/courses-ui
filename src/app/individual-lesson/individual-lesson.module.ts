@@ -4,7 +4,8 @@ import { IndividualLessonListComponent } from './component/individual-lesson-lis
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [IndividualLessonListComponent],
@@ -13,7 +14,8 @@ import {MatInputModule} from '@angular/material/input';
     MatTableModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ]
 })
 export class IndividualLessonModule { }

@@ -1,9 +1,13 @@
-<mat-form-field>
-  <mat-label>Wprowadź filtr</mat-label>
-  <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #input>
-</mat-form-field>
+<div class="d-flex flex-row justify-content-between align-items-end">
+  <mat-form-field>
+    <mat-label>Wprowadź filtr</mat-label>
+    <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #input>
+  </mat-form-field>
+  <mat-checkbox color='primary' (change)="handleShowingFinishedLessons($event)">Pokaż ukończone zajęcia</mat-checkbox>
+</div>
 
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8" matSortActive="dateOfLesson" matSortDirection="desc">
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8"
+  matSortActive="dateOfLesson" matSortDirection="asc">
 
   <ng-container matColumnDef="title">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Tytuł</th>
@@ -26,7 +30,7 @@
   <ng-container matColumnDef="description">
     <td mat-cell *matCellDef="let individualLesson" [attr.colspan]="columnsToRender.length">
       <div class="individual-lesson-detail"
-           [@descriptionExpand]="individualLesson == expandedIndividualLesson ? 'expanded' : 'collapsed'">
+        [@descriptionExpand]="individualLesson == expandedIndividualLesson ? 'expanded' : 'collapsed'">
         <div class="individual-lesson-description">
           {{individualLesson.description}}
         </div>

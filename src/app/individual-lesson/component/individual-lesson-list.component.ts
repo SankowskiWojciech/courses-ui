@@ -5,6 +5,7 @@ import { animate, trigger, state, transition, style } from '@angular/animations'
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -20,8 +21,9 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 })
 export class IndividualLessonListComponent implements OnInit {
 
-  columnsToRender = ['title', 'dateOfLesson', 'studentFullName', 'studentEmailAddress'];
+  readonly columnsToRender = ['title', 'dateOfLesson', 'studentFullName', 'studentEmailAddress'];
   expandedIndividualLesson: IndividualLesson | null;
+  individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -30,9 +32,10 @@ export class IndividualLessonListComponent implements OnInit {
   ngOnInit(): void {
     this.individualLessonService.getIndividualLessons().subscribe(
       individualLessons => {
+        this.individualLessons = individualLessons;
         this.dataSource = new MatTableDataSource();
         this.dataSource.sort = this.sort;
-        this.dataSource.data = individualLessons;
+        this.dataSource.data = this.getOnlyUnfinishedIndividualLessons();
       }
     );
   }
@@ -40,5 +43,18 @@ export class IndividualLessonListComponent implements OnInit {
   filter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  handleShowingFinishedLessons(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.dataSource.data = this.individualLessons;
+    } else {
+      this.dataSource.data = this.getOnlyUnfinishedIndividualLessons();
+    }
+  }
+
+  private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {
+    const currentDate = new Date();
+    return this.individualLessons.filter(individualLesson => new Date(individualLesson.dateOfLesson) >= currentDate);
   }
 }
