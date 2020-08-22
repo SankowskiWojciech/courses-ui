@@ -9,11 +9,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { IndividualLessonAddLessonComponent } from './component/individual-lesson-add-lesson.component';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
   imports: [
+    FormsModule,
     CommonModule,
     MatTableModule,
     MatSortModule,
@@ -22,6 +26,8 @@ import { RouterModule } from '@angular/router';
     MatCheckboxModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
     RouterModule
   ]
 })

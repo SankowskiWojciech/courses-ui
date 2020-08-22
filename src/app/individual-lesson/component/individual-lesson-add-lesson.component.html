@@ -1,1 +1,30 @@
-<p>individual-lesson-add-lesson works!</p>
+<div class="container-fluid">
+  <p class="h3 mt-3 text-center">Dodaj nowe zajęcia</p>
+  <form ngNativeValidate #addIndividualLessonForm="ngForm">
+    <div class="form-row">
+      <mat-form-field class="w-100">
+        <mat-label>Tytuł zajęć</mat-label>
+        <input matInput type="text" name="titleName" id="titleId" [(ngModel)]="individualLesson.title"
+          matTooltip="Maksymalnie 50 znaków" minlength=1 maxlength=50 required>
+        <button mat-button *ngIf="individualLesson.title" matSuffix mat-icon-button aria-label="Clear input"
+          (click)="individualLesson.title=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Data zajęć</mat-label>
+        <input matInput type="datetime-local" name="dateOfLessonName" id="dateOfLessonId"
+          [(ngModel)]="individualLesson.dateOfLesson" required>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="w-100">
+        <mat-label>Opis zajęć</mat-label>
+        <textarea matInput rows="10" name="descriptionName" id="descriptionId"
+          [(ngModel)]="individualLesson.description" matTooltip="Maksymalnie 2000 znaków" maxlength=2000></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
