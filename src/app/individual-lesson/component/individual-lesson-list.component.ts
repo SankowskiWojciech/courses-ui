@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -30,7 +31,7 @@ export class IndividualLessonListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private individualLessonService: IndividualLessonService) { }
+  constructor(private individualLessonService: IndividualLessonService, private router: Router) { }
 
   ngOnInit(): void {
     this.individualLessonService.getIndividualLessons().subscribe(

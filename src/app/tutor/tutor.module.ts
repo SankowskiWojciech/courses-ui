@@ -5,6 +5,7 @@ import { SubdomainResolver } from '../subdomain/service/subdomain-resolver.servi
 import { AuthorizationGuard } from '../login/guard/authorization.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { IndividualLessonListComponent } from '../individual-lesson/component/individual-lesson-list.component';
+import { IndividualLessonAddLessonComponent } from '../individual-lesson/component/individual-lesson-add-lesson.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'lessons/individual',
         component: IndividualLessonListComponent,
+      },
+      {
+        path: 'lessons/individual/add',
+        component: IndividualLessonAddLessonComponent,
       }
     ]
   }

@@ -1,6 +1,6 @@
 <div class="d-flex flex-row justify-content-between align-items-end">
   <div class="d-flex flex-row m-1">
-    <button mat-raised-button color="primary" class="mr-3 mb-2">Dodaj zajęcia</button>
+    <button mat-raised-button color="primary" class="mr-3 mb-2" routerLink="add">Dodaj zajęcia</button>
     <mat-form-field>
       <mat-label>Wprowadź filtr</mat-label>
       <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #input>

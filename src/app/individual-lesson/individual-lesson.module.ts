@@ -8,9 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { IndividualLessonAddLessonComponent } from './component/individual-lesson-add-lesson.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [IndividualLessonListComponent],
+  declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -19,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatCheckboxModule,
     MatPaginatorModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterModule
   ]
 })
 export class IndividualLessonModule { }
