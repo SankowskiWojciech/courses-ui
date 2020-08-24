@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginCredentials } from '../model/login-credentials.model';
 import { Observable, of } from 'rxjs';
 import { Token } from '../model/token.model';
-import { HttpClient, HttpErrorResponse, HttpBackend } from '@angular/common/http';
+import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginService {
 
-  private readonly LOGIN_URL = 'http://localhost:8090/';
+  private readonly LOGIN_BACKEND_URL = 'http://localhost:8090/subdomain/';
 
   private http: HttpClient;
 
@@ -26,6 +26,6 @@ export class LoginService {
   }
 
   private prepareLoginUrl(subdomainName: string): string {
-    return `${this.LOGIN_URL}${subdomainName}/login`;
+    return `${this.LOGIN_BACKEND_URL}${subdomainName}/login`;
   }
 }

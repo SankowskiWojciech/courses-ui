@@ -1,30 +1,48 @@
 <div class="container-fluid">
   <p class="h3 mt-3 text-center">Dodaj nowe zajęcia</p>
-  <form ngNativeValidate #addIndividualLessonForm="ngForm">
+  <form ngNativeValidate (ngSubmit)="saveIndividualLesson()" [formGroup]="addIndividualLessonForm">
     <div class="form-row">
       <mat-form-field class="w-100">
         <mat-label>Tytuł zajęć</mat-label>
-        <input matInput type="text" name="titleName" id="titleId" [(ngModel)]="individualLesson.title"
-          matTooltip="Maksymalnie 50 znaków" minlength=1 maxlength=50 required>
-        <button mat-button *ngIf="individualLesson.title" matSuffix mat-icon-button aria-label="Clear input"
-          (click)="individualLesson.title=''">
+        <input matInput type="text" id="titleId" formControlName="title" matTooltip="Maksymalnie 50 znaków">
+        <button mat-button *ngIf="addIndividualLessonForm.get('title').value" matSuffix mat-icon-button
+          aria-label="Clear input" (click)="addIndividualLessonForm.get('title').setValue('')">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
     </div>
     <div class="form-row">
-      <mat-form-field>
+    <mat-form-field>
         <mat-label>Data zajęć</mat-label>
-        <input matInput type="datetime-local" name="dateOfLessonName" id="dateOfLessonId"
-          [(ngModel)]="individualLesson.dateOfLesson" required>
+        <input matInput type="datetime-local" id="dateOfLessonId" formControlName="dateOfLesson">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="w-100">
+        <mat-label>Wybierz studenta</mat-label>
+        <input type="text" matInput formControlName="student" id="studentId"
+          [matAutocomplete]="studentAutocomplete">
+        <mat-autocomplete #studentAutocomplete="matAutocomplete">
+          <mat-option *ngFor="let student of filteredAvailableStudents | async" [value]="student.fullNameWithEmailAddress">
+            {{student.fullNameWithEmailAddress}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <div class="form-row">
       <mat-form-field class="w-100">
         <mat-label>Opis zajęć</mat-label>
-        <textarea matInput rows="10" name="descriptionName" id="descriptionId"
-          [(ngModel)]="individualLesson.description" matTooltip="Maksymalnie 2000 znaków" maxlength=2000></textarea>
+        <textarea matInput rows="10" id="descriptionId" formControlName="description" matTooltip="Maksymalnie 2000 znaków"></textarea>
+        <button mat-button *ngIf="individualLesson.description" matSuffix mat-icon-button aria-label="Clear input"
+          (click)="individualLesson.description=''">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-between">
+      <button mat-raised-button class="text-primary" routerLink="../">Powrót do listy</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addIndividualLessonForm.valid">Zapisz
+        zajęcia</button>
     </div>
   </form>
 </div>

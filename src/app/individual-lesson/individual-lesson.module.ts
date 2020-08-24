@@ -11,13 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { IndividualLessonAddLessonComponent } from './component/individual-lesson-add-lesson.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
   imports: [
-    FormsModule,
     CommonModule,
     MatTableModule,
     MatSortModule,
@@ -28,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
     RouterModule
   ]
 })

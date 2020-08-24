@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class SubdomainService {
 
-  private readonly LOGIN_URL = 'http://localhost:8090/';
+  private readonly SUBDOMAIN_BACKEND_URL = 'http://localhost:8090/subdomain/';
 
   constructor(private http: HttpClient) { }
 
   getSubdomainInformation(subdomainName: string): Observable<Subdomain> {
-    return this.http.get<Subdomain>(`${this.LOGIN_URL}${subdomainName}`);
+    return this.http.get<Subdomain>(`${this.SUBDOMAIN_BACKEND_URL}${subdomainName}`);
   }
 }
