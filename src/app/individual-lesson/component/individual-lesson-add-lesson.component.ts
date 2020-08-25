@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
-import { Observable, observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { StudentDataService } from '../service/student-data.service';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
+import { ValidationMessages } from '../constants/validation-messages.constant';
+import { title } from 'process';
 
 function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -28,6 +30,13 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   individualLesson: IndividualLesson;
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
+
+  validationMessages = {
+    titleValidationMessage: '',
+    dateOfLessonsValidationMessage: '',
+    studentValidationMessage: '',
+    descriptionValidationMessage: ''
+  };
 
   constructor(private formBuilder: FormBuilder, private studentDataService: StudentDataService) { }
 
@@ -59,12 +68,38 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   }
 
   private initializeAddIndividualLessonForm(): FormGroup {
-    return this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      dateOfLesson: ['', Validators.required],
-      student: ['', [Validators.required, studentValidator(this.availableStudents)]],
-      description: ['', Validators.maxLength(2000)]
+    const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+    titleFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
+    );
+    const dateOfLessonFormControl = new FormControl('', Validators.required);
+    dateOfLessonFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.dateOfLessonsValidationMessage = this.getValidationMessage(dateOfLessonFormControl)
+    );
+    const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
+    studentFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
+    );
+    const descriptionFormControl = new FormControl('', Validators.maxLength(2000));
+    descriptionFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
+    );
+    const addIndividualLessonForm = this.formBuilder.group({
+      title: titleFormControl,
+      dateOfLesson: dateOfLessonFormControl,
+      student: studentFormControl,
+      description: descriptionFormControl
     });
+    return addIndividualLessonForm;
+  }
+
+  private getValidationMessage(control: AbstractControl): string {
+    if ((control.touched || control.dirty) && control.errors) {
+      return Object.keys(control.errors)
+        .map(errorKey => ValidationMessages[errorKey])
+        .join(' ');
+    }
+    return null;
   }
 
   private prepareStudentsAvailableForTutor(): StudentFormModel[] {
