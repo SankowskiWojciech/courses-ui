@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IndividualLesson } from '../model/individual-lesson.model';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -8,7 +7,9 @@ import { StudentDataService } from '../service/student-data.service';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
 import { ValidationMessages } from '../constants/validation-messages.constant';
-import { title } from 'process';
+import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
+import { IndividualLessonService } from '../service/individual-lesson.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -27,22 +28,22 @@ function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
 export class IndividualLessonAddLessonComponent implements OnInit {
 
   addIndividualLessonForm: FormGroup;
-  individualLesson: IndividualLesson;
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
 
   validationMessages = {
-    titleValidationMessage: '',
-    dateOfLessonsValidationMessage: '',
-    studentValidationMessage: '',
-    descriptionValidationMessage: ''
+    titleValidationMessage: null,
+    dateOfLessonsValidationMessage: null,
+    studentValidationMessage: null,
+    descriptionValidationMessage: null
   };
 
-  constructor(private formBuilder: FormBuilder, private studentDataService: StudentDataService) { }
+  constructor(private formBuilder: FormBuilder, private studentDataService: StudentDataService,
+              private individualLessonService: IndividualLessonService, private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.availableStudents = this.prepareStudentsAvailableForTutor();
-    this.individualLesson = this.prepareIndividualLessonFormObject();
     this.addIndividualLessonForm = this.initializeAddIndividualLessonForm();
     this.filteredAvailableStudents = this.addIndividualLessonForm.get('student').valueChanges.pipe(
       startWith(''),
@@ -53,18 +54,6 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   private filterAvailableStudents(userInputValue: string): StudentFormModel[] {
     const filterValue = userInputValue.toLowerCase();
     return this.availableStudents.filter(availableStudent => availableStudent.fullNameWithEmailAddress.toLowerCase().includes(filterValue));
-  }
-
-  private prepareIndividualLessonFormObject(): IndividualLesson {
-    return {
-      title: null,
-      dateOfLesson: null,
-      description: null,
-      subdomainName: localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME),
-      studentFullName: null,
-      studentEmailAddress: null,
-      tutorEmailAddress: localStorage.getItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS)
-    };
   }
 
   private initializeAddIndividualLessonForm(): FormGroup {
@@ -119,6 +108,22 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     };
   }
 
+  private prepareIndividualLessonRequestBody(): IndividualLessonRequestBody {
+    return {
+      title: this.addIndividualLessonForm.get('title').value,
+      dateOfLesson: this.addIndividualLessonForm.get('dateOfLesson').value,
+      description: this.addIndividualLessonForm.get('description').value,
+      subdomainName: localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME),
+      tutorId: localStorage.getItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS),
+      studentId: this.availableStudents.find(
+        availableStudent => availableStudent.fullNameWithEmailAddress === this.addIndividualLessonForm.get('student').value).emailAddress
+    };
+  }
+
   saveIndividualLesson() {
+    const individualLessonRequestBody: IndividualLessonRequestBody = this.prepareIndividualLessonRequestBody();
+    this.individualLessonService.createIndiviualLesson(individualLessonRequestBody).subscribe(
+      createdIndividualLesson => this.router.navigate(['../'], { relativeTo: this.route })
+    );
   }
 }

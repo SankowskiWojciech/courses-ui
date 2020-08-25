@@ -25,12 +25,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     HttpClientModule,
-    SubdomainModule,
-    LoginModule,
-    TutorModule,
+    BrowserAnimationsModule,
     IndividualLessonModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    TutorModule,
+    LoginModule,
+    SubdomainModule,
+    AppRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizationHeaderInterceptor, multi: true},

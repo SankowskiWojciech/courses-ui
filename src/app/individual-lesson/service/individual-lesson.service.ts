@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class IndividualLessonService {
 
   getIndividualLessons(): Observable<IndividualLesson[]> {
     return this.http.get<IndividualLesson[]>(this.getUrlWithSubdomainNameFilter());
+  }
+
+  createIndiviualLesson(individualLessonRequestBody: IndividualLessonRequestBody) {
+    return this.http.post<IndividualLesson>(this.INDIVIDUAL_LESSONS_BACKEND_URL, individualLessonRequestBody);
   }
 
   private getUrlWithSubdomainNameFilter(): string {
