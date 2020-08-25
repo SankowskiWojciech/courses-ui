@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IndividualLesson } from '../model/individual-lesson.model';
-import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constants';
+import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 
 @Injectable({

@@ -4,7 +4,7 @@ import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.
 import { Observable, observable, of } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { StudentService } from '../service/student.service';
+import { StudentDataService } from '../service/student-data.service';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
 
@@ -29,7 +29,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
 
-  constructor(private formBuilder: FormBuilder, private studentService: StudentService) { }
+  constructor(private formBuilder: FormBuilder, private studentDataService: StudentDataService) { }
 
   ngOnInit(): void {
     this.availableStudents = this.prepareStudentsAvailableForTutor();
@@ -69,7 +69,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
 
   private prepareStudentsAvailableForTutor(): StudentFormModel[] {
     const availableStudents: StudentFormModel[] = [];
-    this.studentService.getStudentsAvailableForTutor().subscribe(
+    this.studentDataService.getStudentsAvailableForTutor().subscribe(
       studentsAvailableForTutor => studentsAvailableForTutor.forEach(
         student => availableStudents.push(this.transformStudentToStudentFormModule(student))
       )

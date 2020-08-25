@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constants';
+import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { Student } from '../model/student.model';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class StudentService {
+export class StudentDataService {
 
   private readonly STUDENTS_BACKEND_URL = 'http://localhost:8091/students';
 

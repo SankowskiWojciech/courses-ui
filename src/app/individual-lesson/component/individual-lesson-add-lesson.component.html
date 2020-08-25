@@ -39,10 +39,12 @@
         </button>
       </mat-form-field>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-4">
       <button mat-raised-button class="text-primary" routerLink="../">Powrót do listy</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="!addIndividualLessonForm.valid">Zapisz
         zajęcia</button>
     </div>
   </form>
 </div>
+
+{{addIndividualLessonForm.get('dateOfLesson').value}}
