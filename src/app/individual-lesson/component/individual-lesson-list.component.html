@@ -6,7 +6,7 @@
       <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #input>
     </mat-form-field>
   </div>
-  <mat-checkbox class="mb-2" color='primary' (change)="handleShowingFinishedLessons($event)">Pokaż ukończone zajęcia</mat-checkbox>
+  <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">Pokaż ukończone zajęcia</mat-checkbox>
 </div>
 
 <div class="mat-elevation-z8">

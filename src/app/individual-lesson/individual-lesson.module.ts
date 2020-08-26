@@ -11,9 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { IndividualLessonAddLessonComponent } from './component/individual-lesson-add-lesson.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { StoreModule } from '@ngrx/store';
+import { individualLessonReducer } from './state/individual-lesson.reducer';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
@@ -30,7 +32,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTooltipModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forFeature('individualLesson', individualLessonReducer)
   ]
 })
 export class IndividualLessonModule { }

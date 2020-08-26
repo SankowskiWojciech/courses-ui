@@ -14,6 +14,9 @@ import { UnauthorizedComponent } from './error-handling-components/unauthorized.
 import { TutorModule } from './tutor/tutor.module';
 import { IndividualLessonModule } from './individual-lesson/individual-lesson.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TutorModule,
     LoginModule,
     SubdomainModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({
+      name: 'Courses-UI DevTools',
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizationHeaderInterceptor, multi: true},
