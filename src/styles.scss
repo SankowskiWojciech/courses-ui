@@ -26,6 +26,8 @@ $courses-ui-theme: mat-light-theme($courses-ui-primary, $courses-ui-accent, $cou
 // that you are using.
 @include angular-material-theme($courses-ui-theme);
 
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 html, body { height: 100%; }
