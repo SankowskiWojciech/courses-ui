@@ -5,10 +5,12 @@ import { animate, trigger, state, transition, style } from '@angular/animations'
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { State } from '../state/individual-lesson.state';
+import { getShowFinishedLessons } from '../state/individual-lesson.selector';
+import * as IndividualLessonActions from '../state/individual-lesson.action';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -34,12 +36,12 @@ export class IndividualLessonListComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private individualLessonService: IndividualLessonService, private router: Router,
-              private store: Store<any>) { }
+              private store: Store<State>) { }
 
   ngOnInit(): void {
     //TODO: Unsubscribe
-    this.store.select('individualLesson').subscribe(
-      individualLesson => this.showFinishedLessons = individualLesson.showFinishedLessons
+    this.store.select(getShowFinishedLessons).subscribe(
+      showFinishedLessons => this.showFinishedLessons = showFinishedLessons
     );
     this.individualLessonService.getIndividualLessons().subscribe(
       individualLessons => {
@@ -55,9 +57,7 @@ export class IndividualLessonListComponent implements OnInit {
   }
 
   handleShowingFinishedLessons() {
-    this.store.dispatch(
-      { type: '[Individual Lesson] Toggle showing finished lessons' }
-    );
+    this.store.dispatch(IndividualLessonActions.toggleShowingFinishedLessons());
     if (this.showFinishedLessons) {
       this.dataSource.data = this.individualLessons;
     } else {

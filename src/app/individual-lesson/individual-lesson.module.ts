@@ -33,7 +33,7 @@ import { individualLessonReducer } from './state/individual-lesson.reducer';
     MatAutocompleteModule,
     ReactiveFormsModule,
     RouterModule,
-    StoreModule.forFeature('individualLesson', individualLessonReducer)
+    StoreModule.forFeature('individualLessonState', individualLessonReducer)
   ]
 })
 export class IndividualLessonModule { }
