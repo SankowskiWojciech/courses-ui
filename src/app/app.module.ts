@@ -33,8 +33,8 @@ import { EffectsModule } from '@ngrx/effects';
     IndividualLessonModule,
     TutorModule,
     LoginModule,
-    SubdomainModule,
     AppRoutingModule,
+    SubdomainModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       name: 'Courses-UI DevTools',

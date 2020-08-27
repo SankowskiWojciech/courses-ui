@@ -4,11 +4,13 @@ import { PageNotFoundComponent } from './error-handling-components/page-not-foun
 import { AppComponent } from './app.component';
 import { ForbiddenComponent } from './error-handling-components/forbidden.component';
 import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
+import { SubdomainComponent } from './subdomain/component/subdomain.component';
 
 const routes: Routes = [
   { path: '404', component: PageNotFoundComponent },
   { path: '403', component: ForbiddenComponent },
   { path: '401', component: UnauthorizedComponent },
+  { path: ':subdomainName', component: SubdomainComponent },
   { path: '', component: AppComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '404' }
 ];
