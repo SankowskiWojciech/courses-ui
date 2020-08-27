@@ -4,13 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './component/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
-import { SubdomainResolver } from '../subdomain/service/subdomain-resolver.service';
 
 const routes: Routes = [
   {
     path: ':subdomainName/login',
-    component: LoginComponent,
-    resolve: { subdomainInformation: SubdomainResolver }
+    component: LoginComponent
   }
 ];
 

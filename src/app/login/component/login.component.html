@@ -1,6 +1,6 @@
-<h3> Logowanie do subdomeny {{ subdomainInformation.name }}</h3>
+<h3> Logowanie do subdomeny {{ subdomainInformation?.name }}</h3>
 <div class="container">
-  <form ngNativeValidate #form="ngForm" (ngSubmit)="onSubmit()">
+  <form ngNativeValidate #form="ngForm" (ngSubmit)="loginUser()">
     <div class="form-row">
       <div class="form-group col-md-6">
         <input type="email" id="emailAddress" name="emailAddress" class="form-control" placeholder="Adres e-mail"
