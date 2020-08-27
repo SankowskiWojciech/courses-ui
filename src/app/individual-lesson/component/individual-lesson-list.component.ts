@@ -10,7 +10,8 @@ import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
 import { getShowFinishedLessons, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -32,27 +33,31 @@ export class IndividualLessonListComponent implements OnInit {
   individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
 
+  private ngDestroyed$ = new Subject();
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private router: Router, private store: Store<State>) { }
 
   ngOnInit(): void {
-    //TODO: Unsubscribe
-    this.store.select(getShowFinishedLessons).subscribe(
-      showFinishedLessons => this.showFinishedLessons = showFinishedLessons
-    );
+    this.store.select(getShowFinishedLessons)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(
+        showFinishedLessons => this.showFinishedLessons = showFinishedLessons
+      );
 
-    //TODO: Unsubscribe
-    this.store.select(getIndividualLessons).subscribe(
-      individualLessons => {
-        this.individualLessons = individualLessons;
-        this.prepareDataSource();
-        if (!this.individualLessons.length) {
-          this.store.dispatch(IndividualLessonActions.loadIndividualLessons());
+    this.store.select(getIndividualLessons)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(
+        individualLessons => {
+          this.individualLessons = individualLessons;
+          this.prepareDataSource();
+          if (!this.individualLessons.length) {
+            this.store.dispatch(IndividualLessonActions.loadIndividualLessons());
+          }
         }
-      }
-    );
+      );
   }
 
   filter(event: Event) {
