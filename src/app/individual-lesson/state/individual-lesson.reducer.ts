@@ -3,7 +3,8 @@ import { IndividualLessonState } from './individual-lesson.state';
 import * as IndividualLessonActions from './individual-lesson.action';
 
 const individualLessonInitialState: IndividualLessonState = {
-  showFinishedLessons: false
+  showFinishedLessons: false,
+  individualLessons: []
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -12,6 +13,12 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     return {
       ...state,
       showFinishedLessons: !state.showFinishedLessons
+    };
+  }),
+  on(IndividualLessonActions.loadIndividualLessonsSuccess, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      individualLessons: action.individualLessons
     };
   })
 );

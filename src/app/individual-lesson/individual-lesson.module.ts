@@ -16,6 +16,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { StoreModule } from '@ngrx/store';
 import { individualLessonReducer } from './state/individual-lesson.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { IndividualLessonEffect } from './state/individual-lesson.effect';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
@@ -33,7 +35,8 @@ import { individualLessonReducer } from './state/individual-lesson.reducer';
     MatAutocompleteModule,
     ReactiveFormsModule,
     RouterModule,
-    StoreModule.forFeature('individualLessonState', individualLessonReducer)
+    StoreModule.forFeature('individualLessonState', individualLessonReducer),
+    EffectsModule.forFeature([IndividualLessonEffect])
   ]
 })
 export class IndividualLessonModule { }

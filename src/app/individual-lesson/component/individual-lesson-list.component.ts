@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IndividualLesson } from '../model/individual-lesson.model';
-import { IndividualLessonService } from '../service/individual-lesson.service';
 import { animate, trigger, state, transition, style } from '@angular/animations';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,8 +8,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getShowFinishedLessons } from '../state/individual-lesson.selector';
+import { getShowFinishedLessons, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -35,18 +35,22 @@ export class IndividualLessonListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private individualLessonService: IndividualLessonService, private router: Router,
-              private store: Store<State>) { }
+  constructor(private router: Router, private store: Store<State>) { }
 
   ngOnInit(): void {
     //TODO: Unsubscribe
     this.store.select(getShowFinishedLessons).subscribe(
       showFinishedLessons => this.showFinishedLessons = showFinishedLessons
     );
-    this.individualLessonService.getIndividualLessons().subscribe(
+
+    //TODO: Unsubscribe
+    this.store.select(getIndividualLessons).subscribe(
       individualLessons => {
         this.individualLessons = individualLessons;
         this.prepareDataSource();
+        if (!this.individualLessons.length) {
+          this.store.dispatch(IndividualLessonActions.loadIndividualLessons());
+        }
       }
     );
   }
