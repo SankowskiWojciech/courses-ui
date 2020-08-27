@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   private handleSuccessfulLogin(accountType: AccountType, subdomainName: string) {
-    this.router.navigateByUrl(`${subdomainName}/${accountType.toString().toLowerCase()}`)
+    this.router.navigateByUrl(`${subdomainName}/${accountType.toString().toLowerCase()}`);
   }
 
   private handleHttpError(error: HttpErrorResponse) {

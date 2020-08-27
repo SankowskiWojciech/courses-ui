@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { SubdomainService } from 'src/app/subdomain/service/subdomain.service';
-import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,35 +12,33 @@ export class AuthorizationGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const subdomainName = next.params.subdomainName;
-    return this.doesSubdomainExists(subdomainName)
-      && this.isUserLoggedInToSubdomain(subdomainName)
-      && this.isUserTryingToAccessTheSameSubdomain(subdomainName);
+    if (!this.isUserLoggedInToSubdomain()
+      || !this.isUserTryingToAccessTheSameSubdomain(subdomainName)
+      || !this.isTokenNotExpired()) {
+      this.router.navigateByUrl(`${subdomainName}/login`);
+      return false;
+    }
+    return true;
   }
 
-  isUserLoggedInToSubdomain(subdomainName: string): boolean {
+  isUserLoggedInToSubdomain(): boolean {
     if (!localStorage.length
       || !localStorage.getItem(LocalStorageKeyNames.UserEmailAddress)
       || !localStorage.getItem(LocalStorageKeyNames.Token)
+      || !localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime)
       || !localStorage.getItem(LocalStorageKeyNames.SubdomainName)) {
-      this.router.navigateByUrl(`${subdomainName}/login`);
       return false;
     }
     return true;
-  }
-
-  doesSubdomainExists(subdomainName: string): boolean {
-    let subdomainInformaion: Subdomain;
-    this.subdomainService.getSubdomainInformation(subdomainName).subscribe(
-      subdomain => subdomainInformaion = subdomain
-    );
-    return !subdomainInformaion;
   }
 
   isUserTryingToAccessTheSameSubdomain(subdomainName: string): boolean {
-    if (subdomainName !== localStorage.getItem(LocalStorageKeyNames.SubdomainName)) {
-      this.router.navigateByUrl(`${subdomainName}/login`);
-      return false;
-    }
-    return true;
+    return subdomainName === localStorage.getItem(LocalStorageKeyNames.SubdomainName);
+  }
+
+  isTokenNotExpired(): boolean {
+    const expirationDateTime = new Date(localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime));
+    const currentDateTime = new Date();
+    return expirationDateTime > currentDateTime;
   }
 }

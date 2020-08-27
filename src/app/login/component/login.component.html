@@ -1,16 +1,18 @@
-<h3> Logowanie do subdomeny {{ subdomainInformation?.name }}</h3>
-<div class="container">
+<div class="container-fluid" *ngIf="subdomainInformation">
+  <h3> Logowanie do subdomeny {{ subdomainInformation?.name }}</h3>
   <form ngNativeValidate #form="ngForm" (ngSubmit)="loginUser()">
     <div class="form-row">
       <div class="form-group col-md-6">
         <input type="email" id="emailAddress" name="emailAddress" class="form-control" placeholder="Adres e-mail"
           required pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="loginCredentials.userEmailAddress"
           #emailAddressField="ngModel" />
-        <div *ngIf="emailAddressField.invalid && emailAddressField.touched && (emailAddressField.pristine || emailAddressField.value.length == 0)"
+        <div
+          *ngIf="emailAddressField.invalid && emailAddressField.touched && (emailAddressField.pristine || emailAddressField.value.length == 0)"
           class="alert alert-danger">
           Podaj adres e-mail
         </div>
-        <div *ngIf="emailAddressField.invalid && emailAddressField.touched && emailAddressField.dirty && emailAddressField.value.length != 0"
+        <div
+          *ngIf="emailAddressField.invalid && emailAddressField.touched && emailAddressField.dirty && emailAddressField.value.length != 0"
           class="alert alert-danger">
           Podany adres e-mail jest niepoprawny
         </div>
@@ -20,7 +22,9 @@
       <div class="form-group col-md-6">
         <input type="password" id="password" name="password" class="form-control" placeholder="Hasło" required
           [(ngModel)]="loginCredentials.password" #passwordField="ngModel" />
-        <div *ngIf="passwordField.touched && (passwordField.pristine || (passwordField.dirty && passwordField.value.length == 0))" class="alert alert-danger">
+        <div
+          *ngIf="passwordField.touched && (passwordField.pristine || (passwordField.dirty && passwordField.value.length == 0))"
+          class="alert alert-danger">
           Podaj hasło
         </div>
       </div>
