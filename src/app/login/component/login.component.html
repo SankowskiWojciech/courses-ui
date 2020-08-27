@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="alert alert-danger col-md-6" *ngIf="!isLoginSuccessful">
+    <div class="alert alert-danger col-md-6" *ngIf="isInvalidLoginOrPassword">
       Podany adres e-mail lub hasło są nieprawidłowe
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Zaloguj się</button>

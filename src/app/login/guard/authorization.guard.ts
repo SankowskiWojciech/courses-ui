@@ -20,9 +20,9 @@ export class AuthorizationGuard implements CanActivate {
 
   isUserLoggedInToSubdomain(subdomainName: string): boolean {
     if (!localStorage.length
-      || !localStorage.getItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS)
-      || !localStorage.getItem(LocalStorageKeyNames.TOKEN)
-      || !localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME)) {
+      || !localStorage.getItem(LocalStorageKeyNames.UserEmailAddress)
+      || !localStorage.getItem(LocalStorageKeyNames.Token)
+      || !localStorage.getItem(LocalStorageKeyNames.SubdomainName)) {
       this.router.navigateByUrl(`${subdomainName}/login`);
       return false;
     }
@@ -38,7 +38,7 @@ export class AuthorizationGuard implements CanActivate {
   }
 
   isUserTryingToAccessTheSameSubdomain(subdomainName: string): boolean {
-    if (subdomainName !== localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME)) {
+    if (subdomainName !== localStorage.getItem(LocalStorageKeyNames.SubdomainName)) {
       this.router.navigateByUrl(`${subdomainName}/login`);
       return false;
     }

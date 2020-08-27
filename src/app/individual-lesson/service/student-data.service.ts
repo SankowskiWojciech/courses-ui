@@ -19,6 +19,6 @@ export class StudentDataService {
   }
 
   private getUrlWithSubdomainNameFilter(): string {
-    return `${this.STUDENTS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME)}`;
+    return `${this.STUDENTS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SubdomainName)}`;
   }
 }

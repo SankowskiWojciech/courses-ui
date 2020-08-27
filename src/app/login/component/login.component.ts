@@ -4,14 +4,13 @@ import { LoginCredentials } from '../model/login-credentials.model';
 import { LoginService } from '../service/login.service';
 import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Token } from '../model/token.model';
-import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as SubdomainActions from '../../subdomain/state/subdomain.action';
+import { AccountType } from '../model/account-type.model';
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
   private ngDestroyed$ = new Subject();
 
   subdomainInformation: Subdomain;
-  isLoginSuccessful = true;
+  isInvalidLoginOrPassword = false;
   loginCredentials: LoginCredentials = {
     userEmailAddress: null,
     password: null
@@ -43,19 +42,15 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    this.isLoginSuccessful = true;
+    this.isInvalidLoginOrPassword = false;
     this.loginService.loginUser(this.subdomainInformation.alias, this.loginCredentials).subscribe(
-      token => this.handleSuccessfulLogin(token, this.loginCredentials.userEmailAddress, this.subdomainInformation.alias),
+      token => this.handleSuccessfulLogin(token.accountType, this.subdomainInformation.alias),
       error => this.handleHttpError(error)
     );
   }
 
-  private handleSuccessfulLogin(token: Token, userEmailAddress: string, subdomainName: string) {
-    localStorage.setItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS, userEmailAddress);
-    localStorage.setItem(LocalStorageKeyNames.TOKEN, token.tokenValue);
-    localStorage.setItem(LocalStorageKeyNames.SUBDOMAIN_NAME, subdomainName);
-    this.router.navigateByUrl(`${subdomainName}/${token.accountType.toString().toLowerCase()}`)
-    this.isLoginSuccessful = true;
+  private handleSuccessfulLogin(accountType: AccountType, subdomainName: string) {
+    this.router.navigateByUrl(`${subdomainName}/${accountType.toString().toLowerCase()}`)
   }
 
   private handleHttpError(error: HttpErrorResponse) {
@@ -65,6 +60,6 @@ export class LoginComponent implements OnInit {
     if (error.status === 403) {
       this.router.navigateByUrl('/403');
     }
-    this.isLoginSuccessful = false;
+    this.isInvalidLoginOrPassword = true;
   }
 }

@@ -113,8 +113,8 @@ export class IndividualLessonAddLessonComponent implements OnInit {
       title: this.addIndividualLessonForm.get('title').value,
       dateOfLesson: this.addIndividualLessonForm.get('dateOfLesson').value,
       description: this.addIndividualLessonForm.get('description').value,
-      subdomainName: localStorage.getItem(LocalStorageKeyNames.SUBDOMAIN_NAME),
-      tutorId: localStorage.getItem(LocalStorageKeyNames.USER_EMAIL_ADDRESS),
+      subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainName),
+      tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
       studentId: this.availableStudents.find(
         availableStudent => availableStudent.fullNameWithEmailAddress === this.addIndividualLessonForm.get('student').value).emailAddress
     };
