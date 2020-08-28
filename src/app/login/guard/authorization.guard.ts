@@ -14,7 +14,8 @@ export class AuthorizationGuard implements CanActivate {
     const subdomainName = next.params.subdomainName;
     if (!this.isUserLoggedInToSubdomain()
       || !this.isUserTryingToAccessTheSameSubdomain(subdomainName)
-      || !this.isTokenNotExpired()) {
+      || this.isTokenExpired()) {
+      localStorage.clear();
       this.router.navigateByUrl(`${subdomainName}/login`);
       return false;
     }
@@ -36,9 +37,9 @@ export class AuthorizationGuard implements CanActivate {
     return subdomainName === localStorage.getItem(LocalStorageKeyNames.SubdomainName);
   }
 
-  isTokenNotExpired(): boolean {
+  isTokenExpired(): boolean {
     const expirationDateTime = new Date(localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime));
     const currentDateTime = new Date();
-    return expirationDateTime > currentDateTime;
+    return expirationDateTime <= currentDateTime;
   }
 }

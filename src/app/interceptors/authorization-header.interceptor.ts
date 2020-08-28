@@ -12,15 +12,15 @@ export class AuthorizationHeaderInterceptor implements HttpInterceptor {
   constructor(private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(this.isTokenExpired());
     if (this.isTokenExpired()) {
       const subdomainName = localStorage.getItem(LocalStorageKeyNames.SubdomainName);
+      localStorage.clear();
       this.router.navigateByUrl(`${subdomainName}/login`);
       return EMPTY;
     }
-    if (localStorage.length) {
+    if (localStorage.length && localStorage.getItem(LocalStorageKeyNames.Token)) {
       const requestWithAuthorizationHeader: HttpRequest<any> = req.clone({
-        setHeaders: { Authorization: localStorage.getItem('token') }
+        setHeaders: { Authorization: localStorage.getItem(LocalStorageKeyNames.Token) }
       });
       return next.handle(requestWithAuthorizationHeader);
     } else {
