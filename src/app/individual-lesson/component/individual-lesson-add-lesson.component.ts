@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { startWith, map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { StudentDataService } from '../service/student-data.service';
 import { StudentFormModel } from '../model/student-form-model.model';
@@ -10,6 +10,10 @@ import { ValidationMessages } from '../constants/validation-messages.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { IndividualLessonService } from '../service/individual-lesson.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from '../state/individual-lesson.state';
+import { getStudentsAvailableForTutor } from '../state/individual-lesson.selector';
+import * as IndividualLessonActions from '../state/individual-lesson.action';
 
 function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -38,7 +42,9 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     descriptionValidationMessage: null
   };
 
-  constructor(private formBuilder: FormBuilder, private studentDataService: StudentDataService,
+  private ngDestroyed$ = new Subject();
+
+  constructor(private formBuilder: FormBuilder, private store: Store<State>,
               private individualLessonService: IndividualLessonService, private router: Router,
               private route: ActivatedRoute) { }
 
@@ -93,11 +99,15 @@ export class IndividualLessonAddLessonComponent implements OnInit {
 
   private prepareStudentsAvailableForTutor(): StudentFormModel[] {
     const availableStudents: StudentFormModel[] = [];
-    this.studentDataService.getStudentsAvailableForTutor().subscribe(
-      studentsAvailableForTutor => studentsAvailableForTutor.forEach(
-        student => availableStudents.push(this.transformStudentToStudentFormModule(student))
-      )
-    );
+    this.store.select(getStudentsAvailableForTutor)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(studentsAvailableForTutor => {
+        if (!studentsAvailableForTutor.length) {
+          this.store.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
+        }
+        studentsAvailableForTutor.forEach(
+          student => availableStudents.push(this.transformStudentToStudentFormModule(student)));
+      });
     return availableStudents;
   }
 

@@ -4,7 +4,8 @@ import * as IndividualLessonActions from './individual-lesson.action';
 
 const individualLessonInitialState: IndividualLessonState = {
   showFinishedLessons: false,
-  individualLessons: []
+  individualLessons: [],
+  availableStudents: []
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -19,6 +20,12 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     return {
       ...state,
       individualLessons: action.individualLessons
+    };
+  }),
+  on(IndividualLessonActions.loadStudentsAvailableForTutorSuccess, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      availableStudents: action.availableStudents
     };
   })
 );

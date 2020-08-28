@@ -51,11 +51,11 @@ export class IndividualLessonListComponent implements OnInit {
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(
         individualLessons => {
-          this.individualLessons = individualLessons;
-          this.prepareDataSource();
-          if (!this.individualLessons.length) {
+          if (!individualLessons.length) {
             this.store.dispatch(IndividualLessonActions.loadIndividualLessons());
           }
+          this.individualLessons = individualLessons;
+          this.prepareDataSource();
         }
       );
   }

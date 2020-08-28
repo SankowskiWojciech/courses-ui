@@ -26,10 +26,10 @@ export class SubdomainComponent implements OnInit {
     this.store.select(getSubdomainInformation)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(subdomainInformation => {
-        this.subdomainInformation = subdomainInformation;
-        if (!this.subdomainInformation || subdomainName !== this.subdomainInformation.alias) {
+        if (!subdomainInformation || subdomainName !== subdomainInformation.alias) {
           this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainName }));
         }
+        this.subdomainInformation = subdomainInformation;
       });
   }
 }
