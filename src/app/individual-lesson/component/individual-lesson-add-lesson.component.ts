@@ -3,7 +3,6 @@ import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.
 import { Observable, Subject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
-import { StudentDataService } from '../service/student-data.service';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
 import { ValidationMessages } from '../constants/validation-messages.constant';
@@ -132,8 +131,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
 
   saveIndividualLesson() {
     const individualLessonRequestBody: IndividualLessonRequestBody = this.prepareIndividualLessonRequestBody();
-    this.individualLessonService.createIndiviualLesson(individualLessonRequestBody).subscribe(
-      createdIndividualLesson => this.router.navigate(['../'], { relativeTo: this.route })
-    );
+    this.store.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

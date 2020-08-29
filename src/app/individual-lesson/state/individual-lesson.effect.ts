@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { IndividualLessonService } from '../service/individual-lesson.service';
 import { Injectable } from '@angular/core';
 import * as IndividualLessonActions from './individual-lesson.action';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, concatMap } from 'rxjs/operators';
 import { StudentDataService } from '../service/student-data.service';
 
 @Injectable()
@@ -26,6 +26,15 @@ export class IndividualLessonEffect {
       ofType(IndividualLessonActions.loadStudentsAvailableForTutor),
       mergeMap(() => this.studentDataService.getStudentsAvailableForTutor().pipe(
         map(availableStudents => IndividualLessonActions.loadStudentsAvailableForTutorSuccess({ availableStudents }))
+      ))
+    );
+  });
+
+  createNewIndividualLesson$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(IndividualLessonActions.createNewIndividualLesson),
+      concatMap((action) => this.individualLessonService.createIndiviualLesson(action.individualLessonRequestBody).pipe(
+        map(createdIndividualLesson => IndividualLessonActions.createNewIndividualLessonSuccess({ createdIndividualLesson }))
       ))
     );
   });

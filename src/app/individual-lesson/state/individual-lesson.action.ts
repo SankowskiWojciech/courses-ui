@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { Student } from '../model/student.model';
+import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 
 export const toggleShowingFinishedLessons = createAction(
   '[Individual Lesson State] Toggle showing finished lessons'
@@ -31,5 +32,20 @@ export const loadStudentsAvailableForTutorSuccess = createAction(
 
 export const loadStudentsAvailableForTutorFailure = createAction(
   '[Individual Lesson State] Load students available for tutor - failure',
+  props<{ error: string }>()
+);
+
+export const createNewIndividualLesson = createAction(
+  '[Individual Lesson State] Create new individual lesson',
+  props<{ individualLessonRequestBody: IndividualLessonRequestBody }>()
+);
+
+export const createNewIndividualLessonSuccess = createAction(
+  '[Individual Lesson State] Create new individual lesson - success',
+  props<{ createdIndividualLesson: IndividualLesson }>()
+);
+
+export const createNewIndividualLessonFailure = createAction(
+  '[Individual Lesson State] Create new individual lesson - failure',
   props<{ error: string }>()
 );

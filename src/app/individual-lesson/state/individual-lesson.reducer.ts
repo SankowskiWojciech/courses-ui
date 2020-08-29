@@ -27,5 +27,12 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
       ...state,
       availableStudents: action.availableStudents
     };
-  })
+  }),
+  on(IndividualLessonActions.createNewIndividualLessonSuccess, (state, action): IndividualLessonState => {
+    const updatedIndividualLessons = [...state.individualLessons, action.createdIndividualLesson];
+    return {
+      ...state,
+      individualLessons: updatedIndividualLessons
+    };
+  }),
 );
