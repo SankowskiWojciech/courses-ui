@@ -65,6 +65,11 @@ export class IndividualLessonListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  clearFilter(filterInput: HTMLInputElement): void {
+    filterInput.value = '';
+    this.dataSource.filter = '';
+  }
+
   handleShowingFinishedLessons() {
     this.store.dispatch(IndividualLessonActions.toggleShowingFinishedLessons());
     if (this.showFinishedLessons) {

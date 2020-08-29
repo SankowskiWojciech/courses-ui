@@ -3,10 +3,14 @@
     <button mat-raised-button color="primary" class="mr-3 mb-2" routerLink="add">Dodaj zajęcia</button>
     <mat-form-field>
       <mat-label>Wprowadź filtr</mat-label>
-      <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #input>
+      <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #filterInput>
+      <button mat-button *ngIf="filterInput.value" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter(filterInput)">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
   </div>
-  <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">Pokaż ukończone zajęcia</mat-checkbox>
+  <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">
+    Pokaż ukończone zajęcia</mat-checkbox>
 </div>
 
 <div class="mat-elevation-z8">
