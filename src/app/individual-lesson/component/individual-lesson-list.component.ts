@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { animate, trigger, state, transition, style } from '@angular/animations';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson, getFilterValue } from '../state/individual-lesson.selector';
+import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson, getFilterValue, getPageProperties } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PageProperties } from '../model/page-properties.model';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -25,7 +26,7 @@ import { takeUntil } from 'rxjs/operators';
     ]),
   ],
 })
-export class IndividualLessonListComponent implements OnInit {
+export class IndividualLessonListComponent implements OnInit, OnDestroy {
 
   readonly columnsToRender = ['title', 'dateOfLesson', 'studentFullName', 'studentEmailAddress'];
   showFinishedLessons: boolean;
@@ -35,6 +36,7 @@ export class IndividualLessonListComponent implements OnInit {
   filterValue = '';
 
   private ngDestroyed$ = new Subject();
+  private pagePropertiesubscription: Subscription;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -47,6 +49,14 @@ export class IndividualLessonListComponent implements OnInit {
       .subscribe(
         showFinishedLessons => this.showFinishedLessons = showFinishedLessons
       );
+
+    this.pagePropertiesubscription = this.store.select(getPageProperties)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(
+        pageProperties => {
+          this.paginator.pageSize = pageProperties.pageSize;
+          this.paginator.pageIndex = pageProperties.pageIndex;
+        });
 
     this.store.select(getFilterValue)
       .pipe(takeUntil(this.ngDestroyed$))
@@ -67,6 +77,10 @@ export class IndividualLessonListComponent implements OnInit {
     this.store.select(getExpandedIndividualLesson)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(expandedIndividualLesson => this.expandedIndividualLesson = expandedIndividualLesson);
+  }
+
+  ngOnDestroy(): void {
+    this.pagePropertiesubscription.unsubscribe();
   }
 
   filter(): void {
@@ -92,6 +106,14 @@ export class IndividualLessonListComponent implements OnInit {
   handleExpandingIndividualLessonDescription(individualLesson: IndividualLesson) {
     const expandedIndividualLesson = this.expandedIndividualLesson === individualLesson ? null : individualLesson;
     this.store.dispatch(IndividualLessonActions.setExpandedIndividualLesson({ expandedIndividualLesson }));
+  }
+
+  handlePageEvent(pageEvent: PageEvent) {
+    const pageProperties: PageProperties = {
+      pageSize: pageEvent.pageSize,
+      pageIndex: pageEvent.pageIndex
+    };
+    this.store.dispatch(IndividualLessonActions.setPageProperties({ pageProperties }));
   }
 
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { Student } from '../model/student.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
+import { PageProperties } from '../model/page-properties.model';
 
 export const toggleShowingFinishedLessons = createAction(
   '[Individual Lesson State] Toggle showing finished lessons'
@@ -58,4 +59,9 @@ export const setExpandedIndividualLesson = createAction(
 export const setFilterValue = createAction(
   '[Individual Lesson State] Set filter value',
   props<{ filterValue: string }>()
+);
+
+export const setPageProperties = createAction(
+  '[Individual Lesson State] Set page properties',
+  props<{ pageProperties: PageProperties }>()
 );

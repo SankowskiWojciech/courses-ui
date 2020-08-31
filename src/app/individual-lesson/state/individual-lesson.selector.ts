@@ -27,3 +27,8 @@ export const getFilterValue = createSelector(
   getIndividualLessonFeatureState,
   individualLessonState => individualLessonState.filterValue
 );
+
+export const getPageProperties = createSelector(
+  getIndividualLessonFeatureState,
+  individualLessonState => individualLessonState.pageProperties
+);

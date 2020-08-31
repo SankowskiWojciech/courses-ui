@@ -50,5 +50,5 @@
     <tr mat-row *matRowDef="let row; columns: ['description']" class="individual-lesson-detail-row"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="handlePageEvent($event)" #paginator></mat-paginator>
 </div>

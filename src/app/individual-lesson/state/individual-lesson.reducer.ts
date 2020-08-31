@@ -1,13 +1,20 @@
 import { createReducer, on, createAction } from '@ngrx/store';
 import { IndividualLessonState } from './individual-lesson.state';
 import * as IndividualLessonActions from './individual-lesson.action';
+import { PageProperties } from '../model/page-properties.model';
+
+const defaultPageProperties: PageProperties = {
+  pageSize: 5,
+  pageIndex: 0
+};
 
 const individualLessonInitialState: IndividualLessonState = {
   showFinishedLessons: false,
   individualLessons: [],
   availableStudents: [],
   expandedIndividualLesson: null,
-  filterValue: ''
+  filterValue: '',
+  pageProperties: defaultPageProperties
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -47,6 +54,12 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     return {
       ...state,
       filterValue: action.filterValue
+    };
+  }),
+  on(IndividualLessonActions.setPageProperties, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      pageProperties: action.pageProperties
     };
   })
 );
