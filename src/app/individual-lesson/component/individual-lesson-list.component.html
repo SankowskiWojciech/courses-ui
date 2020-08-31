@@ -3,8 +3,8 @@
     <button mat-raised-button color="primary" class="mr-3 mb-2" routerLink="add">Dodaj zajęcia</button>
     <mat-form-field>
       <mat-label>Wprowadź filtr</mat-label>
-      <input matInput (keyup)="filter($event)" placeholder="Np. Tytuł zajęć" #filterInput>
-      <button mat-button *ngIf="filterInput.value" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter(filterInput)">
+      <input matInput (keyup)="filter()" placeholder="Np. Tytuł zajęć" [(ngModel)]="filterValue">
+      <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>

@@ -6,7 +6,8 @@ const individualLessonInitialState: IndividualLessonState = {
   showFinishedLessons: false,
   individualLessons: [],
   availableStudents: [],
-  expandedIndividualLesson: null
+  expandedIndividualLesson: null,
+  filterValue: ''
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -40,6 +41,12 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     return {
       ...state,
       expandedIndividualLesson: action.expandedIndividualLesson
+    };
+  }),
+  on(IndividualLessonActions.setFilterValue, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      filterValue: action.filterValue
     };
   })
 );

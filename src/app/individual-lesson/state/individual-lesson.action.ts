@@ -54,3 +54,8 @@ export const setExpandedIndividualLesson = createAction(
   '[Individual Lesson State] Set expanded individual lesson',
   props<{ expandedIndividualLesson: IndividualLesson }>()
 );
+
+export const setFilterValue = createAction(
+  '[Individual Lesson State] Set filter value',
+  props<{ filterValue: string }>()
+);

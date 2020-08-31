@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson } from '../state/individual-lesson.selector';
+import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson, getFilterValue } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -32,6 +32,7 @@ export class IndividualLessonListComponent implements OnInit {
   expandedIndividualLesson: IndividualLesson | null;
   individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
+  filterValue = '';
 
   private ngDestroyed$ = new Subject();
 
@@ -46,6 +47,10 @@ export class IndividualLessonListComponent implements OnInit {
       .subscribe(
         showFinishedLessons => this.showFinishedLessons = showFinishedLessons
       );
+
+    this.store.select(getFilterValue)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(filterValue => this.filterValue = filterValue);
 
     this.store.select(getIndividualLessons)
       .pipe(takeUntil(this.ngDestroyed$))
@@ -64,13 +69,14 @@ export class IndividualLessonListComponent implements OnInit {
       .subscribe(expandedIndividualLesson => this.expandedIndividualLesson = expandedIndividualLesson);
   }
 
-  filter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  filter(): void {
+    this.store.dispatch(IndividualLessonActions.setFilterValue({ filterValue: this.filterValue }));
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
-  clearFilter(filterInput: HTMLInputElement): void {
-    filterInput.value = '';
+  clearFilter(): void {
+    const filterValue = '';
+    this.store.dispatch(IndividualLessonActions.setFilterValue({ filterValue }));
     this.dataSource.filter = '';
   }
 
@@ -98,5 +104,6 @@ export class IndividualLessonListComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.showFinishedLessons ? this.individualLessons : this.getOnlyUnfinishedIndividualLessons();
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 }

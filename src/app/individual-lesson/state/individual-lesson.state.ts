@@ -11,4 +11,5 @@ export interface IndividualLessonState {
   individualLessons: IndividualLesson[];
   availableStudents: Student[];
   expandedIndividualLesson: IndividualLesson | null;
+  filterValue: string;
 }

@@ -22,3 +22,8 @@ export const getExpandedIndividualLesson = createSelector(
   getIndividualLessonFeatureState,
   individualLessonState => individualLessonState.expandedIndividualLesson
 );
+
+export const getFilterValue = createSelector(
+  getIndividualLessonFeatureState,
+  individualLessonState => individualLessonState.filterValue
+);
