@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getShowFinishedLessons, getIndividualLessons } from '../state/individual-lesson.selector';
+import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -58,6 +58,10 @@ export class IndividualLessonListComponent implements OnInit {
           this.prepareDataSource();
         }
       );
+
+    this.store.select(getExpandedIndividualLesson)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(expandedIndividualLesson => this.expandedIndividualLesson = expandedIndividualLesson);
   }
 
   filter(event: Event) {
@@ -77,6 +81,11 @@ export class IndividualLessonListComponent implements OnInit {
     } else {
       this.dataSource.data = this.getOnlyUnfinishedIndividualLessons();
     }
+  }
+
+  handleExpandingIndividualLessonDescription(individualLesson: IndividualLesson) {
+    const expandedIndividualLesson = this.expandedIndividualLesson === individualLesson ? null : individualLesson;
+    this.store.dispatch(IndividualLessonActions.setExpandedIndividualLesson({ expandedIndividualLesson }));
   }
 
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {

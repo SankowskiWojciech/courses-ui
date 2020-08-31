@@ -10,4 +10,5 @@ export interface IndividualLessonState {
   showFinishedLessons: boolean;
   individualLessons: IndividualLesson[];
   availableStudents: Student[];
+  expandedIndividualLesson: IndividualLesson | null;
 }

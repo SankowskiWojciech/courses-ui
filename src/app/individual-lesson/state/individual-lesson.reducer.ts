@@ -5,7 +5,8 @@ import * as IndividualLessonActions from './individual-lesson.action';
 const individualLessonInitialState: IndividualLessonState = {
   showFinishedLessons: false,
   individualLessons: [],
-  availableStudents: []
+  availableStudents: [],
+  expandedIndividualLesson: null
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -35,4 +36,10 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
       individualLessons: updatedIndividualLessons
     };
   }),
+  on(IndividualLessonActions.setExpandedIndividualLesson, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      expandedIndividualLesson: action.expandedIndividualLesson
+    };
+  })
 );

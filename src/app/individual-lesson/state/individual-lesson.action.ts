@@ -49,3 +49,8 @@ export const createNewIndividualLessonFailure = createAction(
   '[Individual Lesson State] Create new individual lesson - failure',
   props<{ error: string }>()
 );
+
+export const setExpandedIndividualLesson = createAction(
+  '[Individual Lesson State] Set expanded individual lesson',
+  props<{ expandedIndividualLesson: IndividualLesson }>()
+);
