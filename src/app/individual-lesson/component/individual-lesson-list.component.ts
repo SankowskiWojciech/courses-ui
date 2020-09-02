@@ -28,7 +28,7 @@ import { PageProperties } from '../model/page-properties.model';
 })
 export class IndividualLessonListComponent implements OnInit, OnDestroy {
 
-  readonly columnsToRender = ['title', 'dateOfLesson', 'studentFullName', 'studentEmailAddress'];
+  readonly columnsToRender = ['title', 'startDateOfLesson', 'endDateOfLesson', 'studentFullName', 'studentEmailAddress'];
   showFinishedLessons: boolean;
   expandedIndividualLesson: IndividualLesson | null;
   individualLessons: IndividualLesson[];
@@ -118,7 +118,7 @@ export class IndividualLessonListComponent implements OnInit, OnDestroy {
 
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {
     const currentDate = new Date();
-    return this.individualLessons.filter(individualLesson => new Date(individualLesson.dateOfLesson) >= currentDate);
+    return this.individualLessons.filter(individualLesson => new Date(individualLesson.endDateOfLesson) >= currentDate);
   }
 
   private prepareDataSource() {

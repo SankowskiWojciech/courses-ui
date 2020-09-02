@@ -7,21 +7,12 @@ import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
 import { ValidationMessages } from '../constants/validation-messages.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
-import { IndividualLessonService } from '../service/individual-lesson.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
 import { getStudentsAvailableForTutor } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
-
-function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: boolean } | null => {
-    if (!availableStudents.filter(student => student.fullNameWithEmailAddress === control.value).length) {
-      return { studentValidation: false };
-    }
-    return null;
-  };
-}
+import { studentValidator, startDateOfLessonValidator, endDateOfLessonValidator } from '../validator/individual-lesson-add-lesson.validator';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -36,16 +27,15 @@ export class IndividualLessonAddLessonComponent implements OnInit {
 
   validationMessages = {
     titleValidationMessage: null,
-    dateOfLessonsValidationMessage: null,
+    startDateOfLessonsValidationMessage: null,
+    endDateOfLessonsValidationMessage: null,
     studentValidationMessage: null,
     descriptionValidationMessage: null
   };
 
   private ngDestroyed$ = new Subject();
 
-  constructor(private formBuilder: FormBuilder, private store: Store<State>,
-              private individualLessonService: IndividualLessonService, private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.availableStudents = this.prepareStudentsAvailableForTutor();
@@ -66,10 +56,6 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     titleFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
     );
-    const dateOfLessonFormControl = new FormControl('', Validators.required);
-    dateOfLessonFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.dateOfLessonsValidationMessage = this.getValidationMessage(dateOfLessonFormControl)
-    );
     const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
@@ -78,9 +64,20 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     descriptionFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
     );
+    const startDateOfLessonFormControl = new FormControl('');
+    const endDateOfLessonFormControl = new FormControl('');
+    startDateOfLessonFormControl.setValidators([Validators.required, startDateOfLessonValidator(endDateOfLessonFormControl)]);
+    startDateOfLessonFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.startDateOfLessonsValidationMessage = this.getValidationMessage(startDateOfLessonFormControl)
+    );
+    endDateOfLessonFormControl.setValidators([Validators.required, endDateOfLessonValidator(startDateOfLessonFormControl)]);
+    endDateOfLessonFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.endDateOfLessonsValidationMessage = this.getValidationMessage(endDateOfLessonFormControl)
+    );
     const addIndividualLessonForm = this.formBuilder.group({
       title: titleFormControl,
-      dateOfLesson: dateOfLessonFormControl,
+      startDateOfLesson: startDateOfLessonFormControl,
+      endDateOfLesson: endDateOfLessonFormControl,
       student: studentFormControl,
       description: descriptionFormControl
     });
@@ -120,7 +117,8 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   private prepareIndividualLessonRequestBody(): IndividualLessonRequestBody {
     return {
       title: this.addIndividualLessonForm.get('title').value,
-      dateOfLesson: this.addIndividualLessonForm.get('dateOfLesson').value,
+      startDateOfLesson: this.addIndividualLessonForm.get('startDateOfLesson').value,
+      endDateOfLesson: this.addIndividualLessonForm.get('endDateOfLesson').value,
       description: this.addIndividualLessonForm.get('description').value,
       subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainName),
       tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),

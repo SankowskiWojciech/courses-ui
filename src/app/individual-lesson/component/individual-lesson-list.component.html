@@ -14,15 +14,19 @@
 </div>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="dateOfLesson"
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="startDateOfLesson"
     matSortDirection="asc">
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Tytuł</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.title}}</td>
     </ng-container>
-    <ng-container matColumnDef="dateOfLesson">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data zajęć</th>
-      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.dateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+    <ng-container matColumnDef="startDateOfLesson">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data rozpoczęcia zajęć</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.startDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="endDateOfLesson">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data zakończenia zajęć</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.endDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="studentFullName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię i nazwisko studenta</th>

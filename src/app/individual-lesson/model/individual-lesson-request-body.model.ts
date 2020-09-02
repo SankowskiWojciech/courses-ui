@@ -1,6 +1,7 @@
 export interface IndividualLessonRequestBody {
   title: string;
-  dateOfLesson: Date;
+  startDateOfLesson: Date;
+  endDateOfLesson: Date;
   description: string;
   subdomainName: string;
   tutorId: string;

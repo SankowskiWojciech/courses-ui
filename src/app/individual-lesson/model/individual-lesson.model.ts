@@ -1,6 +1,7 @@
 export interface IndividualLesson {
   title: string;
-  dateOfLesson: Date;
+  startDateOfLesson: Date;
+  endDateOfLesson: Date;
   description: string;
   subdomainName: string;
   tutorEmailAddress: string;

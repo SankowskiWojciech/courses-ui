@@ -4,7 +4,8 @@
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.titleValidationMessage}">
       <mat-form-field class="w-100">
         <mat-label>Tytuł zajęć</mat-label>
-        <input matInput type="text" id="titleId" formControlName="title" matTooltip="Maksymalnie 50 znaków" autocomplete="off">
+        <input matInput type="text" id="titleId" formControlName="title" matTooltip="Maksymalnie 50 znaków"
+          autocomplete="off">
         <button mat-button *ngIf="addIndividualLessonForm.get('title').value" matSuffix mat-icon-button
           aria-label="Clear input" (click)="addIndividualLessonForm.get('title').setValue('')">
           <mat-icon>close</mat-icon>
@@ -12,20 +13,25 @@
         <mat-error>{{validationMessages.titleValidationMessage}}</mat-error>
       </mat-form-field>
     </div>
-    <div class="form-row" [ngClass]="{'mb-3': validationMessages.dateOfLessonsValidationMessage}">
-    <mat-form-field>
-        <mat-label>Data zajęć</mat-label>
-        <input matInput type="datetime-local" id="dateOfLessonId" formControlName="dateOfLesson">
-        <mat-error>{{validationMessages.dateOfLessonsValidationMessage}}</mat-error>
+    <div class="form-row" [ngClass]="{'mb-4': validationMessages.startDateOfLessonsValidationMessage || validationMessages.endDateOfLessonsValidationMessage}">
+      <mat-form-field class="mr-5">
+        <mat-label>Data rozpoczęcia zajęć</mat-label>
+        <input matInput type="datetime-local" id="startDateOfLessonId" formControlName="startDateOfLesson">
+        <mat-error>{{validationMessages.startDateOfLessonsValidationMessage}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Data zakończenia zajęć</mat-label>
+        <input matInput type="datetime-local" id="endDateOfLessonId" formControlName="endDateOfLesson">
+        <mat-error>{{validationMessages.endDateOfLessonsValidationMessage}}</mat-error>
       </mat-form-field>
     </div>
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.studentValidationMessage}">
       <mat-form-field class="w-100">
         <mat-label>Wybierz studenta</mat-label>
-        <input type="text" matInput formControlName="student" id="studentId"
-          [matAutocomplete]="studentAutocomplete">
+        <input type="text" matInput formControlName="student" id="studentId" [matAutocomplete]="studentAutocomplete">
         <mat-autocomplete #studentAutocomplete="matAutocomplete">
-          <mat-option *ngFor="let student of filteredAvailableStudents | async" [value]="student.fullNameWithEmailAddress">
+          <mat-option *ngFor="let student of filteredAvailableStudents | async"
+            [value]="student.fullNameWithEmailAddress">
             {{student.fullNameWithEmailAddress}}
           </mat-option>
         </mat-autocomplete>
@@ -39,9 +45,10 @@
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.descriptionValidationMessage}">
       <mat-form-field class="w-100">
         <mat-label>Opis zajęć</mat-label>
-        <textarea matInput rows="10" id="descriptionId" formControlName="description" matTooltip="Maksymalnie 2000 znaków"></textarea>
-        <button mat-button *ngIf="addIndividualLessonForm.get('description').value" matSuffix mat-icon-button aria-label="Clear input"
-          (click)="addIndividualLessonForm.get('description').setValue('')">
+        <textarea matInput rows="10" id="descriptionId" formControlName="description"
+          matTooltip="Maksymalnie 2000 znaków"></textarea>
+        <button mat-button *ngIf="addIndividualLessonForm.get('description').value" matSuffix mat-icon-button
+          aria-label="Clear input" (click)="addIndividualLessonForm.get('description').setValue('')">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error>{{validationMessages.descriptionValidationMessage}}</mat-error>
