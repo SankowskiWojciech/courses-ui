@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { Observable, Subject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
 import { ValidationMessages } from '../constants/validation-messages.constant';
@@ -10,9 +10,11 @@ import { IndividualLessonRequestBody } from '../model/individual-lesson-request-
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getStudentsAvailableForTutor } from '../state/individual-lesson.selector';
+import { getStudentsAvailableForTutor, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
-import { studentValidator, startDateOfLessonValidator, endDateOfLessonValidator } from '../validator/individual-lesson-add-lesson.validator';
+import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-add-lesson.validator';
+import { IndividualLesson } from '../model/individual-lesson.model';
+import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -24,11 +26,13 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   addIndividualLessonForm: FormGroup;
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
+  individualLessons: IndividualLesson[];
 
   validationMessages = {
     titleValidationMessage: null,
-    startDateOfLessonsValidationMessage: null,
-    endDateOfLessonsValidationMessage: null,
+    lessonDatesValidationMessage: null,
+    lessonStartDateValidationMessage: null,
+    lessonEndDateValidationMessage: null,
     studentValidationMessage: null,
     descriptionValidationMessage: null
   };
@@ -38,6 +42,9 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.store.select(getIndividualLessons)
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(individualLessons => this.individualLessons = individualLessons);
     this.availableStudents = this.prepareStudentsAvailableForTutor();
     this.addIndividualLessonForm = this.initializeAddIndividualLessonForm();
     this.filteredAvailableStudents = this.addIndividualLessonForm.get('student').valueChanges.pipe(
@@ -52,7 +59,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   }
 
   private initializeAddIndividualLessonForm(): FormGroup {
-    const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+    const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(TITLE_MAX_LENGTH)]);
     titleFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
     );
@@ -60,24 +67,28 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
     );
-    const descriptionFormControl = new FormControl('', Validators.maxLength(2000));
+    const descriptionFormControl = new FormControl('', Validators.maxLength(DESCRIPTION_MAX_LENGTH));
     descriptionFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
     );
-    const startDateOfLessonFormControl = new FormControl('');
-    const endDateOfLessonFormControl = new FormControl('');
-    startDateOfLessonFormControl.setValidators([Validators.required, startDateOfLessonValidator(endDateOfLessonFormControl)]);
-    startDateOfLessonFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.startDateOfLessonsValidationMessage = this.getValidationMessage(startDateOfLessonFormControl)
+    const lessonStartDateFormControl = new FormControl('', Validators.required);
+    lessonStartDateFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonStartDateValidationMessage = this.getValidationMessage(lessonStartDateFormControl)
     );
-    endDateOfLessonFormControl.setValidators([Validators.required, endDateOfLessonValidator(startDateOfLessonFormControl)]);
-    endDateOfLessonFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.endDateOfLessonsValidationMessage = this.getValidationMessage(endDateOfLessonFormControl)
+    const lessonEndDateFormControl = new FormControl('', Validators.required);
+    lessonEndDateFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonEndDateValidationMessage = this.getValidationMessage(lessonEndDateFormControl)
+    );
+    const lessonDatesFormGroup = new FormGroup({
+      lessonStartDate: lessonStartDateFormControl,
+      lessonEndDate: lessonEndDateFormControl
+    }, [lessonDatesValidator, lessonCollisionValidator(this.individualLessons)]);
+    lessonDatesFormGroup.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
     const addIndividualLessonForm = this.formBuilder.group({
       title: titleFormControl,
-      startDateOfLesson: startDateOfLessonFormControl,
-      endDateOfLesson: endDateOfLessonFormControl,
+      lessonDates: lessonDatesFormGroup,
       student: studentFormControl,
       description: descriptionFormControl
     });
@@ -117,8 +128,8 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   private prepareIndividualLessonRequestBody(): IndividualLessonRequestBody {
     return {
       title: this.addIndividualLessonForm.get('title').value,
-      startDateOfLesson: this.addIndividualLessonForm.get('startDateOfLesson').value,
-      endDateOfLesson: this.addIndividualLessonForm.get('endDateOfLesson').value,
+      startDateOfLesson: this.addIndividualLessonForm.get('lessonDates').get('lessonStartDate').value,
+      endDateOfLesson: this.addIndividualLessonForm.get('lessonDates').get('lessonEndDate').value,
       description: this.addIndividualLessonForm.get('description').value,
       subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainName),
       tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),

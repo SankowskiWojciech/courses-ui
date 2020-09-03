@@ -1,5 +1,6 @@
 import { StudentFormModel } from '../model/student-form-model.model';
 import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { IndividualLesson } from '../model/individual-lesson.model';
 
 export function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -10,23 +11,32 @@ export function studentValidator(availableStudents: StudentFormModel[]): Validat
   };
 }
 
-export function startDateOfLessonValidator(endDateOfLessonControl: AbstractControl): ValidatorFn {
-  return (startDateOfLessonControl: AbstractControl): { [key: string]: boolean } | null => {
-    const startDateOfLesson = new Date(startDateOfLessonControl.value);
-    const endDateOfLesson = new Date(endDateOfLessonControl.value);
-    if (startDateOfLesson > endDateOfLesson) {
-      return { startDateOfLessonValidation: false };
+export function lessonDatesValidator(lessonDatesFormGroup: AbstractControl): { [key: string]: boolean } | null {
+  const lessonStartDateFormControl = lessonDatesFormGroup.get('lessonStartDate');
+  const lessonEndDateFormControl = lessonDatesFormGroup.get('lessonEndDate');
+  if (lessonStartDateFormControl.dirty && lessonEndDateFormControl.dirty) {
+    const lessonStartDate = new Date(lessonStartDateFormControl.value);
+    const lessonEndDate = new Date(lessonEndDateFormControl.value);
+    if (lessonStartDate > lessonEndDate) {
+      return { lessonDatesValidation: false };
     }
-    return null;
-  };
+  }
+  return null;
 }
 
-export function endDateOfLessonValidator(startDateOfLessonControl: AbstractControl): ValidatorFn {
-  return (endDateOfLessonControl: AbstractControl): { [key: string]: boolean } | null => {
-    const startDateOfLesson = new Date(startDateOfLessonControl.value);
-    const endDateOfLesson = new Date(endDateOfLessonControl.value);
-    if (endDateOfLesson < startDateOfLesson) {
-      return { endDateOfLessonValidation: false };
+export function lessonCollisionValidator(individualLessons: IndividualLesson[]): ValidatorFn {
+  return (lessonDatesFormGroup: AbstractControl): { [key: string]: boolean } | null => {
+    const lessonStartDateFormControl = lessonDatesFormGroup.get('lessonStartDate');
+    const lessonEndDateFormControl = lessonDatesFormGroup.get('lessonEndDate');
+    if (lessonStartDateFormControl.dirty && lessonEndDateFormControl.dirty) {
+      const lessonStartDate = new Date(lessonStartDateFormControl.value);
+      const lessonEndDate = new Date(lessonEndDateFormControl.value);
+      const individualLessonsCollidingWithNewOne = individualLessons.filter(
+        individualLesson => lessonStartDate < new Date(individualLesson.endDateOfLesson) && lessonEndDate > new Date(individualLesson.startDateOfLesson)
+      );
+      if (individualLessonsCollidingWithNewOne.length) {
+        return { lessonCollisionValidation: false };
+      }
     }
     return null;
   };

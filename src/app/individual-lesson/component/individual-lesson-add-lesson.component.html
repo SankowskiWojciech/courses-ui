@@ -13,17 +13,25 @@
         <mat-error>{{validationMessages.titleValidationMessage}}</mat-error>
       </mat-form-field>
     </div>
-    <div class="form-row" [ngClass]="{'mb-4': validationMessages.startDateOfLessonsValidationMessage || validationMessages.endDateOfLessonsValidationMessage}">
-      <mat-form-field class="mr-5">
-        <mat-label>Data rozpoczęcia zajęć</mat-label>
-        <input matInput type="datetime-local" id="startDateOfLessonId" formControlName="startDateOfLesson">
-        <mat-error>{{validationMessages.startDateOfLessonsValidationMessage}}</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Data zakończenia zajęć</mat-label>
-        <input matInput type="datetime-local" id="endDateOfLessonId" formControlName="endDateOfLesson">
-        <mat-error>{{validationMessages.endDateOfLessonsValidationMessage}}</mat-error>
-      </mat-form-field>
+    <div class="form-row" formGroupName="lessonDates"
+      [ngClass]="{'mb-2': validationMessages.lessonStartDateValidationMessage || validationMessages.lessonEndDateValidationMessage || validationMessages.lessonDatesValidationMessage}">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-row">
+          <mat-form-field class="mr-5">
+            <mat-label>Data rozpoczęcia zajęć</mat-label>
+            <input matInput type="datetime-local" id="lessonStartDateId" formControlName="lessonStartDate">
+            <mat-error>{{validationMessages.lessonStartDateValidationMessage}}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mr-5">
+            <mat-label>Data zakończenia zajęć</mat-label>
+            <input matInput type="datetime-local" id="lessonEndDateId" formControlName="lessonEndDate">
+            <mat-error>{{validationMessages.lessonEndDateValidationMessage}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-error class="mat-small">{{validationMessages.lessonDatesValidationMessage}}</mat-error>
+        </div>
+      </div>
     </div>
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.studentValidationMessage}">
       <mat-form-field class="w-100">
