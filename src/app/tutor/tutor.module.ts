@@ -5,6 +5,10 @@ import { AuthorizationGuard } from '../login/guard/authorization.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { IndividualLessonListComponent } from '../individual-lesson/component/individual-lesson-list.component';
 import { IndividualLessonAddLessonComponent } from '../individual-lesson/component/individual-lesson-add-lesson.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -28,6 +32,10 @@ const routes: Routes = [
   declarations: [TutorComponent],
   imports: [
     CommonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
     RouterModule.forChild(routes)
   ]
 })

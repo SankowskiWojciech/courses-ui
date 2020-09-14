@@ -1,39 +1,27 @@
-<div class="container-fluid">
-  <div class="row">
-    <nav id="tutorMenu" class="col-md-2 col-lg-2 col-lx-2 d-md-block bg-dark sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item mb-5 text-light" *ngIf="subdomainInformation$ | async as subdomainInformation">
-            {{subdomainInformation.name}}
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Kalendarz
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="lessons/individual">
-              Zajęcia indywidualne
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Zajęcia grupowe
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Profil
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <main role="main" class="col-md-10 col-lg-10 col-lx-10 ml-sm-auto">
+<div class="tutor-container" [class.mobile-device]="mobileQuery.matches">
+  <mat-toolbar *ngIf="mobileQuery.matches">
+    <button mat-icon-button (click)="sidebarNavigation.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="ml-3"
+      *ngIf="subdomainInformation$ | async as subdomainInformation">{{subdomainInformation.name}}</span>
+  </mat-toolbar>
+  <mat-sidenav-container class="tutor-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #sidebarNavigation [mode]="mobileQuery.matches ? 'push' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="!mobileQuery.matches">
+      <mat-nav-list>
+        <div class="subdomain-header" *ngIf="!mobileQuery.matches && subdomainInformation$ | async as subdomainInformation">
+          {{subdomainInformation.name}}</div>
+        <a mat-list-item href="#">Kalendarz</a>
+        <a mat-list-item routerLink="lessons/individual">Zajęcia indywidualne</a>
+        <a mat-list-item href="#">Zajęcia grupowe</a>
+        <a mat-list-item href="#">Profil</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
       <div class="container-fluid">
-          <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
       </div>
-    </main>
-  </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

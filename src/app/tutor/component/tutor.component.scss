@@ -1,14 +1,53 @@
-.sidebar {
-  position: fixed;
+$navigation-background-color:  #404040;
+$navigation-text-color: #3399FF;
+$subdomain-name-text-color: #A9A9A9;
+
+.tutor-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
+  right: 0;
 }
 
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+mat-sidenav {
+  width: 200px;
+  flex-wrap: wrap;
+  background-color: $navigation-background-color;
+}
+
+mat-toolbar {
+  position: fixed;
+  z-index: 2;
+  background-color: $navigation-background-color;
+  color: $subdomain-name-text-color;
+  font-size: 12px;
+}
+
+mat-sidenav a {
+  color: $navigation-text-color;
+}
+
+.mobile-device mat-sidenav{
+  background-color: $navigation-background-color;
+}
+
+h1.mobile-device-subdomain-name {
+  margin-left: 8px;
+}
+
+.tutor-sidenav-container {
+  flex: 1;
+}
+
+.mobile-device .tutor-sidenav-container {
+  flex: 1 0 auto;
+}
+
+.subdomain-header {
+  display: flex;
+  padding: 20px;
+  color: $subdomain-name-text-color;
 }
