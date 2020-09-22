@@ -18,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { individualLessonReducer } from './state/individual-lesson.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { IndividualLessonEffect } from './state/individual-lesson.effect';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
@@ -33,6 +34,7 @@ import { IndividualLessonEffect } from './state/individual-lesson.effect';
     MatIconModule,
     MatTooltipModule,
     MatAutocompleteModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
