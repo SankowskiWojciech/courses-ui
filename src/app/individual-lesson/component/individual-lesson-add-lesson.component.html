@@ -1,16 +1,17 @@
 <div class="container-fluid">
-  <p class="h3 mt-3 text-center">Dodaj nowe zajęcia</p>
+  <p class="h3 mt-3 text-center">{{ 'lessons.addLesson' | translate }}</p>
   <form ngNativeValidate (ngSubmit)="saveIndividualLesson()" [formGroup]="addIndividualLessonForm">
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.titleValidationMessage}">
       <mat-form-field class="w-100">
-        <mat-label>Tytuł zajęć</mat-label>
-        <input matInput type="text" id="titleId" formControlName="title" matTooltip="Maksymalnie 50 znaków"
+        <mat-label>{{ 'lessons.addLessonForm.title' | translate }}</mat-label>
+        <input matInput type="text" id="titleId" formControlName="title"
+          matTooltip="{{ 'lessons.addLessonForm.tooltips.titleMaxLength' | translate:{'maxLength': TITLE_MAX_LENGTH} }}"
           autocomplete="off">
         <button mat-button *ngIf="addIndividualLessonForm.get('title').value" matSuffix mat-icon-button
           aria-label="Clear input" (click)="addIndividualLessonForm.get('title').setValue('')">
           <mat-icon>close</mat-icon>
         </button>
-        <mat-error>{{validationMessages.titleValidationMessage}}</mat-error>
+        <mat-error>{{validationMessages.titleValidationMessage | async}}</mat-error>
       </mat-form-field>
     </div>
     <div class="form-row" formGroupName="lessonDates"
@@ -18,24 +19,24 @@
       <div class="d-flex flex-column">
         <div class="d-flex flex-row">
           <mat-form-field class="mr-5">
-            <mat-label>Data rozpoczęcia zajęć</mat-label>
+            <mat-label>{{ 'lessons.addLessonForm.startDate' | translate }}</mat-label>
             <input matInput type="datetime-local" id="lessonStartDateId" formControlName="lessonStartDate">
-            <mat-error>{{validationMessages.lessonStartDateValidationMessage}}</mat-error>
+            <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
           </mat-form-field>
           <mat-form-field class="mr-5">
-            <mat-label>Data zakończenia zajęć</mat-label>
+            <mat-label>{{ 'lessons.addLessonForm.endDate' | translate }}</mat-label>
             <input matInput type="datetime-local" id="lessonEndDateId" formControlName="lessonEndDate">
-            <mat-error>{{validationMessages.lessonEndDateValidationMessage}}</mat-error>
+            <mat-error>{{validationMessages.lessonEndDateValidationMessage | async}}</mat-error>
           </mat-form-field>
         </div>
         <div>
-          <mat-error class="mat-small">{{validationMessages.lessonDatesValidationMessage}}</mat-error>
+          <mat-error class="mat-small">{{validationMessages.lessonDatesValidationMessage | async}}</mat-error>
         </div>
       </div>
     </div>
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.studentValidationMessage}">
       <mat-form-field class="w-100">
-        <mat-label>Wybierz studenta</mat-label>
+        <mat-label>{{ 'lessons.addLessonForm.chooseStudent' | translate }}</mat-label>
         <input type="text" matInput formControlName="student" id="studentId" [matAutocomplete]="studentAutocomplete">
         <mat-autocomplete #studentAutocomplete="matAutocomplete">
           <mat-option *ngFor="let student of filteredAvailableStudents | async"
@@ -47,25 +48,25 @@
           aria-label="Clear input" (click)="addIndividualLessonForm.get('student').setValue('')">
           <mat-icon>close</mat-icon>
         </button>
-        <mat-error>{{validationMessages.studentValidationMessage}}</mat-error>
+        <mat-error>{{validationMessages.studentValidationMessage | async}}</mat-error>
       </mat-form-field>
     </div>
     <div class="form-row" [ngClass]="{'mb-3': validationMessages.descriptionValidationMessage}">
       <mat-form-field class="w-100">
-        <mat-label>Opis zajęć</mat-label>
+        <mat-label>{{ 'lessons.addLessonForm.description' | translate }}</mat-label>
         <textarea matInput rows="10" id="descriptionId" formControlName="description"
-          matTooltip="Maksymalnie 2000 znaków"></textarea>
+          matTooltip="{{ 'lessons.addLessonForm.tooltips.descriptionMaxLength' | translate:{'maxLength': DESCRIPTION_MAX_LENGTH} }}"></textarea>
         <button mat-button *ngIf="addIndividualLessonForm.get('description').value" matSuffix mat-icon-button
           aria-label="Clear input" (click)="addIndividualLessonForm.get('description').setValue('')">
           <mat-icon>close</mat-icon>
         </button>
-        <mat-error>{{validationMessages.descriptionValidationMessage}}</mat-error>
+        <mat-error>{{validationMessages.descriptionValidationMessage | async}}</mat-error>
       </mat-form-field>
     </div>
     <div class="d-flex justify-content-between mb-4">
-      <button mat-raised-button class="text-primary" routerLink="../">Powrót do listy</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!addIndividualLessonForm.valid">Zapisz
-        zajęcia</button>
+      <button mat-raised-button class="text-primary" routerLink="../">{{ 'lessons.getBackToList' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit"
+        [disabled]="!addIndividualLessonForm.valid">{{ 'lessons.saveNewLesson' | translate }}</button>
     </div>
   </form>
 </div>

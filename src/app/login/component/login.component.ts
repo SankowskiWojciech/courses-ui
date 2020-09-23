@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   subdomainInformation: Subdomain;
   isInvalidLoginOrPassword = false;
+  loginInProgress = false;
   loginCredentials: LoginCredentials = {
     userEmailAddress: null,
     password: null
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
 
   loginUser() {
     this.isInvalidLoginOrPassword = false;
+    this.loginInProgress = true;
     this.loginService.loginUser(this.subdomainInformation.alias, this.loginCredentials).subscribe(
       token => this.handleSuccessfulLogin(token.accountType, this.subdomainInformation.alias),
       error => this.handleHttpError(error)
@@ -61,5 +63,6 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/403');
     }
     this.isInvalidLoginOrPassword = true;
+    this.loginInProgress = false;
   }
 }

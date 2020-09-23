@@ -18,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { individualLessonReducer } from './state/individual-lesson.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { IndividualLessonEffect } from './state/individual-lesson.effect';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
@@ -37,7 +38,8 @@ import { IndividualLessonEffect } from './state/individual-lesson.effect';
     ReactiveFormsModule,
     RouterModule,
     StoreModule.forFeature('individualLessonState', individualLessonReducer),
-    EffectsModule.forFeature([IndividualLessonEffect])
+    EffectsModule.forFeature([IndividualLessonEffect]),
+    TranslateModule
   ]
 })
 export class IndividualLessonModule { }

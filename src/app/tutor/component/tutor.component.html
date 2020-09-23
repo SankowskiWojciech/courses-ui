@@ -12,10 +12,10 @@
       <mat-nav-list>
         <div class="subdomain-header" *ngIf="!mobileQuery.matches && subdomainInformation$ | async as subdomainInformation">
           {{subdomainInformation.name}}</div>
-        <a mat-list-item href="#">Kalendarz</a>
-        <a mat-list-item routerLink="lessons/individual">Zajęcia indywidualne</a>
-        <a mat-list-item href="#">Zajęcia grupowe</a>
-        <a mat-list-item href="#">Profil</a>
+        <a mat-list-item href="#">{{ 'tutor.calendar' | translate }}</a>
+        <a mat-list-item routerLink="lessons/individual">{{ 'tutor.individualLessons' | translate }}</a>
+        <a mat-list-item href="#">{{ 'tutor.groupLessons' | translate }}</a>
+        <a mat-list-item href="#">{{ 'tutor.profile' | translate }}</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
