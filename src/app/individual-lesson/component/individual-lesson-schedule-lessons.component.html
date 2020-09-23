@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <p class="h3 mt-3 text-center">Zaplanuj zajęcia</p>
+  <form ngNativeValidate (ngSubmit)="scheduleIndividualLessons()" [formGroup]="scheduleIndividualLessonsForm">
+    <div class="form-row">
+      <mat-form-field class="w-100">
+
+      </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-between mb-4">
+      <button mat-raised-button class="text-primary" routerLink="../">Powrót do listy</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!scheduleIndividualLessonsForm.valid">Zaplanuj
+        zajęcia</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,5 @@
+export enum ScheduleTypes {
+  ONE_YEAR_LENGTH_LESSONS,
+  FIXED_DURATION_LESSONS,
+  FIXED_DATES_LESSONS
+}

@@ -19,9 +19,10 @@ import { individualLessonReducer } from './state/individual-lesson.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { IndividualLessonEffect } from './state/individual-lesson.effect';
 import { MatMenuModule } from '@angular/material/menu';
+import { IndividualLessonScheduleLessonsComponent } from './component/individual-lesson-schedule-lessons.component';
 
 @NgModule({
-  declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent],
+  declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
   imports: [
     CommonModule,
     MatTableModule,
