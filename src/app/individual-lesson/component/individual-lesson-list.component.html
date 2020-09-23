@@ -1,10 +1,9 @@
 <div class="d-flex flex-row justify-content-between align-items-end">
   <div class="d-flex flex-row m-1">
-    <button mat-raised-button color="primary" class="mr-3 mb-2" mat-button [matMenuTriggerFor]="newLessonsMenu">Nowe
-      zajęcia</button>
+    <button mat-raised-button color="primary" class="mr-3 mb-2" mat-button [matMenuTriggerFor]="newLessonsMenu">{{ 'lessons.newLesson' | translate }}</button>
     <mat-menu #newLessonsMenu="matMenu" yPosition="below">
-      <button mat-menu-item routerLink="add">Dodaj zajęcia</button>
-      <button mat-menu-item routerLink="schedule">Zaplanuj zajęcia</button>
+      <button mat-menu-item routerLink="add">{{ 'lessons.addLesson' | translate }}</button>
+      <button mat-menu-item routerLink="schedule">{{ 'lessons.scheduleLessons' | translate }}</button>
     </mat-menu>
     <mat-form-field>
       <mat-label>{{ 'lessons.lessonsList.enterFilter' | translate }}</mat-label>

@@ -18,7 +18,9 @@
     "profile": "Profil"
   },
   "lessons": {
+    "newLesson": "Nowe zajęcia",
     "addLesson": "Dodaj zajęcia",
+    "scheduleLessons": "Zaplanuj zajęcia",
     "getBackToList": "Powrót do listy",
     "saveNewLesson": "Zapisz zajęcia",
     "lessonsList": {
