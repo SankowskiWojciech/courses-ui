@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { IndividualLessonScheduleLessonsComponent } from '../individual-lesson/component/individual-lesson-schedule-lessons.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     MatIconModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule
   ]
 })
 export class TutorModule { }

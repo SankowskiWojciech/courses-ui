@@ -4,7 +4,7 @@ import { IndividualLesson } from '../model/individual-lesson.model';
 
 export function studentValidator(availableStudents: StudentFormModel[]): ValidatorFn {
   return (control: AbstractControl): { [key: string]: boolean } | null => {
-    if (!availableStudents.filter(student => student.fullNameWithEmailAddress === control.value).length) {
+    if (control.value !== '' && !availableStudents.filter(student => student.fullNameWithEmailAddress === control.value).length) {
       return { studentValidation: false };
     }
     return null;

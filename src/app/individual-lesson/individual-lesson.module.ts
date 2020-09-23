@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { IndividualLessonEffect } from './state/individual-lesson.effect';
 import { MatMenuModule } from '@angular/material/menu';
 import { IndividualLessonScheduleLessonsComponent } from './component/individual-lesson-schedule-lessons.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
@@ -40,7 +41,8 @@ import { IndividualLessonScheduleLessonsComponent } from './component/individual
     ReactiveFormsModule,
     RouterModule,
     StoreModule.forFeature('individualLessonState', individualLessonReducer),
-    EffectsModule.forFeature([IndividualLessonEffect])
+    EffectsModule.forFeature([IndividualLessonEffect]),
+    TranslateModule
   ]
 })
 export class IndividualLessonModule { }

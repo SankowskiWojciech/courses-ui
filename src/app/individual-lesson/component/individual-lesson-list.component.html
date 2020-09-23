@@ -7,42 +7,38 @@
       <button mat-menu-item routerLink="schedule">Zaplanuj zajęcia</button>
     </mat-menu>
     <mat-form-field>
-      <mat-label>Wprowadź filtr</mat-label>
-      <input matInput (keyup)="filter()" placeholder="Np. Tytuł zajęć" [(ngModel)]="filterValue">
+      <mat-label>{{ 'lessons.lessonsList.enterFilter' | translate }}</mat-label>
+      <input matInput (keyup)="filter()" placeholder="{{ 'lessons.lessonsList.filterPlaceholder' | translate }}" [(ngModel)]="filterValue">
       <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
   <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">
-    Pokaż ukończone zajęcia</mat-checkbox>
+    {{ 'lessons.lessonsList.showFinishedLessons' | translate }}</mat-checkbox>
 </div>
-
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="startDateOfLesson"
     matSortDirection="asc">
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tytuł</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.title' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.title}}</td>
     </ng-container>
     <ng-container matColumnDef="startDateOfLesson">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data rozpoczęcia zajęć</th>
-      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">
-        {{individualLesson.startDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.startDate' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.startDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="endDateOfLesson">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data zakończenia zajęć</th>
-      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">
-        {{individualLesson.endDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.endDate' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.endDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="studentFullName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Imię i nazwisko studenta</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.studentFullName' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.studentFullName}}</td>
     </ng-container>
     <ng-container matColumnDef="studentEmailAddress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Adres e-mail studenta</th>
-      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.studentEmailAddress}}
-      </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.studentEmailAddress' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.studentEmailAddress}}</td>
     </ng-container>
     <ng-container matColumnDef="description">
       <td mat-cell *matCellDef="let individualLesson" [attr.colspan]="columnsToRender.length">
@@ -61,7 +57,5 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['description']" class="individual-lesson-detail-row"></tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="handlePageEvent($event)" #paginator>
-  </mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="handlePageEvent($event)" #paginator></mat-paginator>
 </div>

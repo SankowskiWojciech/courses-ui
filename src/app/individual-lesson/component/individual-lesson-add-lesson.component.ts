@@ -5,7 +5,6 @@ import { startWith, map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { StudentFormModel } from '../model/student-form-model.model';
 import { Student } from '../model/student.model';
-import { ValidationMessages } from '../constants/validation-messages.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -15,6 +14,7 @@ import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-add-lesson.validator';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -22,6 +22,9 @@ import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesso
   styleUrls: ['./individual-lesson-add-lesson.component.scss']
 })
 export class IndividualLessonAddLessonComponent implements OnInit {
+
+  readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
+  readonly DESCRIPTION_MAX_LENGTH = DESCRIPTION_MAX_LENGTH;
 
   addIndividualLessonForm: FormGroup;
   availableStudents: StudentFormModel[];
@@ -38,8 +41,9 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   };
 
   private ngDestroyed$ = new Subject();
+  private readonly TRANSLATION_KEY_PREFIX = 'lessons.addLessonForm.validationErrorMessages.';
 
-  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute, private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.store.select(getIndividualLessons)
@@ -59,7 +63,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   }
 
   private initializeAddIndividualLessonForm(): FormGroup {
-    const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(TITLE_MAX_LENGTH)]);
+    const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(this.TITLE_MAX_LENGTH)]);
     titleFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
     );
@@ -67,7 +71,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
     );
-    const descriptionFormControl = new FormControl('', Validators.maxLength(DESCRIPTION_MAX_LENGTH));
+    const descriptionFormControl = new FormControl('', Validators.maxLength(this.DESCRIPTION_MAX_LENGTH));
     descriptionFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
     );
@@ -95,11 +99,9 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     return addIndividualLessonForm;
   }
 
-  private getValidationMessage(control: AbstractControl): string {
+  private getValidationMessage(control: AbstractControl): Observable<string> {
     if ((control.touched || control.dirty) && control.errors) {
-      return Object.keys(control.errors)
-        .map(errorKey => ValidationMessages[errorKey])
-        .join(' ');
+      return this.translateService.get(`${this.TRANSLATION_KEY_PREFIX}${Object.keys(control.errors)[0]}`);
     }
     return null;
   }
