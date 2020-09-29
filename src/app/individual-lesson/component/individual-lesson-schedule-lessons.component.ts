@@ -17,6 +17,7 @@ import { TITLE_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
+import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
@@ -184,7 +185,13 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     this.showLessonsTitlesTextArea = true;
   }
 
-  scheduleIndividualLessons() { }
+  scheduleIndividualLessons() {
+    const studentEmailAddress = this.availableStudents.find(
+      availableStudent => availableStudent.fullNameWithEmailAddress === this.scheduleIndividualLessonsForm.get('student').value
+    ).emailAddress;
+    const individualLessonsScheduleRequestBody = transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(this.scheduleIndividualLessonsForm, studentEmailAddress);
+    console.log(individualLessonsScheduleRequestBody);
+  }
 
   isLessonTitleTooLong(lessonTitle: string): boolean {
     return lessonTitle.length > TITLE_MAX_LENGTH;
