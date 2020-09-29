@@ -23,33 +23,49 @@
     "scheduleLessons": "Zaplanuj zajęcia",
     "getBackToList": "Powrót do listy",
     "saveNewLesson": "Zapisz zajęcia",
-    "lessonsList": {
-      "enterFilter": "Wprowadź filtr",
-      "filterPlaceholder": "Np. Tytuł zajęć",
-      "showFinishedLessons": "Pokaż ukończone zajęcia",
-      "title": "Tytuł zajęć",
-      "startDate": "Data rozpoczęcia zajęć",
-      "endDate": "Data zakończenia zajęć",
-      "studentFullName": "Imię i nazwisko studenta",
-      "studentEmailAddress": "Adres e-mail studenta"
+    "enterFilter": "Wprowadź filtr",
+    "filterPlaceholder": "Np. Tytuł zajęć",
+    "showFinishedLessons": "Pokaż ukończone zajęcia",
+    "title": "Tytuł zajęć",
+    "titles": "Tytuły zajęć",
+    "startDate": "Data rozpoczęcia zajęć",
+    "endDate": "Data zakończenia zajęć",
+    "studentFullName": "Imię i nazwisko studenta",
+    "studentEmailAddress": "Adres e-mail studenta",
+    "chooseStudent": "Wybierz studenta",
+    "description": "Opis zajęć",
+    "chooseScheduleType": "Wybierz rodzaj planu",
+    "startTime": "Godzina rozpoczęcia zajęć",
+    "endTime": "Godzina zakończenia zajęć",
+    "lessonsDates": "Terminy zajęć",
+    "lessonsNumber": "Numer zajęć",
+    "tooltips": {
+      "maxLength": "Maksymalnie {{ maxLength }} znaków",
+      "lessonsTitlesMaxLength": "Maksymalna długość tytułu lekcji to {{ maxLength }} znaków"
     },
-    "addLessonForm": {
-      "title": "Tytuł zajęć",
-      "startDate": "Data rozpoczęcia zajęć",
-      "endDate": "Data zakończenia zajęć",
-      "chooseStudent": "Wybierz studenta",
-      "description": "Opis zajęć",
-      "tooltips": {
-        "titleMaxLength": "Maksymalnie {{ maxLength }} znaków",
-        "descriptionMaxLength": "Maksymalnie {{ maxLength }} znaków"
-      },
-      "validationErrorMessages": {
-        "required": "Wypełnij to pole.",
-        "maxlength": "Przekroczono maksymalną ilość znaków.",
-        "studentValidation": "Wybierz studenta z listy.",
-        "lessonDatesValidation": "Data rozpoczęcia lub zakończenia zajęć jest nieprawidłowa.",
-        "lessonCollisionValidation": "Data zajęć koliduje z istniejącymi zajęciami."
-      }
+    "formValidationErrorMessages": {
+      "required": "Wypełnij to pole.",
+      "maxlength": "Przekroczono maksymalną ilość znaków.",
+      "studentValidation": "Wybierz studenta z listy.",
+      "lessonDatesValidation": "Data rozpoczęcia lub zakończenia zajęć jest nieprawidłowa.",
+      "lessonTimesValidation": "Godzina rozpoczęcia lub zakończenia zajęć jest nieprawidłowa.",
+      "lessonCollisionValidation": "Data zajęć koliduje z istniejącymi zajęciami.",
+      "weekdaysWithTimeRangesValidation": "Wybierz przynajmniej jeden termin.",
+      "lessonTitleTooLongValidation": "Przekroczono maksymalną długość tytułu lekcji."
+    },
+    "scheduleTypes": {
+      "OneYearLengthLessons": "Zajęcia roczne",
+      "FixedDurationLessons": "Zajęcia o określonej ilości minut",
+      "FixedDatesLessons": "Zajęcia o określonej dacie początkowej i końcowej"
     }
+  },
+  "weekdays": {
+    "Monday": "Poniedziałek",
+    "Tuesday": "Wtorek",
+    "Wednesday": "Środa",
+    "Thursday": "Czwartek",
+    "Friday": "Piątek",
+    "Saturday": "Sobota",
+    "Sunday": "Niedziela"
   }
 }

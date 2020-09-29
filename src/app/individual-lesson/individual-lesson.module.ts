@@ -21,6 +21,9 @@ import { IndividualLessonEffect } from './state/individual-lesson.effect';
 import { MatMenuModule } from '@angular/material/menu';
 import { IndividualLessonScheduleLessonsComponent } from './component/individual-lesson-schedule-lessons.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
@@ -37,6 +40,9 @@ import { TranslateModule } from '@ngx-translate/core';
     MatTooltipModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,

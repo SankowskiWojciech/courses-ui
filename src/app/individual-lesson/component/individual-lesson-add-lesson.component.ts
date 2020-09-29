@@ -4,17 +4,17 @@ import { Observable, Subject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { StudentFormModel } from '../model/student-form-model.model';
-import { Student } from '../model/student.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
 import { getStudentsAvailableForTutor, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
-import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-add-lesson.validator';
+import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-new-lessons.validator';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
 import { TranslateService } from '@ngx-translate/core';
+import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -41,7 +41,7 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   };
 
   private ngDestroyed$ = new Subject();
-  private readonly TRANSLATION_KEY_PREFIX = 'lessons.addLessonForm.validationErrorMessages.';
+  private readonly TRANSLATION_KEY_PREFIX = 'lessons.formValidationErrorMessages.';
 
   constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute, private translateService: TranslateService) { }
 
@@ -115,16 +115,9 @@ export class IndividualLessonAddLessonComponent implements OnInit {
           this.store.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
         }
         studentsAvailableForTutor.forEach(
-          student => availableStudents.push(this.transformStudentToStudentFormModule(student)));
+          student => availableStudents.push(transformStudentToStudentFormModule(student)));
       });
     return availableStudents;
-  }
-
-  private transformStudentToStudentFormModule(student: Student): StudentFormModel {
-    return {
-      fullNameWithEmailAddress: `${student.fullName} (${student.emailAddress})`,
-      emailAddress: student.emailAddress
-    };
   }
 
   private prepareIndividualLessonRequestBody(): IndividualLessonRequestBody {

@@ -32,3 +32,6 @@ $courses-ui-theme: mat-light-theme($courses-ui-primary, $courses-ui-accent, $cou
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+button {
+  outline: none !important;
+}

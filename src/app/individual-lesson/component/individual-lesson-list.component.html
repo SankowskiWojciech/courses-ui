@@ -6,37 +6,37 @@
       <button mat-menu-item routerLink="schedule">{{ 'lessons.scheduleLessons' | translate }}</button>
     </mat-menu>
     <mat-form-field>
-      <mat-label>{{ 'lessons.lessonsList.enterFilter' | translate }}</mat-label>
-      <input matInput (keyup)="filter()" placeholder="{{ 'lessons.lessonsList.filterPlaceholder' | translate }}" [(ngModel)]="filterValue">
+      <mat-label>{{ 'lessons.enterFilter' | translate }}</mat-label>
+      <input matInput (keyup)="filter()" placeholder="{{ 'lessons.filterPlaceholder' | translate }}" [(ngModel)]="filterValue">
       <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
   <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">
-    {{ 'lessons.lessonsList.showFinishedLessons' | translate }}</mat-checkbox>
+    {{ 'lessons.showFinishedLessons' | translate }}</mat-checkbox>
 </div>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="startDateOfLesson"
     matSortDirection="asc">
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.title' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.title' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.title}}</td>
     </ng-container>
     <ng-container matColumnDef="startDateOfLesson">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.startDate' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.startDate' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.startDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="endDateOfLesson">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.endDate' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.endDate' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.endDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="studentFullName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.studentFullName' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.studentFullName' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.studentFullName}}</td>
     </ng-container>
     <ng-container matColumnDef="studentEmailAddress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.lessonsList.studentEmailAddress' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.studentEmailAddress' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">{{individualLesson.studentEmailAddress}}</td>
     </ng-container>
     <ng-container matColumnDef="description">

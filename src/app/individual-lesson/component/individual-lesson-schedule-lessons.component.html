@@ -1,15 +1,110 @@
 <div class="container-fluid">
-  <p class="h3 mt-3 text-center">Zaplanuj zajęcia</p>
+  <p class="h3 mt-3 text-center mb-3">{{ 'lessons.scheduleLessons' | translate }}</p>
   <form ngNativeValidate (ngSubmit)="scheduleIndividualLessons()" [formGroup]="scheduleIndividualLessonsForm">
     <div class="form-row">
       <mat-form-field class="w-100">
-
+        <mat-label>{{ 'lessons.chooseScheduleType' | translate }}</mat-label>
+        <mat-select formControlName="scheduleType" id="scheduleTypeId">
+          <mat-option *ngFor="let scheduleType of scheduleTypes" [value]="scheduleType">
+            {{ 'lessons.scheduleTypes.' + scheduleType | translate }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
+    <div class="form-row" *ngIf="scheduleIndividualLessonsForm.get('lessonStartDate')"
+      [ngClass]="{'mb-3': validationMessages.lessonStartDateValidationMessage}">
+      <mat-form-field>
+        <mat-label>{{ 'lessons.startDate' | translate }}</mat-label>
+        <input matInput type="date" id="lessonStartDateId" formControlName="lessonStartDate">
+        <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
+      </mat-form-field>
+    </div>
+    <h6 *ngIf="scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges')">{{ 'lessons.lessonsDates' | translate }}
+    </h6>
+    <div class="d-flex flex-column" *ngIf="scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges')"
+      [ngClass]="{'mb-2': validationMessages.weekdaysWithTimeRangesValidationMessage || validationMessages.lessonTimesValidation}">
+      <div class="d-flex flex-column flex-xl-row justify-content-between" formGroupName="weekdaysWithTimeRanges">
+        <div
+          *ngFor="let weekdayWithTimeRangesFormGroup of scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges'); let weekday of weekdays">
+          <div class="d-flex flex-column mr-2" formGroupName="{{weekday + 'FormGroup'}}">
+            <mat-checkbox color='primary' id="{{weekday + 'Id'}}" formControlName="{{weekday}}" #weekdayCheckbox>
+              {{ 'weekdays.' + weekday | translate }}
+            </mat-checkbox>
+            <mat-form-field *ngIf="weekdayCheckbox.checked">
+              <mat-label>{{ 'lessons.startTime' | translate }}</mat-label>
+              <input matInput type="time" id="{{weekday + 'StartTimeId'}}" formControlName="{{weekday + 'StartTime'}}">
+            </mat-form-field>
+            <mat-form-field *ngIf="weekdayCheckbox.checked">
+              <mat-label>{{ 'lessons.endTime' | translate }}</mat-label>
+              <input matInput type="time" id="{{weekday + 'EndTimeId'}}" formControlName="{{weekday + 'EndTime'}}">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <mat-error class="mat-small">{{validationMessages.lessonTimesValidation | async}}</mat-error>
+      <mat-error class="mat-small">{{validationMessages.weekdaysWithTimeRangesValidationMessage | async}}</mat-error>
+    </div>
+    <div class="form-row" *ngIf="scheduleIndividualLessonsForm.get('student')"
+      [ngClass]="{'mb-3': validationMessages.studentValidationMessage}">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'lessons.chooseStudent' | translate }}</mat-label>
+        <input type="text" matInput formControlName="student" id="studentId" [matAutocomplete]="studentAutocomplete">
+        <mat-autocomplete #studentAutocomplete="matAutocomplete">
+          <mat-option *ngFor="let student of filteredAvailableStudents | async"
+            [value]="student.fullNameWithEmailAddress">
+            {{student.fullNameWithEmailAddress}}
+          </mat-option>
+        </mat-autocomplete>
+        <button mat-button *ngIf="scheduleIndividualLessonsForm.get('student').value" matSuffix mat-icon-button
+          aria-label="Clear input" (click)="scheduleIndividualLessonsForm.get('student').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error>{{validationMessages.studentValidationMessage | async}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-row mb-3" *ngIf="scheduleIndividualLessonsForm.get('lessonsTitles') && showLessonsTitlesTextArea"
+      [ngClass]="{'mb-3': validationMessages.lessonsTitlesValidationMessage}">
+      <mat-form-field class="w-100">
+        <mat-label>{{ 'lessons.titles' | translate }}</mat-label>
+        <textarea matInput rows="10" id="lessonsTitlesId" formControlName="lessonsTitles"
+          matTooltip="{{ 'lessons.tooltips.lessonsTitlesMaxLength' | translate:{'maxLength': TITLE_MAX_LENGTH} }}"></textarea>
+        <button mat-button *ngIf="scheduleIndividualLessonsForm.get('lessonsTitles').value" matSuffix mat-icon-button
+          aria-label="Clear input" (click)="scheduleIndividualLessonsForm.get('lessonsTitles').setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button *ngIf="scheduleIndividualLessonsForm.get('lessonsTitles').value" matSuffix mat-icon-button
+          aria-label="Save input" (click)="setLessonsTitles()">
+          <mat-icon>done</mat-icon>
+        </button>
+        <mat-error>{{validationMessages.lessonsTitlesValidationMessage | async}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="d-flex flex-column mb-3" *ngIf="showLessonsTitlesTable">
+      <div class="d-flex flex-row">
+        <table mat-table [dataSource]="lessonsTitlesDataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="ordinalNumber">
+            <th mat-header-cell *matHeaderCellDef> {{ 'lessons.lessonsNumber' | translate }} </th>
+            <td mat-cell *matCellDef="let lessonTitle"> {{lessonsTitlesDataSource.data.indexOf(lessonTitle) + 1}} </td>
+          </ng-container>
+          <ng-container matColumnDef="lessonTitle">
+            <th mat-header-cell *matHeaderCellDef> {{ 'lessons.title' | translate }} </th>
+            <td mat-cell *matCellDef="let lessonTitle"> {{lessonTitle}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToRender"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToRender;"
+            [class.title-invalid-length]="isLessonTitleTooLong(row)"></tr>
+        </table>
+        <button mat-button matSuffix mat-icon-button aria-label="Edit input" (click)="editLessonsTitles()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons #paginator></mat-paginator>
+      <mat-error class="mat-small mt-1">{{validationMessages.lessonsTitlesValidationMessage | async}}</mat-error>
+    </div>
     <div class="d-flex justify-content-between mb-4">
-      <button mat-raised-button class="text-primary" routerLink="../">Powrót do listy</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!scheduleIndividualLessonsForm.valid">Zaplanuj
-        zajęcia</button>
+      <button mat-raised-button class="text-primary" routerLink="../">{{ 'lessons.getBackToList' | translate }}</button>
+      <button mat-raised-button color="primary" type="submit"
+        [disabled]="!scheduleIndividualLessonsForm.valid">{{ 'lessons.scheduleLessons' | translate }}</button>
     </div>
   </form>
 </div>
