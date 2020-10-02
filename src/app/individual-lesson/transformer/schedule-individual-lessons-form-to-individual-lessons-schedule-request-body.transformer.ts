@@ -9,8 +9,8 @@ const weekdays = Object.keys(Weekdays);
 
 export function transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(scheduleIndividualLessonsForm: FormGroup, studentId: string): IndividualLessonsScheduleRequestBody {
   return {
-    beginningDate: scheduleIndividualLessonsForm.get('lessonStartDate').value,
-    endDate: scheduleIndividualLessonsForm.get('lessonEndDate') ? scheduleIndividualLessonsForm.get('lessonEndDate').value : null,
+    beginningDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonStartDate').value,
+    endDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate') ? scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate').value : null,
     scheduleType: ScheduleTypes[scheduleIndividualLessonsForm.get('scheduleType').value],
     allLessonsDurationInMinutes: 0,//scheduleIndividualLessonsForm.get('lessonStartDate').value,
     lessonsDaysOfWeekWithTimes: prepareDaysOfWeekWithTimes(scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges').value),

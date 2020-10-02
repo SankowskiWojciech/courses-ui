@@ -11,13 +11,25 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="form-row" *ngIf="scheduleIndividualLessonsForm.get('lessonStartDate')"
-      [ngClass]="{'mb-3': validationMessages.lessonStartDateValidationMessage}">
-      <mat-form-field>
-        <mat-label>{{ 'lessons.startDate' | translate }}</mat-label>
-        <input matInput type="date" id="lessonStartDateId" formControlName="lessonStartDate">
-        <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
-      </mat-form-field>
+    <div class="form-row" formGroupName="lessonDates" *ngIf="scheduleIndividualLessonsForm.get('lessonDates')"
+      [ngClass]="{'mb-2': validationMessages.lessonStartDateValidationMessage || validationMessages.lessonEndDateValidationMessage || validationMessages.lessonDatesValidationMessage}">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-row">
+          <mat-form-field class="mr-5">
+            <mat-label>{{ 'lessons.startDate' | translate }}</mat-label>
+            <input matInput type="date" id="lessonStartDateId" formControlName="lessonStartDate">
+            <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="mr-5" *ngIf="scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate')">
+            <mat-label>{{ 'lessons.endDate' | translate }}</mat-label>
+            <input matInput type="date" id="lessonEndDateId" formControlName="lessonEndDate">
+            <mat-error>{{validationMessages.lessonEndDateValidationMessage | async}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-error class="mat-small">{{validationMessages.lessonDatesValidationMessage | async}}</mat-error>
+        </div>
+      </div>
     </div>
     <h6 *ngIf="scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges')">{{ 'lessons.lessonsDates' | translate }}
     </h6>

@@ -12,7 +12,7 @@ import { State } from '../state/individual-lesson.state';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs/internal/Subject';
-import { lessonsTitlesValidator, studentValidator, weekdaysFormGroupValidator, weekdayWithTimeRangesFormGroupValidator } from '../validator/individual-lesson-new-lessons.validator';
+import { lessonDatesValidator, lessonsTitlesValidator, studentValidator, weekdaysFormGroupValidator, weekdayWithTimeRangesFormGroupValidator } from '../validator/individual-lesson-new-lessons.validator';
 import { TITLE_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -40,7 +40,9 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   validationMessages = {
+    lessonDatesValidationMessage: null,
     lessonStartDateValidationMessage: null,
+    lessonEndDateValidationMessage: null,
     studentValidationMessage: null,
     lessonTimesValidation: null,
     weekdaysWithTimeRangesValidationMessage: null,
@@ -66,8 +68,22 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     });
 
     scheduleTypeFormControl.valueChanges.subscribe(
-      inputValue => this.initializeBasicForm(scheduleIndividualLessonsForm)
-    );
+      (chosenScheduleType: ScheduleTypes) => {
+        switch (ScheduleTypes[chosenScheduleType]) {
+          case ScheduleTypes.OneYearLengthLessons: {
+            this.initializeBasicForm(scheduleIndividualLessonsForm);
+            break;
+          }
+          case ScheduleTypes.FixedDatesLessons: {
+            this.initializeFormForScheduleTypeFixedDatesLessons(scheduleIndividualLessonsForm);
+            break;
+          }
+          default: {
+            console.log(ScheduleTypes.FixedDurationLessons);
+            break;
+          }
+        }
+      });
 
     return scheduleIndividualLessonsForm;
   }
@@ -77,6 +93,12 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     lessonStartDateFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonStartDateValidationMessage = this.getValidationMessage(lessonStartDateFormControl)
     );
+    const lessonDatesFormGroup = new FormGroup({
+      lessonStartDate: lessonStartDateFormControl
+    });
+    lessonDatesFormGroup.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
+    );
     const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
@@ -85,7 +107,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     lessonsTitlesFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonsTitlesValidationMessage = this.getValidationMessage(lessonsTitlesFormControl)
     );
-    scheduleIndividualLessonsForm.addControl('lessonStartDate', lessonStartDateFormControl);
+    scheduleIndividualLessonsForm.setControl('lessonDates', lessonDatesFormGroup);
     scheduleIndividualLessonsForm.addControl('weekdaysWithTimeRanges', this.initializeWeekdaysWithTimeRanges());
     scheduleIndividualLessonsForm.addControl('student', studentFormControl);
     scheduleIndividualLessonsForm.addControl('lessonsTitles', lessonsTitlesFormControl);
@@ -96,11 +118,23 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   }
 
   private initializeFormForScheduleTypeFixedDurationLessons(scheduleIndividualLessonsForm: FormGroup) {
-
   }
 
   private initializeFormForScheduleTypeFixedDatesLessons(scheduleIndividualLessonsForm: FormGroup) {
-
+    this.initializeBasicForm(scheduleIndividualLessonsForm);
+    const lessonStartDateFormControl = scheduleIndividualLessonsForm.get('lessonDates').get('lessonStartDate');
+    const lessonEndDateFormControl = new FormControl('', Validators.required);
+    lessonEndDateFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonEndDateValidationMessage = this.getValidationMessage(lessonEndDateFormControl)
+    );
+    const lessonDatesFormGroup = new FormGroup({
+      lessonStartDate: lessonStartDateFormControl,
+      lessonEndDate: lessonEndDateFormControl
+    }, lessonDatesValidator);
+    lessonDatesFormGroup.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
+    );
+    scheduleIndividualLessonsForm.setControl('lessonDates', lessonDatesFormGroup);
   }
 
   private initializeWeekdaysWithTimeRanges(): FormGroup {
