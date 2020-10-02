@@ -79,7 +79,7 @@ export function weekdaysFormGroupValidator(weekdayWithTimeRangesFormGroups: Form
 }
 
 export function lessonsTitlesValidator(lessonsTitlesFormControl: AbstractControl): { [key: string]: boolean } | null {
-  if (lessonsTitlesFormControl.value.trim()) {
+  if (lessonsTitlesFormControl.value && lessonsTitlesFormControl.value.trim()) {
     const lessonsTitles = lessonsTitlesFormControl.value.trim().split('\n').filter((lessonTitle: string) => lessonTitle.trim().length > 0);
     const lessonsTitlesWithExceededLength = [];
     lessonsTitles.forEach((lessonTitle: string) => {

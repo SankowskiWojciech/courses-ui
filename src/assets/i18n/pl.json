@@ -39,9 +39,11 @@
     "endTime": "Godzina zakończenia zajęć",
     "lessonsDates": "Terminy zajęć",
     "lessonsNumber": "Numer zajęć",
+    "durationInMinutes": "Ilość minut",
     "tooltips": {
       "maxLength": "Maksymalnie {{ maxLength }} znaków",
-      "lessonsTitlesMaxLength": "Maksymalna długość tytułu lekcji to {{ maxLength }} znaków"
+      "lessonsTitlesMaxLength": "Maksymalna długość tytułu lekcji to {{ maxLength }} znaków",
+      "minDuration": "Minimalnie 1 minuta"
     },
     "formValidationErrorMessages": {
       "required": "Wypełnij to pole.",
@@ -51,7 +53,9 @@
       "lessonTimesValidation": "Godzina rozpoczęcia lub zakończenia zajęć jest nieprawidłowa.",
       "lessonCollisionValidation": "Data zajęć koliduje z istniejącymi zajęciami.",
       "weekdaysWithTimeRangesValidation": "Wybierz przynajmniej jeden termin.",
-      "lessonTitleTooLongValidation": "Przekroczono maksymalną długość tytułu lekcji."
+      "lessonTitleTooLongValidation": "Przekroczono maksymalną długość tytułu lekcji.",
+      "min": "Minimalny czas trwania zajęć wynosi 1 minutę.",
+      "pattern": "Minuty muszą być liczbą całkowitą."
     },
     "scheduleTypes": {
       "OneYearLengthLessons": "Zajęcia roczne",

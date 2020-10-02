@@ -12,7 +12,7 @@ export function transformScheduleIndividualLessonsFormToIndividualLessonsSchedul
     beginningDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonStartDate').value,
     endDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate') ? scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate').value : null,
     scheduleType: ScheduleTypes[scheduleIndividualLessonsForm.get('scheduleType').value],
-    allLessonsDurationInMinutes: 0,//scheduleIndividualLessonsForm.get('lessonStartDate').value,
+    allLessonsDurationInMinutes: scheduleIndividualLessonsForm.get('lessonsDuration') ? scheduleIndividualLessonsForm.get('lessonsDuration').value : null,
     lessonsDaysOfWeekWithTimes: prepareDaysOfWeekWithTimes(scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges').value),
     lessonsTitles: prepareLessonsTitles(scheduleIndividualLessonsForm.get('lessonsTitles').value),
     subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainName),

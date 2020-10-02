@@ -11,23 +11,31 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="form-row" formGroupName="lessonDates" *ngIf="scheduleIndividualLessonsForm.get('lessonDates')"
+    <div class="form-row"
       [ngClass]="{'mb-2': validationMessages.lessonStartDateValidationMessage || validationMessages.lessonEndDateValidationMessage || validationMessages.lessonDatesValidationMessage}">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row">
-          <mat-form-field class="mr-5">
-            <mat-label>{{ 'lessons.startDate' | translate }}</mat-label>
-            <input matInput type="date" id="lessonStartDateId" formControlName="lessonStartDate">
-            <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
-          </mat-form-field>
-          <mat-form-field class="mr-5" *ngIf="scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate')">
-            <mat-label>{{ 'lessons.endDate' | translate }}</mat-label>
-            <input matInput type="date" id="lessonEndDateId" formControlName="lessonEndDate">
-            <mat-error>{{validationMessages.lessonEndDateValidationMessage | async}}</mat-error>
-          </mat-form-field>
-        </div>
-        <div>
+      <div class="d-flex flex-row">
+        <div class="d-flex flex-column">
+          <div formGroupName="lessonDates" *ngIf="scheduleIndividualLessonsForm.get('lessonDates')">
+            <mat-form-field class="mr-5">
+              <mat-label>{{ 'lessons.startDate' | translate }}</mat-label>
+              <input matInput type="date" id="lessonStartDateId" formControlName="lessonStartDate">
+              <mat-error>{{validationMessages.lessonStartDateValidationMessage | async}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="mr-5" *ngIf="scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate')">
+              <mat-label>{{ 'lessons.endDate' | translate }}</mat-label>
+              <input matInput type="date" id="lessonEndDateId" formControlName="lessonEndDate">
+              <mat-error>{{validationMessages.lessonEndDateValidationMessage | async}}</mat-error>
+            </mat-form-field>
+          </div>
           <mat-error class="mat-small">{{validationMessages.lessonDatesValidationMessage | async}}</mat-error>
+        </div>
+        <div class="d-flex flex-column">
+          <mat-form-field *ngIf="scheduleIndividualLessonsForm.get('lessonsDuration')">
+            <mat-label>{{ 'lessons.durationInMinutes' | translate }}</mat-label>
+            <input matInput type="number" id="lessonsDurationId" formControlName="lessonsDuration"
+              matTooltip="{{ 'lessons.tooltips.minDuration' | translate }}" pattern="^[0-9]+$">
+          </mat-form-field>
+          <mat-error class="mat-small">{{validationMessages.lessonsDurationValidationMessage | async}}</mat-error>
         </div>
       </div>
     </div>
@@ -96,7 +104,8 @@
         <table mat-table [dataSource]="lessonsTitlesDataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="ordinalNumber">
             <th mat-header-cell *matHeaderCellDef> {{ 'lessons.lessonsNumber' | translate }} </th>
-            <td mat-cell *matCellDef="let lessonTitle"> {{lessonsTitlesDataSource.data.indexOf(lessonTitle) + 1}} </td>
+            <td mat-cell *matCellDef="let lessonTitle"> {{lessonsTitlesDataSource.data.indexOf(lessonTitle) + 1}}
+            </td>
           </ng-container>
           <ng-container matColumnDef="lessonTitle">
             <th mat-header-cell *matHeaderCellDef> {{ 'lessons.title' | translate }} </th>

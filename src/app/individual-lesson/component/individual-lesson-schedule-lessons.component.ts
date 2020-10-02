@@ -39,15 +39,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   lessonsTitlesDataSource: MatTableDataSource<string>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  validationMessages = {
-    lessonDatesValidationMessage: null,
-    lessonStartDateValidationMessage: null,
-    lessonEndDateValidationMessage: null,
-    studentValidationMessage: null,
-    lessonTimesValidation: null,
-    weekdaysWithTimeRangesValidationMessage: null,
-    lessonsTitlesValidationMessage: null
-  };
+  validationMessages = this.initializeValidationMessages();
 
   readonly columnsToRender = ['ordinalNumber', 'lessonTitle'];
   readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
@@ -66,7 +58,6 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     const scheduleIndividualLessonsForm = this.formBuilder.group({
       scheduleType: scheduleTypeFormControl
     });
-
     scheduleTypeFormControl.valueChanges.subscribe(
       (chosenScheduleType: ScheduleTypes) => {
         switch (ScheduleTypes[chosenScheduleType]) {
@@ -79,12 +70,10 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
             break;
           }
           default: {
-            console.log(ScheduleTypes.FixedDurationLessons);
-            break;
+            this.initializeFormForScheduleTypeFixedDurationLessons(scheduleIndividualLessonsForm);
           }
         }
       });
-
     return scheduleIndividualLessonsForm;
   }
 
@@ -107,7 +96,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     lessonsTitlesFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonsTitlesValidationMessage = this.getValidationMessage(lessonsTitlesFormControl)
     );
-    scheduleIndividualLessonsForm.setControl('lessonDates', lessonDatesFormGroup);
+    scheduleIndividualLessonsForm.addControl('lessonDates', lessonDatesFormGroup);
     scheduleIndividualLessonsForm.addControl('weekdaysWithTimeRanges', this.initializeWeekdaysWithTimeRanges());
     scheduleIndividualLessonsForm.addControl('student', studentFormControl);
     scheduleIndividualLessonsForm.addControl('lessonsTitles', lessonsTitlesFormControl);
@@ -115,9 +104,19 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
       startWith(''),
       map(userInputValue => this.filterAvailableStudents(userInputValue))
     );
+    scheduleIndividualLessonsForm.get('lessonDates').clearValidators();
+    (scheduleIndividualLessonsForm.get('lessonDates') as FormGroup ).removeControl('lessonEndDate');
+    scheduleIndividualLessonsForm.removeControl('lessonsDuration');
+    this.validationMessages = this.initializeValidationMessages();
   }
 
   private initializeFormForScheduleTypeFixedDurationLessons(scheduleIndividualLessonsForm: FormGroup) {
+    this.initializeBasicForm(scheduleIndividualLessonsForm);
+    const lessonsDurationInMinutesFormControl = new FormControl('', [Validators.required, Validators.min(1)]);
+    lessonsDurationInMinutesFormControl.valueChanges.subscribe(
+      inputValue => this.validationMessages.lessonsDurationValidationMessage = this.getValidationMessage(lessonsDurationInMinutesFormControl)
+    );
+    scheduleIndividualLessonsForm.addControl('lessonsDuration', lessonsDurationInMinutesFormControl);
   }
 
   private initializeFormForScheduleTypeFixedDatesLessons(scheduleIndividualLessonsForm: FormGroup) {
@@ -200,6 +199,19 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
           student => availableStudents.push(transformStudentToStudentFormModule(student)));
       });
     return availableStudents;
+  }
+
+  private initializeValidationMessages(): any {
+    return {
+      lessonDatesValidationMessage: null,
+      lessonStartDateValidationMessage: null,
+      lessonEndDateValidationMessage: null,
+      studentValidationMessage: null,
+      lessonTimesValidation: null,
+      weekdaysWithTimeRangesValidationMessage: null,
+      lessonsTitlesValidationMessage: null,
+      lessonsDurationValidationMessage: null
+    };
   }
 
   setLessonsTitles() {
