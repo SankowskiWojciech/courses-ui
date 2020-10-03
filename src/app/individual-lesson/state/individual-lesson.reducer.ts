@@ -1,4 +1,4 @@
-import { createReducer, on, createAction } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { IndividualLessonState } from './individual-lesson.state';
 import * as IndividualLessonActions from './individual-lesson.action';
 import { PageProperties } from '../model/page-properties.model';
@@ -60,6 +60,13 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     return {
       ...state,
       pageProperties: action.pageProperties
+    };
+  }),
+  on(IndividualLessonActions.scheduleIndividualLessonsSuccess, (state, action): IndividualLessonState => {
+    const updatedIndividualLessons = [...state.individualLessons, ...action.scheduledIndividualLessons];
+    return {
+      ...state,
+      individualLessons: updatedIndividualLessons
     };
   })
 );

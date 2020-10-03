@@ -7,7 +7,7 @@ import { mergeMap, map, concatMap } from 'rxjs/operators';
 import { StudentDataService } from '../service/student-data.service';
 
 @Injectable()
-export class IndividualLessonEffect {
+export class IndividualLessonEffects {
 
   constructor(private actions$: Actions, private individualLessonService: IndividualLessonService,
               private studentDataService: StudentDataService) { }
@@ -35,6 +35,15 @@ export class IndividualLessonEffect {
       ofType(IndividualLessonActions.createNewIndividualLesson),
       concatMap((action) => this.individualLessonService.createIndiviualLesson(action.individualLessonRequestBody).pipe(
         map(createdIndividualLesson => IndividualLessonActions.createNewIndividualLessonSuccess({ createdIndividualLesson }))
+      ))
+    );
+  });
+
+  scheduleIndividualLessons$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(IndividualLessonActions.scheduleIndividualLessons),
+      concatMap((action) => this.individualLessonService.scheduleIndividualLessons(action.individualLessonsScheduleRequestBody).pipe(
+        map(scheduledIndividualLessons => IndividualLessonActions.scheduleIndividualLessonsSuccess({ scheduledIndividualLessons }))
       ))
     );
   });

@@ -12,12 +12,13 @@ import { State } from '../state/individual-lesson.state';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs/internal/Subject';
-import { lessonDatesValidator, lessonsTitlesValidator, studentValidator, weekdaysFormGroupValidator, weekdayWithTimeRangesFormGroupValidator } from '../validator/individual-lesson-new-lessons.validator';
+import * as IndividualLessonFormValidators from '../validator/individual-lesson-new-lessons.validator';
 import { TITLE_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
@@ -46,7 +47,8 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   private ngDestroyed$ = new Subject();
   private readonly TRANSLATION_KEY_PREFIX = 'lessons.formValidationErrorMessages.';
 
-  constructor(private formBuilder: FormBuilder, private translateService: TranslateService, private store: Store<State>) { }
+  constructor(private formBuilder: FormBuilder, private translateService: TranslateService,
+              private store: Store<State>, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.scheduleIndividualLessonsForm = this.initializeScheduleIndividualLessonsForm();
@@ -88,11 +90,11 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     lessonDatesFormGroup.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
-    const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
+    const studentFormControl = new FormControl('', [Validators.required, IndividualLessonFormValidators.studentValidator(this.availableStudents)]);
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
     );
-    const lessonsTitlesFormControl = new FormControl('', lessonsTitlesValidator);
+    const lessonsTitlesFormControl = new FormControl('', IndividualLessonFormValidators.lessonsTitlesValidator);
     lessonsTitlesFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonsTitlesValidationMessage = this.getValidationMessage(lessonsTitlesFormControl)
     );
@@ -105,7 +107,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
       map(userInputValue => this.filterAvailableStudents(userInputValue))
     );
     scheduleIndividualLessonsForm.get('lessonDates').clearValidators();
-    (scheduleIndividualLessonsForm.get('lessonDates') as FormGroup ).removeControl('lessonEndDate');
+    (scheduleIndividualLessonsForm.get('lessonDates') as FormGroup).removeControl('lessonEndDate');
     scheduleIndividualLessonsForm.removeControl('lessonsDuration');
     this.validationMessages = this.initializeValidationMessages();
   }
@@ -129,7 +131,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     const lessonDatesFormGroup = new FormGroup({
       lessonStartDate: lessonStartDateFormControl,
       lessonEndDate: lessonEndDateFormControl
-    }, lessonDatesValidator);
+    }, IndividualLessonFormValidators.lessonDatesValidator);
     lessonDatesFormGroup.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
@@ -151,7 +153,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
           if (checkboxValue) {
             weekdayStartTimeFormControl.setValidators(Validators.required);
             weekdayEndTimeFormControl.setValidators(Validators.required);
-            weekdayWithTimeRangesFormGroup.setValidators(weekdayWithTimeRangesFormGroupValidator(weekday));
+            weekdayWithTimeRangesFormGroup.setValidators(IndividualLessonFormValidators.weekdayWithTimeRangesFormGroupValidator(weekday));
           } else {
             weekdayWithTimeRangesFormGroup.get(`${weekday}StartTime`).setValue('');
             weekdayWithTimeRangesFormGroup.get(`${weekday}EndTime`).setValue('');
@@ -167,7 +169,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
       return weekdayWithTimeRangesFormGroup;
     });
     this.weekdayWithTimeRangesFormGroups = weekdayWithTimeRangesFormGroups;
-    const weekdaysFormGroup = new FormGroup({}, weekdaysFormGroupValidator(this.weekdayWithTimeRangesFormGroups));
+    const weekdaysFormGroup = new FormGroup({}, IndividualLessonFormValidators.weekdaysFormGroupValidator(this.weekdayWithTimeRangesFormGroups));
     this.weekdayWithTimeRangesFormGroups.forEach(weekdayWithTimeRangesFormGroup => weekdaysFormGroup.addControl(`${Object.keys(weekdayWithTimeRangesFormGroup.controls)[0]}FormGroup`, weekdayWithTimeRangesFormGroup));
     weekdaysFormGroup.valueChanges.subscribe(input =>
       this.validationMessages.weekdaysWithTimeRangesValidationMessage = this.getValidationMessage(weekdaysFormGroup)
@@ -236,7 +238,8 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
       availableStudent => availableStudent.fullNameWithEmailAddress === this.scheduleIndividualLessonsForm.get('student').value
     ).emailAddress;
     const individualLessonsScheduleRequestBody = transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(this.scheduleIndividualLessonsForm, studentEmailAddress);
-    console.log(individualLessonsScheduleRequestBody);
+    this.store.dispatch(IndividualLessonActions.scheduleIndividualLessons({ individualLessonsScheduleRequestBody }));
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   isLessonTitleTooLong(lessonTitle: string): boolean {

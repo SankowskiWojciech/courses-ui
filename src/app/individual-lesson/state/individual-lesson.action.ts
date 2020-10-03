@@ -3,6 +3,7 @@ import { IndividualLesson } from '../model/individual-lesson.model';
 import { Student } from '../model/student.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { PageProperties } from '../model/page-properties.model';
+import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
 
 export const toggleShowingFinishedLessons = createAction(
   '[Individual Lesson State] Toggle showing finished lessons'
@@ -64,4 +65,19 @@ export const setFilterValue = createAction(
 export const setPageProperties = createAction(
   '[Individual Lesson State] Set page properties',
   props<{ pageProperties: PageProperties }>()
+);
+
+export const scheduleIndividualLessons = createAction(
+  '[Individual Lesson State] Schedule individual lessons',
+  props<{ individualLessonsScheduleRequestBody: IndividualLessonsScheduleRequestBody }>()
+);
+
+export const scheduleIndividualLessonsSuccess = createAction(
+  '[Individual Lesson State] Schedule individual lessons - success',
+  props<{ scheduledIndividualLessons: IndividualLesson[] }>()
+);
+
+export const scheduleIndividualLessonsFailure = createAction(
+  '[Individual Lesson State] Schedule individual lessons - failure',
+  props<{ error: string }>()
 );

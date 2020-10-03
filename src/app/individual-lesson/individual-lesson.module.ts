@@ -17,7 +17,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { StoreModule } from '@ngrx/store';
 import { individualLessonReducer } from './state/individual-lesson.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { IndividualLessonEffect } from './state/individual-lesson.effect';
+import { IndividualLessonEffects } from './state/individual-lesson.effect';
 import { MatMenuModule } from '@angular/material/menu';
 import { IndividualLessonScheduleLessonsComponent } from './component/individual-lesson-schedule-lessons.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     RouterModule,
     StoreModule.forFeature('individualLessonState', individualLessonReducer),
-    EffectsModule.forFeature([IndividualLessonEffect]),
+    EffectsModule.forFeature([IndividualLessonEffects]),
     TranslateModule
   ]
 })

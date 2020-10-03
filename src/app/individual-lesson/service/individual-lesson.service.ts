@@ -5,6 +5,7 @@ import { IndividualLesson } from '../model/individual-lesson.model';
 import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
+import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class IndividualLessonService {
 
   createIndiviualLesson(individualLessonRequestBody: IndividualLessonRequestBody) {
     return this.http.post<IndividualLesson>(this.INDIVIDUAL_LESSONS_BACKEND_URL, individualLessonRequestBody);
+  }
+
+  scheduleIndividualLessons(individualLessonsScheduleRequestBody: IndividualLessonsScheduleRequestBody) {
+    return this.http.post<IndividualLesson[]>(`${this.INDIVIDUAL_LESSONS_BACKEND_URL}/schedule`, individualLessonsScheduleRequestBody);
   }
 
   private getUrlWithSubdomainNameFilter(): string {
