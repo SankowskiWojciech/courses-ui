@@ -18,7 +18,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
@@ -47,8 +46,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   private ngDestroyed$ = new Subject();
   private readonly TRANSLATION_KEY_PREFIX = 'lessons.formValidationErrorMessages.';
 
-  constructor(private formBuilder: FormBuilder, private translateService: TranslateService,
-              private store: Store<State>, private router: Router, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private translateService: TranslateService, private store: Store<State>) { }
 
   ngOnInit(): void {
     this.scheduleIndividualLessonsForm = this.initializeScheduleIndividualLessonsForm();
@@ -239,10 +237,5 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     ).emailAddress;
     const individualLessonsScheduleRequestBody = transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(this.scheduleIndividualLessonsForm, studentEmailAddress);
     this.store.dispatch(IndividualLessonActions.scheduleIndividualLessons({ individualLessonsScheduleRequestBody }));
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
-  isLessonTitleTooLong(lessonTitle: string): boolean {
-    return lessonTitle.length > TITLE_MAX_LENGTH;
   }
 }

@@ -113,7 +113,7 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="columnsToRender"></tr>
           <tr mat-row *matRowDef="let row; columns: columnsToRender;"
-            [class.title-invalid-length]="isLessonTitleTooLong(row)"></tr>
+            [class.title-invalid-length]="row.length > TITLE_MAX_LENGTH"></tr>
         </table>
         <button mat-button matSuffix mat-icon-button aria-label="Edit input" (click)="editLessonsTitles()">
           <mat-icon>edit</mat-icon>

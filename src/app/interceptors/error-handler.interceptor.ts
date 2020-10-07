@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -27,6 +27,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     if (error.status === 401) {
       this.router.navigateByUrl('/401');
     }
-    return EMPTY;
+    return throwError(error.error.errorCode);
   }
 }

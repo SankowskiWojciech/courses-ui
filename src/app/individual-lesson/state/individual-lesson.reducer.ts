@@ -14,7 +14,8 @@ const individualLessonInitialState: IndividualLessonState = {
   availableStudents: [],
   expandedIndividualLesson: null,
   filterValue: '',
-  pageProperties: defaultPageProperties
+  pageProperties: defaultPageProperties,
+  errorCode: ''
 };
 
 export const individualLessonReducer = createReducer<IndividualLessonState>(
@@ -66,7 +67,14 @@ export const individualLessonReducer = createReducer<IndividualLessonState>(
     const updatedIndividualLessons = [...state.individualLessons, ...action.scheduledIndividualLessons];
     return {
       ...state,
-      individualLessons: updatedIndividualLessons
+      individualLessons: updatedIndividualLessons,
+      errorCode: ''
+    };
+  }),
+  on(IndividualLessonActions.scheduleIndividualLessonsFailure, (state, action): IndividualLessonState => {
+    return {
+      ...state,
+      errorCode: action.errorCode
     };
   })
 );

@@ -35,3 +35,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button {
   outline: none !important;
 }
+
+.success-snackbar {
+  background: green;
+  color: black;
+}
+
+.failure-snackbar {
+  background: red;
+  color: black;
+}

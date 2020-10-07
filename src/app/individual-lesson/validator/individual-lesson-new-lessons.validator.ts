@@ -20,7 +20,7 @@ export function lessonDatesValidator(lessonDatesFormGroup: AbstractControl): { [
   if (lessonStartDateFormControl.dirty && lessonEndDateFormControl.dirty) {
     const lessonStartDate = new Date(lessonStartDateFormControl.value);
     const lessonEndDate = new Date(lessonEndDateFormControl.value);
-    if (lessonStartDate > lessonEndDate) {
+    if (lessonStartDate >= lessonEndDate) {
       return { lessonDatesValidation: false };
     }
   }

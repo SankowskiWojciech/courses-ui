@@ -14,4 +14,5 @@ export interface IndividualLessonState {
   expandedIndividualLesson: IndividualLesson | null;
   filterValue: string;
   pageProperties: PageProperties;
+  errorCode: string;
 }

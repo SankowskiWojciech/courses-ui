@@ -79,5 +79,5 @@ export const scheduleIndividualLessonsSuccess = createAction(
 
 export const scheduleIndividualLessonsFailure = createAction(
   '[Individual Lesson State] Schedule individual lessons - failure',
-  props<{ error: string }>()
+  props<{ errorCode: string }>()
 );
