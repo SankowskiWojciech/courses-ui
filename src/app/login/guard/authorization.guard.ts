@@ -10,12 +10,12 @@ export class AuthorizationGuard implements CanActivate {
   constructor(private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const subdomainName = next.params.subdomainName;
+    const subdomainAlias = next.params.subdomainAlias;
     if (!this.isUserLoggedInToSubdomain()
-      || !this.isUserTryingToAccessTheSameSubdomain(subdomainName)
+      || !this.isUserTryingToAccessTheSameSubdomain(subdomainAlias)
       || this.isTokenExpired()) {
       localStorage.clear();
-      this.router.navigateByUrl(`${subdomainName}/login`);
+      this.router.navigateByUrl(`${subdomainAlias}/login`);
       return false;
     }
     return true;
@@ -26,14 +26,14 @@ export class AuthorizationGuard implements CanActivate {
       || !localStorage.getItem(LocalStorageKeyNames.UserEmailAddress)
       || !localStorage.getItem(LocalStorageKeyNames.Token)
       || !localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime)
-      || !localStorage.getItem(LocalStorageKeyNames.SubdomainName)) {
+      || !localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)) {
       return false;
     }
     return true;
   }
 
-  isUserTryingToAccessTheSameSubdomain(subdomainName: string): boolean {
-    return subdomainName === localStorage.getItem(LocalStorageKeyNames.SubdomainName);
+  isUserTryingToAccessTheSameSubdomain(subdomainAlias: string): boolean {
+    return subdomainAlias === localStorage.getItem(LocalStorageKeyNames.SubdomainAlias);
   }
 
   isTokenExpired(): boolean {

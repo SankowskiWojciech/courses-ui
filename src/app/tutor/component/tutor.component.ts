@@ -27,7 +27,7 @@ export class TutorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const subdomainName = this.route.snapshot.params.subdomainName;
+    const subdomainAlias = this.route.snapshot.params.subdomainAlias;
     this.subdomainInformation$ = this.store.select(getSubdomainInformation);
   }
 

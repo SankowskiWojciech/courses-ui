@@ -11,7 +11,7 @@ export class SubdomainService {
 
   constructor(private http: HttpClient) { }
 
-  getSubdomainInformation(subdomainName: string): Observable<Subdomain> {
-    return this.http.get<Subdomain>(`${SUBDOMAIN_BACKEND_URL}/${subdomainName}`);
+  getSubdomainInformation(subdomainAlias: string): Observable<Subdomain> {
+    return this.http.get<Subdomain>(`${SUBDOMAIN_BACKEND_URL}/${subdomainAlias}`);
   }
 }

@@ -3,7 +3,7 @@ import { Subdomain } from '../model/subdomain.model';
 
 export const loadSubdomainInformation = createAction(
   '[Subdomain state] Load subdomain information',
-  props<{ subdomainName: string }>()
+  props<{ subdomainAlias: string }>()
 );
 
 export const loadSubdomainInformationSuccess = createAction(

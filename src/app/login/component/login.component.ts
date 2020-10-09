@@ -10,7 +10,6 @@ import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.selec
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as SubdomainActions from '../../subdomain/state/subdomain.action';
-import { AccountType } from '../model/account-type.model';
 
 @Component({
   templateUrl: './login.component.html',
@@ -31,13 +30,13 @@ export class LoginComponent implements OnInit {
   constructor(private loginService: LoginService, private route: ActivatedRoute, private router: Router, private store: Store<State>) { }
 
   ngOnInit(): void {
-    const subdomainName = this.route.snapshot.params.subdomainName;
+    const subdomainAlias = this.route.snapshot.params.subdomainAlias;
     this.store.select(getSubdomainInformation)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(subdomainInformation => {
         this.subdomainInformation = subdomainInformation;
-        if (!this.subdomainInformation || this.subdomainInformation.alias !== subdomainName) {
-          this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainName }));
+        if (!this.subdomainInformation || this.subdomainInformation.alias !== subdomainAlias) {
+          this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainAlias }));
         }
       });
   }
@@ -51,8 +50,8 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private handleSuccessfulLogin(accountType: AccountType, subdomainName: string) {
-    this.router.navigateByUrl(`${subdomainName}/${accountType.toString().toLowerCase()}`);
+  private handleSuccessfulLogin(accountType: string, subdomainAlias: string) {
+    this.router.navigateByUrl(`${subdomainAlias}/${accountType.toLowerCase()}`);
   }
 
   private handleHttpError(error: HttpErrorResponse) {

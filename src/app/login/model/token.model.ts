@@ -1,7 +1,5 @@
-import { AccountType } from './account-type.model';
-
 export interface Token {
   tokenValue: string;
-  accountType: AccountType;
+  accountType: string;
   expirationDateTime: Date;
 }

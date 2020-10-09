@@ -66,7 +66,7 @@ export class IndividualLessonEffects {
       ofType(IndividualLessonActions.scheduleIndividualLessons),
       concatMap(action => this.individualLessonService.scheduleIndividualLessons(action.individualLessonsScheduleRequestBody).pipe(
         map(scheduledIndividualLessons => {
-          this.router.navigateByUrl(`${localStorage.getItem(LocalStorageKeyNames.SubdomainName)}/tutor/lessons/individual`);
+          this.router.navigateByUrl(`${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}/tutor/lessons/individual`);
           this.statusInformationSnackBar.open(translatedSuccessMessage, '', this.SNACK_BAR_CONFIG_FOR_SUCCESS_RESULT);
           return IndividualLessonActions.scheduleIndividualLessonsSuccess({ scheduledIndividualLessons });
         }),

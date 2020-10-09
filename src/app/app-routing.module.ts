@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '404', component: PageNotFoundComponent },
   { path: '403', component: ForbiddenComponent },
   { path: '401', component: UnauthorizedComponent },
-  { path: ':subdomainName', component: SubdomainComponent },
+  { path: ':subdomainAlias', component: SubdomainComponent },
   { path: '', component: AppComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '404' }
 ];

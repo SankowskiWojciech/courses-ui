@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: ':subdomainName/login',
+    path: ':subdomainAlias/login',
     component: LoginComponent
   }
 ];

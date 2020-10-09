@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable, empty, of, EMPTY } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { LocalStorageKeyNames } from '../constants/local-storage-key-names.constant';
 import { Router } from '@angular/router';
 
@@ -13,9 +13,9 @@ export class AuthorizationHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.isTokenExpired()) {
-      const subdomainName = localStorage.getItem(LocalStorageKeyNames.SubdomainName);
+      const subdomainAlias = localStorage.getItem(LocalStorageKeyNames.SubdomainAlias);
       localStorage.clear();
-      this.router.navigateByUrl(`${subdomainName}/login`);
+      this.router.navigateByUrl(`${subdomainAlias}/login`);
       return EMPTY;
     }
     if (localStorage.length && localStorage.getItem(LocalStorageKeyNames.Token)) {

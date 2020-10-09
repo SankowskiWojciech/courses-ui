@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: ':subdomainName/tutor',
+    path: ':subdomainAlias/tutor',
     component: TutorComponent,
     canActivate: [AuthorizationGuard],
     children: [

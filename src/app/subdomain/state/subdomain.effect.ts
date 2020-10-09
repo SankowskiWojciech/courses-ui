@@ -13,7 +13,7 @@ export class SubdomainEffect {
   loadSubdomainInformation$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SubdomainActions.loadSubdomainInformation),
-      mergeMap((action) => this.subdomainService.getSubdomainInformation(action.subdomainName).pipe(
+      mergeMap(action => this.subdomainService.getSubdomainInformation(action.subdomainAlias).pipe(
         map(subdomainInformation => SubdomainActions.loadSubdomainInformationSuccess({ subdomainInformation }))
       ))
     );

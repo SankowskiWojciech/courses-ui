@@ -29,6 +29,6 @@ export class IndividualLessonService {
   }
 
   private getUrlWithSubdomainNameFilter(): string {
-    return `${this.INDIVIDUAL_LESSONS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SubdomainName)}`;
+    return `${this.INDIVIDUAL_LESSONS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
   }
 }

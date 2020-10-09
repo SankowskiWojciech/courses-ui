@@ -22,12 +22,12 @@ export class SubdomainComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<State>) { }
 
   ngOnInit(): void {
-    const subdomainName = this.route.snapshot.params.subdomainName;
+    const subdomainAlias = this.route.snapshot.params.subdomainAlias;
     this.store.select(getSubdomainInformation)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(subdomainInformation => {
-        if (!subdomainInformation || subdomainName !== subdomainInformation.alias) {
-          this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainName }));
+        if (!subdomainInformation || subdomainAlias !== subdomainInformation.alias) {
+          this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainAlias }));
         }
         this.subdomainInformation = subdomainInformation;
       });
