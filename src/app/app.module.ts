@@ -21,6 +21,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+const COURSES_MODULES = [
+  IndividualLessonModule,
+  TutorModule,
+  LoginModule,
+  SubdomainModule
+];
+
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -36,11 +43,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    IndividualLessonModule,
-    TutorModule,
-    LoginModule,
+    ...COURSES_MODULES,
     AppRoutingModule,
-    SubdomainModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       name: 'Courses-UI DevTools',

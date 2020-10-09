@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
-import { SubdomainService } from 'src/app/subdomain/service/subdomain.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationGuard implements CanActivate {
 
-  constructor(private subdomainService: SubdomainService, private router: Router) { }
+  constructor(private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const subdomainName = next.params.subdomainName;
