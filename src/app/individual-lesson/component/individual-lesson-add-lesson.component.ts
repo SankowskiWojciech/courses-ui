@@ -133,6 +133,5 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   saveIndividualLesson() {
     const individualLessonRequestBody: IndividualLessonRequestBody = transformAddIndividualLessonFormToIndividualLessonRequestBody(this.addIndividualLessonForm, this.availableStudents);
     this.store.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -1,36 +1,26 @@
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { IndividualLessonService } from '../service/individual-lesson.service';
 import { Injectable } from '@angular/core';
 import * as IndividualLessonActions from './individual-lesson.action';
-import { mergeMap, map, concatMap, catchError } from 'rxjs/operators';
+import { mergeMap, map, concatMap, catchError, tap } from 'rxjs/operators';
 import { StudentDataService } from '../service/student-data.service';
 import { of } from 'rxjs';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StatusInformationService } from '../service/status-information.service';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 
 @Injectable()
 export class IndividualLessonEffects {
 
-  private readonly SNACK_BAR_CONFIG: MatSnackBarConfig = {
-    horizontalPosition: 'center',
-    verticalPosition: 'bottom',
-    duration: 3000
-  };
-  private readonly SNACK_BAR_CONFIG_FOR_SUCCESS_RESULT: MatSnackBarConfig = {
-    ...this.SNACK_BAR_CONFIG,
-    panelClass: ['success-snackbar']
-  };
-  private readonly SNACK_BAR_CONFIG_FOR_FAILURE_RESULT: MatSnackBarConfig = {
-    ...this.SNACK_BAR_CONFIG,
-    panelClass: ['failure-snackbar']
-  };
+  private readonly NEW_INDIVIDUAL_LESSONS_CREATION_SUCCESS_MESSAGE_TRANSLATION_KEY = 'lessons.newIndividualLessonsCreationSuccess';
+  private readonly SCHEDULE_INDIVIDUAL_LESSONS_FAILURE_MESSAGE_TRANSLATION_KEY_PREFIX = 'lessons.apiErrorMessages.';
+  private readonly INDIVIDUAL_LESSONS_LIST_URL_POSTFIX = '/tutor/lessons/individual';
 
   constructor(private actions$: Actions, private individualLessonService: IndividualLessonService,
-              private studentDataService: StudentDataService, private statusInformationSnackBar: MatSnackBar,
-              private translateService: TranslateService, private router: Router) { }
+              private studentDataService: StudentDataService, private router: Router, private route: ActivatedRoute,
+              private statusInformationService: StatusInformationService, private translateService: TranslateService) { }
 
   loadIndividualLessons$ = createEffect(() => {
     return this.actions$.pipe(
@@ -59,22 +49,43 @@ export class IndividualLessonEffects {
     );
   });
 
+  @Effect({ dispatch: false })
+  createNewIndividualLessonSuccess$ = this.actions$.pipe(
+    ofType(IndividualLessonActions.createNewIndividualLessonSuccess),
+    tap(() => {
+      const translatedSuccesseMessage = this.translateService.instant(this.NEW_INDIVIDUAL_LESSONS_CREATION_SUCCESS_MESSAGE_TRANSLATION_KEY);
+      this.statusInformationService.openSuccessSnackBar(translatedSuccesseMessage);
+      this.router.navigateByUrl(`${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}${this.INDIVIDUAL_LESSONS_LIST_URL_POSTFIX}`);
+    })
+  );
+
   scheduleIndividualLessons$ = createEffect(() => {
-    let translatedSuccessMessage = this.translateService.get('lessons.scheduleLessonsStatusInformation.success').subscribe(translatedMessage => translatedSuccessMessage = translatedMessage);
-    let translatedFailureMessage = this.translateService.get('lessons.scheduleLessonsStatusInformation.failure').subscribe(translatedMessage => translatedFailureMessage = translatedMessage);
     return this.actions$.pipe(
       ofType(IndividualLessonActions.scheduleIndividualLessons),
       concatMap(action => this.individualLessonService.scheduleIndividualLessons(action.individualLessonsScheduleRequestBody).pipe(
-        map(scheduledIndividualLessons => {
-          this.router.navigateByUrl(`${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}/tutor/lessons/individual`);
-          this.statusInformationSnackBar.open(translatedSuccessMessage, '', this.SNACK_BAR_CONFIG_FOR_SUCCESS_RESULT);
-          return IndividualLessonActions.scheduleIndividualLessonsSuccess({ scheduledIndividualLessons });
-        }),
-        catchError(errorCode => {
-          this.statusInformationSnackBar.open(translatedFailureMessage, '', this.SNACK_BAR_CONFIG_FOR_FAILURE_RESULT);
-          return of(IndividualLessonActions.scheduleIndividualLessonsFailure({ errorCode }));
-        })
+        map(scheduledIndividualLessons => IndividualLessonActions.scheduleIndividualLessonsSuccess({ scheduledIndividualLessons })),
+        catchError(errorCode => of(IndividualLessonActions.scheduleIndividualLessonsFailure({ errorCode })))
       ))
     );
   });
+
+  @Effect({ dispatch: false })
+  scheduleIndividualLessonsSuccess$ = this.actions$.pipe(
+    ofType(IndividualLessonActions.scheduleIndividualLessonsSuccess),
+    tap(() => {
+      const translatedSuccesseMessage = this.translateService.instant(this.NEW_INDIVIDUAL_LESSONS_CREATION_SUCCESS_MESSAGE_TRANSLATION_KEY);
+      this.statusInformationService.openSuccessSnackBar(translatedSuccesseMessage);
+      this.router.navigateByUrl(`${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}${this.INDIVIDUAL_LESSONS_LIST_URL_POSTFIX}`);
+    })
+  );
+
+  @Effect({ dispatch: false })
+  scheduleIndividualLessonsFailure$ = this.actions$.pipe(
+    ofType(IndividualLessonActions.scheduleIndividualLessonsFailure),
+    tap((action) => {
+      const errorCode = action.errorCode.toLowerCase();
+      const translatedFailureMessage = this.translateService.instant(`${this.SCHEDULE_INDIVIDUAL_LESSONS_FAILURE_MESSAGE_TRANSLATION_KEY_PREFIX}${errorCode}`);
+      this.statusInformationService.openFailureSnackBar(translatedFailureMessage);
+    })
+  );
 }

@@ -45,9 +45,9 @@
       "lessonsTitlesMaxLength": "Maksymalna długość tytułu lekcji to {{ maxLength }} znaków",
       "minDuration": "Minimalnie 1 minuta"
     },
-    "scheduleLessonsStatusInformation": {
-      "success": "Zajęcia utworzone",
-      "failure": "Zajęcia kolidują z innymi zajęciami"
+    "newIndividualLessonsCreationSuccess": "Zajęcia utworzone poprawnie",
+    "apiErrorMessages": {
+      "lessons_dates_collision": "Zajęcia kolidują z innymi zajęciami"
     },
     "formValidationErrorMessages": {
       "required": "Wypełnij to pole.",
