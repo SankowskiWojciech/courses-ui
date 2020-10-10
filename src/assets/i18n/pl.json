@@ -45,7 +45,7 @@
       "lessonsTitlesMaxLength": "Maksymalna długość tytułu lekcji to {{ maxLength }} znaków",
       "minDuration": "Minimalnie 1 minuta"
     },
-    "statusInformation": {
+    "scheduleLessonsStatusInformation": {
       "success": "Zajęcia utworzone",
       "failure": "Zajęcia kolidują z innymi zajęciami"
     },

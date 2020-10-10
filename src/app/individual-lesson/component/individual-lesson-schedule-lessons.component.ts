@@ -18,6 +18,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
+import { COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY } from '../constants/columns-to-render.constant';
+import { ValidationMessages } from '../model/validation-messages.model';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
@@ -41,7 +43,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
 
   validationMessages = this.initializeValidationMessages();
 
-  readonly columnsToRender = ['ordinalNumber', 'lessonTitle'];
+  readonly columnsToRender = COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY;
   readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
   private ngDestroyed$ = new Subject();
   private readonly TRANSLATION_KEY_PREFIX = 'lessons.formValidationErrorMessages.';
@@ -201,12 +203,14 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
     return availableStudents;
   }
 
-  private initializeValidationMessages(): any {
+  private initializeValidationMessages(): ValidationMessages {
     return {
+      titleValidationMessage: null,
       lessonDatesValidationMessage: null,
       lessonStartDateValidationMessage: null,
       lessonEndDateValidationMessage: null,
       studentValidationMessage: null,
+      descriptionValidationMessage: null,
       lessonTimesValidation: null,
       weekdaysWithTimeRangesValidationMessage: null,
       lessonsTitlesValidationMessage: null,
@@ -232,10 +236,7 @@ export class IndividualLessonScheduleLessonsComponent implements OnInit {
   }
 
   scheduleIndividualLessons() {
-    const studentEmailAddress = this.availableStudents.find(
-      availableStudent => availableStudent.fullNameWithEmailAddress === this.scheduleIndividualLessonsForm.get('student').value
-    ).emailAddress;
-    const individualLessonsScheduleRequestBody = transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(this.scheduleIndividualLessonsForm, studentEmailAddress);
+    const individualLessonsScheduleRequestBody = transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(this.scheduleIndividualLessonsForm, this.availableStudents);
     this.store.dispatch(IndividualLessonActions.scheduleIndividualLessons({ individualLessonsScheduleRequestBody }));
   }
 }

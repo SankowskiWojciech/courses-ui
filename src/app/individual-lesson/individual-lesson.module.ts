@@ -26,25 +26,29 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+const ANGULAR_MATERIAL_MODULES = [
+  MatTableModule,
+  MatSortModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatButtonModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatAutocompleteModule,
+  MatMenuModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSnackBarModule
+];
+
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
   imports: [
     CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatAutocompleteModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSnackBarModule,
+    ...ANGULAR_MATERIAL_MODULES,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,

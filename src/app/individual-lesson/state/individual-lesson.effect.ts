@@ -29,8 +29,8 @@ export class IndividualLessonEffects {
   };
 
   constructor(private actions$: Actions, private individualLessonService: IndividualLessonService,
-    private studentDataService: StudentDataService, private statusInformationSnackBar: MatSnackBar,
-    private translateService: TranslateService, private router: Router) { }
+              private studentDataService: StudentDataService, private statusInformationSnackBar: MatSnackBar,
+              private translateService: TranslateService, private router: Router) { }
 
   loadIndividualLessons$ = createEffect(() => {
     return this.actions$.pipe(
@@ -60,8 +60,8 @@ export class IndividualLessonEffects {
   });
 
   scheduleIndividualLessons$ = createEffect(() => {
-    let translatedSuccessMessage = this.translateService.get('lessons.statusInformation.success').subscribe(translatedMessage => translatedSuccessMessage = translatedMessage);
-    let translatedFailureMessage = this.translateService.get('lessons.statusInformation.failure').subscribe(translatedMessage => translatedFailureMessage = translatedMessage);
+    let translatedSuccessMessage = this.translateService.get('lessons.scheduleLessonsStatusInformation.success').subscribe(translatedMessage => translatedSuccessMessage = translatedMessage);
+    let translatedFailureMessage = this.translateService.get('lessons.scheduleLessonsStatusInformation.failure').subscribe(translatedMessage => translatedFailureMessage = translatedMessage);
     return this.actions$.pipe(
       ofType(IndividualLessonActions.scheduleIndividualLessons),
       concatMap(action => this.individualLessonService.scheduleIndividualLessons(action.individualLessonsScheduleRequestBody).pipe(

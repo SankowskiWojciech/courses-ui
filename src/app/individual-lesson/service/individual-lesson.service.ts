@@ -6,29 +6,28 @@ import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-fi
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
+import { INDIVIDUAL_LESSONS_BACKEND_URL, INDIVIDUAL_LESSONS_SCHEDULE_LESSONS_BACKEND_URL } from 'src/app/constants/backend-urls.constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndividualLessonService {
 
-  private readonly INDIVIDUAL_LESSONS_BACKEND_URL = 'http://localhost:8091/lessons/individual';
-
   constructor(private http: HttpClient) { }
 
   getIndividualLessons(): Observable<IndividualLesson[]> {
-    return this.http.get<IndividualLesson[]>(this.getUrlWithSubdomainNameFilter());
+    return this.http.get<IndividualLesson[]>(this.getUrlWithSubdomainAliasFilter());
   }
 
   createIndiviualLesson(individualLessonRequestBody: IndividualLessonRequestBody) {
-    return this.http.post<IndividualLesson>(this.INDIVIDUAL_LESSONS_BACKEND_URL, individualLessonRequestBody);
+    return this.http.post<IndividualLesson>(INDIVIDUAL_LESSONS_BACKEND_URL, individualLessonRequestBody);
   }
 
   scheduleIndividualLessons(individualLessonsScheduleRequestBody: IndividualLessonsScheduleRequestBody) {
-    return this.http.post<IndividualLesson[]>(`${this.INDIVIDUAL_LESSONS_BACKEND_URL}/schedule`, individualLessonsScheduleRequestBody);
+    return this.http.post<IndividualLesson[]>(INDIVIDUAL_LESSONS_SCHEDULE_LESSONS_BACKEND_URL, individualLessonsScheduleRequestBody);
   }
 
-  private getUrlWithSubdomainNameFilter(): string {
-    return `${this.INDIVIDUAL_LESSONS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
+  private getUrlWithSubdomainAliasFilter(): string {
+    return `${INDIVIDUAL_LESSONS_BACKEND_URL}?${IndividualLessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
   }
 }

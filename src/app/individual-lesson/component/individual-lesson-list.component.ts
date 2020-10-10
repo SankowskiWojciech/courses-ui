@@ -13,6 +13,7 @@ import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageProperties } from '../model/page-properties.model';
+import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.constant';
 
 @Component({
   selector: 'courses-individual-lesson-list',
@@ -28,7 +29,7 @@ import { PageProperties } from '../model/page-properties.model';
 })
 export class IndividualLessonListComponent implements OnInit, OnDestroy {
 
-  readonly columnsToRender = ['title', 'startDateOfLesson', 'endDateOfLesson', 'studentFullName', 'studentEmailAddress'];
+  readonly COLUMNS_TO_RENDER = COLUMNS_TO_RENDER_FOR_LIST;
   showFinishedLessons: boolean;
   expandedIndividualLesson: IndividualLesson | null;
   individualLessons: IndividualLesson[];
@@ -49,7 +50,6 @@ export class IndividualLessonListComponent implements OnInit, OnDestroy {
       .subscribe(
         showFinishedLessons => this.showFinishedLessons = showFinishedLessons
       );
-
     this.pagePropertiesubscription = this.store.select(getPageProperties)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(
@@ -57,11 +57,9 @@ export class IndividualLessonListComponent implements OnInit, OnDestroy {
           this.paginator.pageSize = pageProperties.pageSize;
           this.paginator.pageIndex = pageProperties.pageIndex;
         });
-
     this.store.select(getFilterValue)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(filterValue => this.filterValue = filterValue);
-
     this.store.select(getIndividualLessons)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(
@@ -73,7 +71,6 @@ export class IndividualLessonListComponent implements OnInit, OnDestroy {
           this.prepareDataSource();
         }
       );
-
     this.store.select(getExpandedIndividualLesson)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(expandedIndividualLesson => this.expandedIndividualLesson = expandedIndividualLesson);
@@ -89,9 +86,9 @@ export class IndividualLessonListComponent implements OnInit, OnDestroy {
   }
 
   clearFilter(): void {
-    const filterValue = '';
-    this.store.dispatch(IndividualLessonActions.setFilterValue({ filterValue }));
-    this.dataSource.filter = '';
+    const emptyFilterValue = '';
+    this.store.dispatch(IndividualLessonActions.setFilterValue({ filterValue: emptyFilterValue }));
+    this.dataSource.filter = emptyFilterValue;
   }
 
   handleShowingFinishedLessons() {

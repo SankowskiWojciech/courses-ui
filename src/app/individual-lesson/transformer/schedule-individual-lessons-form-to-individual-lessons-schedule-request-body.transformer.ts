@@ -4,10 +4,11 @@ import { ScheduleTypes } from '../constants/schedule-types.constant';
 import { Weekdays } from '../constants/weekdays.constant';
 import { DayOfWeekWithTimes } from '../model/day-of-week-with-times.model';
 import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
+import { StudentFormModel } from '../model/student-form-model.model';
 
 const weekdays = Object.keys(Weekdays);
 
-export function transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(scheduleIndividualLessonsForm: FormGroup, studentId: string): IndividualLessonsScheduleRequestBody {
+export function transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody(scheduleIndividualLessonsForm: FormGroup, studentsAvailableForTutor: StudentFormModel[]): IndividualLessonsScheduleRequestBody {
   return {
     beginningDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonStartDate').value,
     endDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate') ? scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate').value : null,
@@ -17,7 +18,7 @@ export function transformScheduleIndividualLessonsFormToIndividualLessonsSchedul
     lessonsTitles: prepareLessonsTitles(scheduleIndividualLessonsForm.get('lessonsTitles').value),
     subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
     tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
-    studentId: studentId
+    studentId: getStudentId(scheduleIndividualLessonsForm.get('student').value, studentsAvailableForTutor)
   };
 }
 
@@ -43,4 +44,9 @@ function prepareLessonsTitles(lessonsTitles: string): string[] {
     return lessonsTitles.split('\n');
   }
   return null;
+}
+
+function getStudentId(studentFormControlValue: string, studentsAvailableForTutor: StudentFormModel[]): string {
+  return studentsAvailableForTutor.find(
+    availableStudent => availableStudent.fullNameWithEmailAddress === studentFormControlValue).emailAddress;
 }

@@ -15,6 +15,8 @@ import { IndividualLesson } from '../model/individual-lesson.model';
 import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
 import { TranslateService } from '@ngx-translate/core';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
+import { ValidationMessages } from '../model/validation-messages.model';
+import { transformAddIndividualLessonFormToIndividualLessonRequestBody } from '../transformer/add-individual-lesson-form-to-individual-lesson-request-body.transformer';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -30,20 +32,13 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
   individualLessons: IndividualLesson[];
-
-  validationMessages = {
-    titleValidationMessage: null,
-    lessonDatesValidationMessage: null,
-    lessonStartDateValidationMessage: null,
-    lessonEndDateValidationMessage: null,
-    studentValidationMessage: null,
-    descriptionValidationMessage: null
-  };
+  validationMessages = this.initializeValidationMessages();
 
   private ngDestroyed$ = new Subject();
-  private readonly TRANSLATION_KEY_PREFIX = 'lessons.formValidationErrorMessages.';
+  private readonly TRANSLATION_KEY_PREFIX_FOR_VALIDATION_MESSAGES = 'lessons.formValidationErrorMessages.';
 
-  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router, private route: ActivatedRoute, private translateService: TranslateService) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router,
+              private route: ActivatedRoute, private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.store.select(getIndividualLessons)
@@ -99,9 +94,24 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     return addIndividualLessonForm;
   }
 
+  private initializeValidationMessages(): ValidationMessages {
+    return {
+      titleValidationMessage: null,
+      lessonDatesValidationMessage: null,
+      lessonStartDateValidationMessage: null,
+      lessonEndDateValidationMessage: null,
+      studentValidationMessage: null,
+      descriptionValidationMessage: null,
+      lessonTimesValidation: null,
+      weekdaysWithTimeRangesValidationMessage: null,
+      lessonsTitlesValidationMessage: null,
+      lessonsDurationValidationMessage: null
+    };
+  }
+
   private getValidationMessage(control: AbstractControl): Observable<string> {
     if ((control.touched || control.dirty) && control.errors) {
-      return this.translateService.get(`${this.TRANSLATION_KEY_PREFIX}${Object.keys(control.errors)[0]}`);
+      return this.translateService.get(`${this.TRANSLATION_KEY_PREFIX_FOR_VALIDATION_MESSAGES}${Object.keys(control.errors)[0]}`);
     }
     return null;
   }
@@ -120,21 +130,8 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     return availableStudents;
   }
 
-  private prepareIndividualLessonRequestBody(): IndividualLessonRequestBody {
-    return {
-      title: this.addIndividualLessonForm.get('title').value,
-      startDateOfLesson: this.addIndividualLessonForm.get('lessonDates').get('lessonStartDate').value,
-      endDateOfLesson: this.addIndividualLessonForm.get('lessonDates').get('lessonEndDate').value,
-      description: this.addIndividualLessonForm.get('description').value,
-      subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
-      tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
-      studentId: this.availableStudents.find(
-        availableStudent => availableStudent.fullNameWithEmailAddress === this.addIndividualLessonForm.get('student').value).emailAddress
-    };
-  }
-
   saveIndividualLesson() {
-    const individualLessonRequestBody: IndividualLessonRequestBody = this.prepareIndividualLessonRequestBody();
+    const individualLessonRequestBody: IndividualLessonRequestBody = transformAddIndividualLessonFormToIndividualLessonRequestBody(this.addIndividualLessonForm, this.availableStudents);
     this.store.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
     this.router.navigate(['../'], { relativeTo: this.route });
   }

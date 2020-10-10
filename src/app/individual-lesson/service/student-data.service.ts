@@ -4,21 +4,20 @@ import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.
 import { Student } from '../model/student.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { STUDENTS_BACKEND_URL } from 'src/app/constants/backend-urls.constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentDataService {
 
-  private readonly STUDENTS_BACKEND_URL = 'http://localhost:8091/students';
-
   constructor(private http: HttpClient) { }
 
   getStudentsAvailableForTutor(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.getUrlWithSubdomainNameFilter());
+    return this.http.get<Student[]>(this.getUrlWithSubdomainAliasFilter());
   }
 
-  private getUrlWithSubdomainNameFilter(): string {
-    return `${this.STUDENTS_BACKEND_URL}?${IndividualLessonFilteringKeys.SUBDOMAIN_NAME_FILTERING_KEY}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
+  private getUrlWithSubdomainAliasFilter(): string {
+    return `${STUDENTS_BACKEND_URL}?${IndividualLessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
   }
 }

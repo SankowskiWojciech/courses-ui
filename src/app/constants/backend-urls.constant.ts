@@ -1,4 +1,7 @@
-import { LocalStorageKeyNames } from './local-storage-key-names.constant';
-
 const COURSES_LOGIN_BACKEND_SERVICE_URL = 'http://localhost:8090';
+const COURSES_LESSONS_BACKEND_SERVICE_URL = 'http://localhost:8091';
+
 export const SUBDOMAIN_BACKEND_URL = `${COURSES_LOGIN_BACKEND_SERVICE_URL}/subdomain`;
+export const STUDENTS_BACKEND_URL = `${COURSES_LESSONS_BACKEND_SERVICE_URL}/students`;
+export const INDIVIDUAL_LESSONS_BACKEND_URL = `${COURSES_LESSONS_BACKEND_SERVICE_URL}/lessons/individual`;
+export const INDIVIDUAL_LESSONS_SCHEDULE_LESSONS_BACKEND_URL = `${INDIVIDUAL_LESSONS_BACKEND_URL}/schedule`;
