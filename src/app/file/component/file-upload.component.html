@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <form ngNativeValidate [formGroup]="fileUploadForm">
+    <div class="form-row" [ngClass]="{'mb-3': validationMessages}">
+      <mat-form-field>
+        <ngx-mat-file-input #fileInput type="file" id="fileUploadId" formControlName="fileUpload"
+          [accept]="FILE_VALID_EXTENSIONS" placeholder="{{ 'files.addFile' | translate }}"
+          matTooltip="{{ 'files.tooltips.maxFileSize' | translate:{'maxFileSize': FILE_MAX_SIZE_IN_BYTES | byteFormat} }}">
+        </ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        <button mat-button *ngIf="!fileInput.empty" matSuffix mat-icon-button aria-label="Remove file"
+          (click)="fileInput.clear($event)">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <mat-error>{{validationMessages | async}}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

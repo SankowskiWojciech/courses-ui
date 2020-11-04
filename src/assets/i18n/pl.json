@@ -75,5 +75,20 @@
     "Friday": "Piątek",
     "Saturday": "Sobota",
     "Sunday": "Niedziela"
+  },
+  "files": {
+    "addFile": "Dodaj nowy plik",
+    "formValidationErrorMessages": {
+      "maxContentSize": "Przekroczono dozwoloną wielkość pliku.",
+      "fileExtensionValidation": "Niedozwolony typ pliku."
+    },
+    "newFileUploadSuccess": "Dodano nowy plik",
+    "apiErrorMessages": {
+      "invalid_file_format": "Plik jest uszkodzony",
+      "file_corrupted": "Plik jest uszkodzony"
+    },
+    "tooltips": {
+      "maxFileSize": "Maksymalna wielkość pliku to {{ maxFileSize }}"
+    }
   }
 }

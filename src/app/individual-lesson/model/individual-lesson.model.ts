@@ -1,4 +1,5 @@
 export interface IndividualLesson {
+  lessonId: number;
   title: string;
   startDateOfLesson: Date;
   endDateOfLesson: Date;
@@ -7,4 +8,5 @@ export interface IndividualLesson {
   tutorEmailAddress: string;
   studentFullName: string;
   studentEmailAddress: string;
+  filesIds: number[];
 }

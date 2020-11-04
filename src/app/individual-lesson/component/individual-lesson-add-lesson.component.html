@@ -63,6 +63,7 @@
         <mat-error>{{validationMessages.descriptionValidationMessage | async}}</mat-error>
       </mat-form-field>
     </div>
+    <courses-file-upload></courses-file-upload>
     <div class="d-flex justify-content-between mb-4">
       <button mat-raised-button class="text-primary" routerLink="../">{{ 'lessons.getBackToList' | translate }}</button>
       <button mat-raised-button color="primary" type="submit"

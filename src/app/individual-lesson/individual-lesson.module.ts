@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { FileModule } from '../file/file.module';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -44,17 +46,23 @@ const ANGULAR_MATERIAL_MODULES = [
   MatSnackBarModule
 ];
 
+const COURSES_MODULES = [
+  FileModule
+];
+
 @NgModule({
   declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
   imports: [
     CommonModule,
     ...ANGULAR_MATERIAL_MODULES,
+    MaterialFileInputModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     StoreModule.forFeature('individualLessonState', individualLessonReducer),
     EffectsModule.forFeature([IndividualLessonEffects]),
-    TranslateModule
+    TranslateModule,
+    ...COURSES_MODULES
   ]
 })
 export class IndividualLessonModule { }
