@@ -63,7 +63,18 @@
         <mat-error>{{validationMessages.descriptionValidationMessage | async}}</mat-error>
       </mat-form-field>
     </div>
-    <courses-file-upload></courses-file-upload>
+    <div class="form-row">
+      <div class="d-flex flex-row">
+        <mat-form-field class="mr-5">
+          <mat-label>{{ 'files.files' | translate }}</mat-label>
+          <mat-select formControlName="files" id="filesId" multiple (click)="sortFilesAlphabetically()">
+            <mat-option *ngFor="let fileInformation of filesInformation" [value]="fileInformation">
+              {{fileInformation.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <courses-file-upload></courses-file-upload>
+      </div>
+    </div>
     <div class="d-flex justify-content-between mb-4">
       <button mat-raised-button class="text-primary" routerLink="../">{{ 'lessons.getBackToList' | translate }}</button>
       <button mat-raised-button color="primary" type="submit"

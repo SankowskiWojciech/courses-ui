@@ -1,5 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { FileInformation } from 'src/app/file/model/file-information.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { StudentFormModel } from '../model/student-form-model.model';
 
@@ -11,11 +12,19 @@ export function transformAddIndividualLessonFormToIndividualLessonRequestBody(ad
     description: addIndividualLessonForm.get('description').value,
     subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
     tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
-    studentId: getStudentId(addIndividualLessonForm.get('student').value, studentsAvailableForTutor)
+    studentId: getStudentId(addIndividualLessonForm.get('student').value, studentsAvailableForTutor),
+    filesIds: getFilesIds(addIndividualLessonForm.get('files').value)
   };
 }
 
 function getStudentId(studentFormControlValue: string, studentsAvailableForTutor: StudentFormModel[]): string {
   return studentsAvailableForTutor.find(
     availableStudent => availableStudent.fullNameWithEmailAddress === studentFormControlValue).emailAddress;
+}
+
+function getFilesIds(filesInformation: FileInformation[]): number[] {
+  if (filesInformation && filesInformation.length) {
+    return filesInformation.map(fileInformation => fileInformation.fileId);
+  }
+  return null;
 }

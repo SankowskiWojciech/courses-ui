@@ -14,5 +14,11 @@ export const fileReducer = createReducer<FileState>(
       ...state,
       filesInformation: updatedFilesInformation
     };
-  })
+  }),
+  on(FileActions.loadFilesInformationSuccess, (state, action): FileState => {
+    return {
+      ...state,
+      filesInformation: action.filesInformation
+    };
+  }),
 );

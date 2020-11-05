@@ -77,6 +77,7 @@
     "Sunday": "Niedziela"
   },
   "files": {
+    "files": "Pliki",
     "addFile": "Dodaj nowy plik",
     "formValidationErrorMessages": {
       "maxContentSize": "Przekroczono dozwoloną wielkość pliku.",

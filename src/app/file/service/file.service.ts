@@ -16,6 +16,10 @@ export class FileService {
     return this.http.post<FileInformation>(FILES_BACKEND_URL, this.prepareFormData(file));
   }
 
+  getFilesInformation() {
+    return this.http.get<FileInformation[]>(FILES_BACKEND_URL);
+  }
+
   private prepareFormData(file: File) {
     const formData = new FormData();
     formData.append(this.FORM_DATA_FILE_KEY, file, file.name);

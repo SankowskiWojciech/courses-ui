@@ -15,3 +15,17 @@ export const uploadNewFileFailure = createAction(
   '[File State] Upload new file - failure',
   props<{ errorCode: string }>()
 );
+
+export const loadFilesInformation = createAction(
+  '[File State] Load files information'
+);
+
+export const loadFilesInformationSuccess = createAction(
+  '[File State] Load files information - Success',
+  props<{ filesInformation: FileInformation[] }>()
+);
+
+export const loadFilesInformationFailure = createAction(
+  '[File State] Load files information - Failure',
+  props<{ errorCode: string }>()
+);

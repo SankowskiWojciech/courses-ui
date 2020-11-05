@@ -6,9 +6,11 @@ import { StudentFormModel } from '../model/student-form-model.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State } from '../state/individual-lesson.state';
+import { State as IndividualLessonState } from '../state/individual-lesson.state';
+import { State as FileState } from '../../file/state/file.state';
 import { getStudentsAvailableForTutor, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
+import * as FileActions from '../../file/state/file.action';
 import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-new-lessons.validator';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
@@ -16,6 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 import { ValidationMessages } from '../model/validation-messages.model';
 import { transformAddIndividualLessonFormToIndividualLessonRequestBody } from '../transformer/add-individual-lesson-form-to-individual-lesson-request-body.transformer';
+import { FileInformation } from 'src/app/file/model/file-information.model';
+import { getFilesInformation } from 'src/app/file/state/file.selector';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -30,20 +34,30 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   addIndividualLessonForm: FormGroup;
   availableStudents: StudentFormModel[];
   filteredAvailableStudents: Observable<StudentFormModel[]>;
+  filesInformation: FileInformation[];
   individualLessons: IndividualLesson[];
   validationMessages = this.initializeValidationMessages();
 
   private ngDestroyed$ = new Subject();
   private readonly TRANSLATION_KEY_PREFIX_FOR_VALIDATION_MESSAGES = 'lessons.formValidationErrorMessages.';
 
-  constructor(private formBuilder: FormBuilder, private store: Store<State>, private router: Router,
-              private route: ActivatedRoute, private translateService: TranslateService) { }
+  constructor(private formBuilder: FormBuilder, private individualLessonStore: Store<IndividualLessonState>, private router: Router,
+              private route: ActivatedRoute, private translateService: TranslateService,
+              private fileStore: Store<FileState>) { }
 
   ngOnInit(): void {
-    this.store.select(getIndividualLessons)
+    this.individualLessonStore.select(getIndividualLessons)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(individualLessons => this.individualLessons = individualLessons);
     this.availableStudents = this.prepareStudentsAvailableForTutor();
+    this.fileStore.select(getFilesInformation)
+    .pipe(takeUntil(this.ngDestroyed$))
+    .subscribe(filesInformation => {
+      if (!filesInformation.length) {
+        this.fileStore.dispatch(FileActions.loadFilesInformation());
+      }
+      this.filesInformation = filesInformation;
+    });
     this.addIndividualLessonForm = this.initializeAddIndividualLessonForm();
     this.filteredAvailableStudents = this.addIndividualLessonForm.get('student').valueChanges.pipe(
       startWith(''),
@@ -59,36 +73,37 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   private initializeAddIndividualLessonForm(): FormGroup {
     const titleFormControl = new FormControl('', [Validators.required, Validators.maxLength(this.TITLE_MAX_LENGTH)]);
     titleFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
+      () => this.validationMessages.titleValidationMessage = this.getValidationMessage(titleFormControl)
     );
     const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
     studentFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
+      () => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
     );
     const descriptionFormControl = new FormControl('', Validators.maxLength(this.DESCRIPTION_MAX_LENGTH));
     descriptionFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
+      () => this.validationMessages.descriptionValidationMessage = this.getValidationMessage(descriptionFormControl)
     );
     const lessonStartDateFormControl = new FormControl('', Validators.required);
     lessonStartDateFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.lessonStartDateValidationMessage = this.getValidationMessage(lessonStartDateFormControl)
+      () => this.validationMessages.lessonStartDateValidationMessage = this.getValidationMessage(lessonStartDateFormControl)
     );
     const lessonEndDateFormControl = new FormControl('', Validators.required);
     lessonEndDateFormControl.valueChanges.subscribe(
-      inputValue => this.validationMessages.lessonEndDateValidationMessage = this.getValidationMessage(lessonEndDateFormControl)
+      () => this.validationMessages.lessonEndDateValidationMessage = this.getValidationMessage(lessonEndDateFormControl)
     );
     const lessonDatesFormGroup = new FormGroup({
       lessonStartDate: lessonStartDateFormControl,
       lessonEndDate: lessonEndDateFormControl
     }, [lessonDatesValidator, lessonCollisionValidator(this.individualLessons)]);
     lessonDatesFormGroup.valueChanges.subscribe(
-      inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
+      () => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
     const addIndividualLessonForm = this.formBuilder.group({
       title: titleFormControl,
       lessonDates: lessonDatesFormGroup,
       student: studentFormControl,
-      description: descriptionFormControl
+      description: descriptionFormControl,
+      files: new FormControl()
     });
     return addIndividualLessonForm;
   }
@@ -117,11 +132,11 @@ export class IndividualLessonAddLessonComponent implements OnInit {
 
   private prepareStudentsAvailableForTutor(): StudentFormModel[] {
     const availableStudents: StudentFormModel[] = [];
-    this.store.select(getStudentsAvailableForTutor)
+    this.individualLessonStore.select(getStudentsAvailableForTutor)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(studentsAvailableForTutor => {
         if (!studentsAvailableForTutor.length) {
-          this.store.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
+          this.individualLessonStore.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
         }
         studentsAvailableForTutor.forEach(
           student => availableStudents.push(transformStudentToStudentFormModule(student)));
@@ -129,8 +144,12 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     return availableStudents;
   }
 
+  sortFilesAlphabetically(){
+    this.filesInformation = [...this.filesInformation].sort((file1, file2) => file1.name.localeCompare(file2.name));
+  }
+
   saveIndividualLesson() {
     const individualLessonRequestBody: IndividualLessonRequestBody = transformAddIndividualLessonFormToIndividualLessonRequestBody(this.addIndividualLessonForm, this.availableStudents);
-    this.store.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
+    this.individualLessonStore.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
   }
 }
