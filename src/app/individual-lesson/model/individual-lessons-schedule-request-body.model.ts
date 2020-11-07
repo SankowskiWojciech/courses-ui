@@ -1,4 +1,3 @@
-import { ScheduleTypes } from '../constants/schedule-types.constant';
 import { DayOfWeekWithTimes } from './day-of-week-with-times.model';
 
 export interface IndividualLessonsScheduleRequestBody {

@@ -20,7 +20,7 @@ import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.const
   templateUrl: './individual-lesson-list.component.html',
   styleUrls: ['./individual-lesson-list.component.scss'],
   animations: [
-    trigger('descriptionExpand', [
+    trigger('detailsExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),

@@ -11,15 +11,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { fileReducer } from './state/file.reducer';
 import { FileEffects } from './state/file.effect';
+import { FileListComponent } from './component/file-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 const ANGULAR_MATERIAL_MODULES = [
+  MatTableModule,
+  MatSortModule,
   MatFormFieldModule,
   MatIconModule,
   MatTooltipModule
 ];
 
 @NgModule({
-  declarations: [FileUploadComponent],
+  declarations: [FileUploadComponent, FileListComponent],
   imports: [
     CommonModule,
     ...ANGULAR_MATERIAL_MODULES,
@@ -30,7 +35,8 @@ const ANGULAR_MATERIAL_MODULES = [
     TranslateModule
   ],
   exports: [
-    FileUploadComponent
+    FileUploadComponent,
+    FileListComponent
   ]
 })
 export class FileModule { }

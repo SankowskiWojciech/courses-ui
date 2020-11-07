@@ -20,10 +20,10 @@ tr.individual-lesson-row:not(.expanded-row):active {
 
 .individual-lesson-detail {
   overflow: hidden;
-  display: flex;
+  display: flexbox;
 }
 
-.individual-lesson-description {
+.individual-lesson-detail-content {
   padding: 16px;
 }
 

@@ -77,6 +77,9 @@
     "Sunday": "Niedziela"
   },
   "files": {
+    "name": "Nazwa pliku",
+    "createdBy": "Utworzony przez",
+    "creationDateTime": "Data utworzenia",
     "files": "Pliki",
     "addFile": "Dodaj nowy plik",
     "formValidationErrorMessages": {
