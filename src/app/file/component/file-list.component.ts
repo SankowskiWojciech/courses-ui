@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.constant';
 import { FileInformation } from '../model/file-information.model';
+import { FileService } from '../service/file.service';
 
 @Component({
   selector: 'courses-file-list',
@@ -19,11 +20,15 @@ export class FileListComponent implements OnInit {
   dataSource: MatTableDataSource<FileInformation>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor() { }
+  constructor(private fileService: FileService) { }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
     this.dataSource.sort = this.sort;
     this.dataSource.data = this.filesInformation;
+  }
+
+  downloadFile(fileInformation: FileInformation) {
+    this.fileService.downloadFile(fileInformation);
   }
 }

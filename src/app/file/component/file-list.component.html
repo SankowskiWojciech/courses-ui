@@ -1,7 +1,8 @@
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="name" matSortDirection="asc">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'files.name' | translate }}</th>
-    <td mat-cell *matCellDef="let fileInformation">{{fileInformation.name}}</td>
+    <td mat-cell *matCellDef="let fileInformation"><a [routerLink]=""
+        (click)="downloadFile(fileInformation)">{{fileInformation.name}}</a></td>
   </ng-container>
   <ng-container matColumnDef="createdBy">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'files.createdBy' | translate }}</th>

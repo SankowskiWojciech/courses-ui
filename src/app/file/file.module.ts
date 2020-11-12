@@ -14,6 +14,7 @@ import { FileEffects } from './state/file.effect';
 import { FileListComponent } from './component/file-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { RouterModule } from '@angular/router';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -27,6 +28,7 @@ const ANGULAR_MATERIAL_MODULES = [
   declarations: [FileUploadComponent, FileListComponent],
   imports: [
     CommonModule,
+    RouterModule,
     ...ANGULAR_MATERIAL_MODULES,
     MaterialFileInputModule,
     ReactiveFormsModule,
