@@ -42,22 +42,22 @@ export class IndividualLessonAddLessonComponent implements OnInit {
   private readonly TRANSLATION_KEY_PREFIX_FOR_VALIDATION_MESSAGES = 'lessons.formValidationErrorMessages.';
 
   constructor(private formBuilder: FormBuilder, private individualLessonStore: Store<IndividualLessonState>, private router: Router,
-              private route: ActivatedRoute, private translateService: TranslateService,
-              private fileStore: Store<FileState>) { }
+    private route: ActivatedRoute, private translateService: TranslateService,
+    private fileStore: Store<FileState>) { }
 
   ngOnInit(): void {
+    this.individualLessonStore.dispatch(IndividualLessonActions.loadIndividualLessons());
+    this.individualLessonStore.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
+    this.fileStore.dispatch(FileActions.loadFilesInformation());
     this.individualLessonStore.select(getIndividualLessons)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(individualLessons => this.individualLessons = individualLessons);
     this.availableStudents = this.prepareStudentsAvailableForTutor();
     this.fileStore.select(getFilesInformation)
-    .pipe(takeUntil(this.ngDestroyed$))
-    .subscribe(filesInformation => {
-      if (!filesInformation.length) {
-        this.fileStore.dispatch(FileActions.loadFilesInformation());
-      }
-      this.filesInformation = filesInformation;
-    });
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe(filesInformation => {
+        this.filesInformation = filesInformation;
+      });
     this.addIndividualLessonForm = this.initializeAddIndividualLessonForm();
     this.filteredAvailableStudents = this.addIndividualLessonForm.get('student').valueChanges.pipe(
       startWith(''),
@@ -135,16 +135,13 @@ export class IndividualLessonAddLessonComponent implements OnInit {
     this.individualLessonStore.select(getStudentsAvailableForTutor)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(studentsAvailableForTutor => {
-        if (!studentsAvailableForTutor.length) {
-          this.individualLessonStore.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
-        }
         studentsAvailableForTutor.forEach(
           student => availableStudents.push(transformStudentToStudentFormModule(student)));
       });
     return availableStudents;
   }
 
-  sortFilesAlphabetically(){
+  sortFilesAlphabetically() {
     this.filesInformation = [...this.filesInformation].sort((file1, file2) => file1.name.localeCompare(file2.name));
   }
 
