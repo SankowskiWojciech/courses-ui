@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
-import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
-import { INDIVIDUAL_LESSONS_BACKEND_URL, INDIVIDUAL_LESSONS_SCHEDULE_LESSONS_BACKEND_URL } from 'src/app/constants/backend-urls.constant';
+import { INDIVIDUAL_LESSONS_BACKEND_URL, INDIVIDUAL_LESSONS_SCHEDULE_LESSONS_BACKEND_URL } from 'src/app/constant/backend-urls.constant';
 
 @Injectable({
   providedIn: 'root'

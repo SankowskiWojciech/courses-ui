@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FILES_BACKEND_URL } from 'src/app/constants/backend-urls.constant';
+import { FILES_BACKEND_URL } from 'src/app/constant/backend-urls.constant';
 import { FileInformation } from '../model/file-information.model';
 import * as FileSaver from 'file-saver';
 

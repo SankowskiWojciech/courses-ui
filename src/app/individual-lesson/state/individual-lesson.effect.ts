@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StatusInformationService } from '../service/status-information.service';
-import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
 
 @Injectable()
 export class IndividualLessonEffects {

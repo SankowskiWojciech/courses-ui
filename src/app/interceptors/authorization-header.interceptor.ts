@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
-import { LocalStorageKeyNames } from '../constants/local-storage-key-names.constant';
+import { LocalStorageKeyNames } from '../constant/local-storage-key-names.constant';
 import { Router } from '@angular/router';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
+import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
 import { ScheduleTypes } from '../constants/schedule-types.constant';
 import { Weekdays } from '../constants/weekdays.constant';
 import { DayOfWeekWithTimes } from '../model/day-of-week-with-times.model';

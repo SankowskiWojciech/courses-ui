@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { Token } from '../model/token.model';
 import { HttpClient, HttpBackend } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { LocalStorageKeyNames } from 'src/app/constants/local-storage-key-names.constant';
-import { SUBDOMAIN_BACKEND_URL } from 'src/app/constants/backend-urls.constant';
+import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
+import { SUBDOMAIN_BACKEND_URL } from 'src/app/constant/backend-urls.constant';
 
 @Injectable({
   providedIn: 'root'
