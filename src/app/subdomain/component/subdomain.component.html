@@ -1,4 +1,4 @@
-<div *ngIf="subdomainInformation">
+<div *ngIf="subdomainInformation$ | async as subdomainInformation">
   <p>subdomain works!</p>
   <p>Sudomain data:</p>
   <p>Subdomain name: {{this.subdomainInformation.name}}</p>

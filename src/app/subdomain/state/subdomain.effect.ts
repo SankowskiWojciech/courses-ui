@@ -7,8 +7,7 @@ import { mergeMap, map } from 'rxjs/operators';
 @Injectable()
 export class SubdomainEffect {
 
-  constructor(private actions$: Actions,
-              private subdomainService: SubdomainService) { }
+  constructor(private actions$: Actions, private subdomainService: SubdomainService) { }
 
   loadSubdomainInformation$ = createEffect(() => {
     return this.actions$.pipe(
