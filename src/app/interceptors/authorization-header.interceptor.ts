@@ -13,10 +13,7 @@ export class AuthorizationHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.isTokenExpired()) {
-      const subdomainAlias = localStorage.getItem(LocalStorageKeyNames.SubdomainAlias);
-      localStorage.clear();
-      this.router.navigateByUrl(`${subdomainAlias}/login`);
-      return EMPTY;
+      this.handleExpiredToken();
     }
     if (localStorage.length && localStorage.getItem(LocalStorageKeyNames.Token)) {
       const requestWithAuthorizationHeader: HttpRequest<any> = req.clone({
@@ -28,12 +25,19 @@ export class AuthorizationHeaderInterceptor implements HttpInterceptor {
     }
   }
 
-  isTokenExpired(): boolean {
+  private isTokenExpired(): boolean {
     if (localStorage.length && localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime) !== null) {
       const expirationDateTime = new Date(localStorage.getItem(LocalStorageKeyNames.ExpirationDateTime));
       const currentDateTime = new Date();
       return expirationDateTime <= currentDateTime;
     }
     return false;
+  }
+
+  private handleExpiredToken(): Observable<HttpEvent<any>> {
+    const subdomainAlias = localStorage.getItem(LocalStorageKeyNames.SubdomainAlias);
+    localStorage.clear();
+    this.router.navigateByUrl(`${subdomainAlias}/login`);
+    return EMPTY;
   }
 }
