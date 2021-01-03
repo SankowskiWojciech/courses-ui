@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.select';
 import { MediaMatcher } from '@angular/cdk/layout';
+import * as SubdomainActions from '../../subdomain/state/subdomain.action';
 
 @Component({
   selector: 'courses-tutor',
@@ -28,6 +29,7 @@ export class TutorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const subdomainAlias = this.route.snapshot.params.subdomainAlias;
+    this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainAlias }));
     this.subdomainInformation$ = this.store.select(getSubdomainInformation);
   }
 

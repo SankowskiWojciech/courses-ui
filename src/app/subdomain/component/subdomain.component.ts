@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getSubdomainInformation } from '../state/subdomain.select';
-import { takeUntil } from 'rxjs/operators';
 import * as SubdomainActions from '../state/subdomain.action';
 
 @Component({
