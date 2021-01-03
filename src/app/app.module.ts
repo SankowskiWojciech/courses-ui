@@ -1,16 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { SubdomainModule } from './subdomain/subdomain.module';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PageNotFoundComponent } from './error-handling-components/page-not-found.component';
-import { ForbiddenComponent } from './error-handling-components/forbidden.component';
 import { AuthorizationHeaderInterceptor } from './interceptors/authorization-header.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
-import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
 import { TutorModule } from './tutor/tutor.module';
 import { IndividualLessonModule } from './individual-lesson/individual-lesson.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +16,10 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { PageNotFoundComponent } from './error-handling/page-not-found.component';
+import { ForbiddenComponent } from './error-handling/forbidden.component';
+import { UnauthorizedComponent } from './error-handling/unauthorized.component';
+import { DEFAULT_LANGUAGE } from './constants/default-language.constant';
 
 const COURSES_MODULES = [
   IndividualLessonModule,
@@ -53,7 +53,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
     EffectsModule.forRoot([]),
     TranslateModule.forRoot({
-      defaultLanguage: 'pl',
+      defaultLanguage: DEFAULT_LANGUAGE,
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './error-handling-components/page-not-found.component';
 import { AppComponent } from './app.component';
-import { ForbiddenComponent } from './error-handling-components/forbidden.component';
-import { UnauthorizedComponent } from './error-handling-components/unauthorized.component';
+import { ForbiddenComponent } from './error-handling/forbidden.component';
+import { PageNotFoundComponent } from './error-handling/page-not-found.component';
+import { UnauthorizedComponent } from './error-handling/unauthorized.component';
 import { SubdomainComponent } from './subdomain/component/subdomain.component';
 
 const routes: Routes = [

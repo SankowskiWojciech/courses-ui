@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
-const DEFAULT_LANGUAGE = 'pl';
+import { DEFAULT_LANGUAGE } from './constants/default-language.constant';
 
 @Component({
   selector: 'courses-root',
