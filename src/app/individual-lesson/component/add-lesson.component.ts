@@ -23,10 +23,10 @@ import { getFilesInformation } from 'src/app/file/state/file.selector';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
-  templateUrl: './individual-lesson-add-lesson.component.html',
-  styleUrls: ['./individual-lesson-add-lesson.component.scss']
+  templateUrl: './add-lesson.component.html',
+  styleUrls: ['./add-lesson.component.scss']
 })
-export class IndividualLessonAddLessonComponent implements OnInit {
+export class AddLessonComponent implements OnInit {
 
   readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
   readonly DESCRIPTION_MAX_LENGTH = DESCRIPTION_MAX_LENGTH;

@@ -17,8 +17,8 @@ import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.const
 
 @Component({
   selector: 'courses-individual-lesson-list',
-  templateUrl: './individual-lesson-list.component.html',
-  styleUrls: ['./individual-lesson-list.component.scss'],
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
   animations: [
     trigger('detailsExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -27,7 +27,7 @@ import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.const
     ]),
   ],
 })
-export class IndividualLessonListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy {
 
   readonly COLUMNS_TO_RENDER = COLUMNS_TO_RENDER_FOR_LIST;
   showFinishedLessons: boolean;

@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TutorComponent } from './component/tutor.component';
 import { AuthorizationGuard } from '../login/guard/authorization.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { IndividualLessonListComponent } from '../individual-lesson/component/individual-lesson-list.component';
-import { IndividualLessonAddLessonComponent } from '../individual-lesson/component/individual-lesson-add-lesson.component';
+import { ListComponent } from '../individual-lesson/component/list.component';
+import { AddLessonComponent } from '../individual-lesson/component/add-lesson.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { IndividualLessonScheduleLessonsComponent } from '../individual-lesson/component/individual-lesson-schedule-lessons.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ScheduleLessonsComponent } from '../individual-lesson/component/schedule-lessons.component';
 
 const routes: Routes = [
   {
@@ -20,15 +20,15 @@ const routes: Routes = [
     children: [
       {
         path: 'lessons/individual',
-        component: IndividualLessonListComponent,
+        component: ListComponent,
       },
       {
         path: 'lessons/individual/add',
-        component: IndividualLessonAddLessonComponent,
+        component: AddLessonComponent,
       },
       {
         path: 'lessons/individual/schedule',
-        component: IndividualLessonScheduleLessonsComponent,
+        component: ScheduleLessonsComponent,
       }
     ]
   }

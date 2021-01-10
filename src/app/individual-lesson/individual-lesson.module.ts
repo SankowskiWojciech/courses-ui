@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IndividualLessonListComponent } from './component/individual-lesson-list.component';
+import { ListComponent as ListComponent } from './component/list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
-import { IndividualLessonAddLessonComponent } from './component/individual-lesson-add-lesson.component';
+import { AddLessonComponent } from './component/add-lesson.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -19,7 +19,6 @@ import { individualLessonReducer } from './state/individual-lesson.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { IndividualLessonEffects } from './state/individual-lesson.effect';
 import { MatMenuModule } from '@angular/material/menu';
-import { IndividualLessonScheduleLessonsComponent } from './component/individual-lesson-schedule-lessons.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { FileModule } from '../file/file.module';
+import { ScheduleLessonsComponent } from './component/schedule-lessons.component';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -51,7 +51,7 @@ const COURSES_MODULES = [
 ];
 
 @NgModule({
-  declarations: [IndividualLessonListComponent, IndividualLessonAddLessonComponent, IndividualLessonScheduleLessonsComponent],
+  declarations: [ListComponent, AddLessonComponent, ScheduleLessonsComponent],
   imports: [
     CommonModule,
     ...ANGULAR_MATERIAL_MODULES,

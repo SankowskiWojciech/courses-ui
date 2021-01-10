@@ -23,10 +23,10 @@ import { ValidationMessages } from '../model/validation-messages.model';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
-  templateUrl: './individual-lesson-schedule-lessons.component.html',
-  styleUrls: ['./individual-lesson-schedule-lessons.component.scss']
+  templateUrl: './schedule-lessons.component.html',
+  styleUrls: ['./schedule-lessons.component.scss']
 })
-export class IndividualLessonScheduleLessonsComponent implements OnInit {
+export class ScheduleLessonsComponent implements OnInit {
 
   showLessonsTitlesTextArea = true;
   showLessonsTitlesTable = false;
