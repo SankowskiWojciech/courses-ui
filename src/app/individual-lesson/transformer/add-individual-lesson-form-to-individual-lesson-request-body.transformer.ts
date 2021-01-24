@@ -22,7 +22,7 @@ function getStudentId(studentFormControlValue: string, studentsAvailableForTutor
     availableStudent => availableStudent.fullNameWithEmailAddress === studentFormControlValue).emailAddress;
 }
 
-function getFilesIds(filesInformation: FileInformation[]): number[] {
+function getFilesIds(filesInformation: FileInformation[]): string[] {
   if (filesInformation && filesInformation.length) {
     return filesInformation.map(fileInformation => fileInformation.fileId);
   }

@@ -6,5 +6,5 @@ export interface IndividualLessonRequestBody {
   subdomainAlias: string;
   tutorId: string;
   studentId: string;
-  filesIds: number[];
+  filesIds: string[];
 }
