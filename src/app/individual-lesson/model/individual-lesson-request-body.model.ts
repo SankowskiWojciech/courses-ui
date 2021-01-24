@@ -3,7 +3,7 @@ export interface IndividualLessonRequestBody {
   startDateOfLesson: Date;
   endDateOfLesson: Date;
   description: string;
-  subdomainName: string;
+  subdomainAlias: string;
   tutorId: string;
   studentId: string;
   filesIds: number[];

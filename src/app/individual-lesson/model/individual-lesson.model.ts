@@ -6,7 +6,7 @@ export interface IndividualLesson {
   startDateOfLesson: Date;
   endDateOfLesson: Date;
   description: string;
-  subdomainName: string;
+  subdomainAlias: string;
   tutorEmailAddress: string;
   studentFullName: string;
   studentEmailAddress: string;

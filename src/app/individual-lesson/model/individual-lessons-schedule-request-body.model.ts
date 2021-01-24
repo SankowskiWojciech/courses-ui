@@ -7,7 +7,7 @@ export interface IndividualLessonsScheduleRequestBody {
   allLessonsDurationInMinutes: number;
   lessonsDaysOfWeekWithTimes: DayOfWeekWithTimes[];
   lessonsTitles: string[];
-  subdomainName: string;
+  subdomainAlias: string;
   tutorId: string;
   studentId: string;
 }

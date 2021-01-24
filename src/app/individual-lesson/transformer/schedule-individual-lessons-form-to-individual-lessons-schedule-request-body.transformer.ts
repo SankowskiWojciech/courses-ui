@@ -16,7 +16,7 @@ export function transformScheduleIndividualLessonsFormToIndividualLessonsSchedul
     allLessonsDurationInMinutes: scheduleIndividualLessonsForm.get('lessonsDuration') ? scheduleIndividualLessonsForm.get('lessonsDuration').value : null,
     lessonsDaysOfWeekWithTimes: prepareDaysOfWeekWithTimes(scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges').value),
     lessonsTitles: prepareLessonsTitles(scheduleIndividualLessonsForm.get('lessonsTitles').value),
-    subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
+    subdomainAlias: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
     tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
     studentId: getStudentId(scheduleIndividualLessonsForm.get('student').value, studentsAvailableForTutor)
   };
