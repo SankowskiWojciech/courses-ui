@@ -28,12 +28,12 @@
     <ng-container matColumnDef="startDateOfLesson">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.startDate' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">
-        {{individualLesson.startDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+        {{individualLesson.startDate | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="endDateOfLesson">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.endDate' | translate }}</th>
       <td mat-cell class="cursor-pointer" *matCellDef="let individualLesson">
-        {{individualLesson.endDateOfLesson | date: 'dd-MM-yyyy H:mm'}}</td>
+        {{individualLesson.endDate | date: 'dd-MM-yyyy H:mm'}}</td>
     </ng-container>
     <ng-container matColumnDef="studentFullName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.studentFullName' | translate }}</th>

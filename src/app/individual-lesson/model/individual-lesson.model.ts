@@ -1,12 +1,12 @@
 import { FileInformation } from 'src/app/file/model/file-information.model';
 
 export interface IndividualLesson {
-  lessonId: number;
+  id: number;
   title: string;
-  startDateOfLesson: Date;
-  endDateOfLesson: Date;
+  startDate: Date;
+  endDate: Date;
   description: string;
-  subdomainAlias: string;
+  subdomainName: string;
   tutorEmailAddress: string;
   studentFullName: string;
   studentEmailAddress: string;

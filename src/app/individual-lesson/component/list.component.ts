@@ -115,7 +115,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {
     const currentDate = new Date();
-    return this.individualLessons.filter(individualLesson => new Date(individualLesson.endDateOfLesson) >= currentDate);
+    return this.individualLessons.filter(individualLesson => new Date(individualLesson.endDate) >= currentDate);
   }
 
   private prepareDataSource() {
