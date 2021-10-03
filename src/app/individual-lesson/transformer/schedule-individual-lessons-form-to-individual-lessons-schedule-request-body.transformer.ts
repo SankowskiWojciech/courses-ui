@@ -13,9 +13,9 @@ export function transformScheduleIndividualLessonsFormToIndividualLessonsSchedul
     beginningDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonStartDate').value,
     endDate: scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate') ? scheduleIndividualLessonsForm.get('lessonDates').get('lessonEndDate').value : null,
     scheduleType: ScheduleTypes[scheduleIndividualLessonsForm.get('scheduleType').value],
-    allLessonsDurationInMinutes: scheduleIndividualLessonsForm.get('lessonsDuration') ? scheduleIndividualLessonsForm.get('lessonsDuration').value : null,
-    lessonsDaysOfWeekWithTimes: prepareDaysOfWeekWithTimes(scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges').value),
-    lessonsTitles: prepareLessonsTitles(scheduleIndividualLessonsForm.get('lessonsTitles').value),
+    durationOfAllLessonsInMinutes: scheduleIndividualLessonsForm.get('lessonsDuration') ? scheduleIndividualLessonsForm.get('lessonsDuration').value : null,
+    daysOfWeekWithTimes: prepareDaysOfWeekWithTimes(scheduleIndividualLessonsForm.get('weekdaysWithTimeRanges').value),
+    titles: prepareLessonsTitles(scheduleIndividualLessonsForm.get('lessonsTitles').value),
     subdomainAlias: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
     tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
     studentId: getStudentId(scheduleIndividualLessonsForm.get('student').value, studentsAvailableForTutor)

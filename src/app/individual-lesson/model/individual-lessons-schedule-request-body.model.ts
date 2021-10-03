@@ -4,9 +4,9 @@ export interface IndividualLessonsScheduleRequestBody {
   beginningDate: Date;
   endDate: Date;
   scheduleType: string;
-  allLessonsDurationInMinutes: number;
-  lessonsDaysOfWeekWithTimes: DayOfWeekWithTimes[];
-  lessonsTitles: string[];
+  durationOfAllLessonsInMinutes: number;
+  daysOfWeekWithTimes: DayOfWeekWithTimes[];
+  titles: string[];
   subdomainAlias: string;
   tutorId: string;
   studentId: string;

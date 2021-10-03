@@ -24,7 +24,7 @@ export class FileService {
   }
 
   downloadFile(fileInformation: FileInformation) {
-    this.http.get(`${FILES_BACKEND_URL}/${fileInformation.fileId}`, this.prepareOptionsForDownloadingFile()).subscribe(
+    this.http.get(`${FILES_BACKEND_URL}/${fileInformation.id}`, this.prepareOptionsForDownloadingFile()).subscribe(
       fileContent => {
         const blob = new Blob([fileContent]);
         FileSaver.saveAs(blob, fileInformation.name);

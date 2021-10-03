@@ -35,7 +35,7 @@ export function lessonCollisionValidator(individualLessons: IndividualLesson[]):
       const lessonStartDate = new Date(lessonStartDateFormControl.value);
       const lessonEndDate = new Date(lessonEndDateFormControl.value);
       const individualLessonsCollidingWithNewOne = individualLessons.filter(
-        individualLesson => lessonStartDate < new Date(individualLesson.endDateOfLesson) && lessonEndDate > new Date(individualLesson.startDateOfLesson)
+        individualLesson => lessonStartDate < new Date(individualLesson.endDate) && lessonEndDate > new Date(individualLesson.startDate)
       );
       if (individualLessonsCollidingWithNewOne.length) {
         return { lessonCollisionValidation: false };
