@@ -1,5 +1,5 @@
 export interface FileInformation {
-  id: number;
+  id: string;
   name: string;
   extension: string;
   createdBy: string;
