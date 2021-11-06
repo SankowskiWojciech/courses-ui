@@ -11,7 +11,6 @@ export function transformAddIndividualLessonFormToIndividualLessonRequestBody(ad
     endDate: addIndividualLessonForm.get('lessonDates').get('lessonEndDate').value,
     description: addIndividualLessonForm.get('description').value,
     subdomainAlias: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
-    tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
     studentId: getStudentId(addIndividualLessonForm.get('student').value, studentsAvailableForTutor),
     filesIds: getFilesIds(addIndividualLessonForm.get('files').value)
   };
