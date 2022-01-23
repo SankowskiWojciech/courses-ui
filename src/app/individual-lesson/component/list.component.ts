@@ -37,7 +37,6 @@ export class ListComponent implements OnInit, OnDestroy {
   filterValue = '';
 
   private ngDestroyed$ = new Subject();
-  private pagePropertiesubscription: Subscription;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -50,7 +49,7 @@ export class ListComponent implements OnInit, OnDestroy {
       .subscribe(
         showFinishedLessons => this.showFinishedLessons = showFinishedLessons
       );
-    this.pagePropertiesubscription = this.store.select(getPageProperties)
+    this.store.select(getPageProperties)
       .pipe(takeUntil(this.ngDestroyed$))
       .subscribe(
         pageProperties => {
@@ -77,7 +76,8 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.pagePropertiesubscription.unsubscribe();
+    this.ngDestroyed$.next();
+    this.ngDestroyed$.complete();
   }
 
   filter(): void {
