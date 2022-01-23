@@ -66,7 +66,7 @@
     <div class="form-row">
       <div class="d-flex flex-row">
         <mat-form-field class="mr-5">
-          <mat-label>{{ 'files.files' | translate }}</mat-label>
+          <mat-label><mat-icon class="mr-2">folder</mat-icon><span>{{ 'files.files' | translate }}</span></mat-label>
           <mat-select formControlName="files" id="filesId" multiple (click)="sortFilesAlphabetically()">
             <mat-option *ngFor="let fileInformation of filesInformation" [value]="fileInformation">
               {{fileInformation.name}}</mat-option>
@@ -76,9 +76,9 @@
       </div>
     </div>
     <div class="d-flex justify-content-between mb-4">
-      <button mat-raised-button class="text-primary" routerLink="../">{{ 'lessons.getBackToList' | translate }}</button>
+      <button mat-raised-button class="text-primary" routerLink="../"><mat-icon class="mr-2">keyboard_return</mat-icon><span>{{ 'lessons.getBackToList' | translate }}</span></button>
       <button mat-raised-button color="primary" type="submit"
-        [disabled]="!addIndividualLessonForm.valid">{{ 'lessons.saveNewLesson' | translate }}</button>
+        [disabled]="!addIndividualLessonForm.valid"><mat-icon class="mr-2">save</mat-icon><span>{{ 'lessons.saveNewLesson' | translate }}</span></button>
     </div>
   </form>
 </div>
