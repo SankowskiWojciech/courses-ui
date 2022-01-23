@@ -1,16 +1,16 @@
-<div class="tutor-container" [class.mobile-device]="mobileQuery.matches">
-  <mat-toolbar *ngIf="mobileQuery.matches">
+<div class="tutor-container" [class.mobile-device]="isScreenSmall">
+  <mat-toolbar *ngIf="isScreenSmall">
     <button mat-icon-button (click)="sidebarNavigation.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <span class="ml-3"
       *ngIf="subdomainInformation$ | async as subdomainInformation">{{subdomainInformation.name}}</span>
   </mat-toolbar>
-  <mat-sidenav-container class="tutor-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #sidebarNavigation [mode]="mobileQuery.matches ? 'push' : 'side'"
-      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="!mobileQuery.matches">
+  <mat-sidenav-container class="tutor-sidenav-container" [style.marginTop.px]="isScreenSmall ? 56 : 0">
+    <mat-sidenav #sidebarNavigation [mode]="isScreenSmall ? 'push' : 'side'" [fixedInViewport]="isScreenSmall"
+      fixedTopGap="56" [opened]="!isScreenSmall">
       <mat-nav-list>
-        <div class="subdomain-header" *ngIf="!mobileQuery.matches && subdomainInformation$ | async as subdomainInformation">
+        <div class="subdomain-header" *ngIf="!isScreenSmall && subdomainInformation$ | async as subdomainInformation">
           {{subdomainInformation.name}}</div>
         <a mat-list-item href="#">{{ 'tutor.calendar' | translate }}</a>
         <a mat-list-item routerLink="lessons/individual">{{ 'tutor.individualLessons' | translate }}</a>

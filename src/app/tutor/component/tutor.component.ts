@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.select';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import * as SubdomainActions from '../../subdomain/state/subdomain.action';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'courses-tutor',
@@ -15,25 +16,25 @@ import * as SubdomainActions from '../../subdomain/state/subdomain.action';
 })
 export class TutorComponent implements OnInit, OnDestroy {
 
-  private readonly MOBILE_QUERY = '(max-width: 600px)';
-  private mobileQueryListener: () => void;
+  private ngDestroyed$ = new Subject();
 
-  mobileQuery: MediaQueryList;
+  isScreenSmall: boolean;
   subdomainInformation$: Observable<Subdomain>;
 
-  constructor(private route: ActivatedRoute, private store: Store<State>, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia(this.MOBILE_QUERY);
-    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addEventListener('change', () => this.mobileQueryListener);
-  }
+  constructor(private route: ActivatedRoute, private store: Store<State>,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([Breakpoints.XSmall])
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe((breakpointState: BreakpointState) => this.isScreenSmall = breakpointState.matches);
     const subdomainAlias = this.route.snapshot.params.subdomainAlias;
     this.store.dispatch(SubdomainActions.loadSubdomainInformation({ subdomainAlias }));
     this.subdomainInformation$ = this.store.select(getSubdomainInformation);
   }
 
   ngOnDestroy(): void {
-    this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
+    this.ngDestroyed$.next();
+    this.ngDestroyed$.complete();
   }
 }

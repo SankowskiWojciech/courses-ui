@@ -1,6 +1,6 @@
-$navigation-background-color:  #404040;
-$navigation-text-color: #3399FF;
-$subdomain-name-text-color: #A9A9A9;
+$navigation-background-color: #404040;
+$navigation-text-color: #3399ff;
+$subdomain-name-text-color: #a9a9a9;
 
 .tutor-container {
   display: flex;
@@ -30,7 +30,7 @@ mat-sidenav a {
   color: $navigation-text-color;
 }
 
-.mobile-device mat-sidenav{
+.mobile-device mat-sidenav {
   background-color: $navigation-background-color;
 }
 
