@@ -19,7 +19,7 @@
   },
   "lessons": {
     "newLesson": "Nowe zajęcia",
-    "addLesson": "Dodaj zajęcia",
+    "addLesson": "Dodaj pojedyncze zajęcia",
     "scheduleLessons": "Zaplanuj zajęcia",
     "getBackToList": "Powrót do listy",
     "saveNewLesson": "Zapisz zajęcia",
