@@ -7,7 +7,7 @@
       <button mat-menu-item routerLink="schedule"><mat-icon class="mr-2">event</mat-icon><span>{{ 'lessons.scheduleLessons' | translate }}</span></button>
     </mat-menu>
     <mat-form-field>
-      <mat-label>{{ 'lessons.enterFilter' | translate }}</mat-label>
+      <mat-label><mat-icon class="mr-2">filter_alt</mat-icon><span>{{ 'lessons.enterFilter' | translate }}</span></mat-label>
       <input matInput (keyup)="filter()" placeholder="{{ 'lessons.filterPlaceholder' | translate }}"
         [(ngModel)]="filterValue">
       <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter()">
