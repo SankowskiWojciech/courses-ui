@@ -3,10 +3,10 @@
     <div class="form-row" [ngClass]="{'mb-3': validationMessages}">
       <mat-form-field>
         <ngx-mat-file-input #fileInput type="file" id="fileUploadId" formControlName="fileUpload"
-          [accept]="FILE_VALID_EXTENSIONS" placeholder="{{ 'files.addFile' | translate }}"
+          [accept]="FILE_VALID_EXTENSIONS"
           matTooltip="{{ 'files.tooltips.maxFileSize' | translate:{'maxFileSize': FILE_MAX_SIZE_IN_BYTES | byteFormat} }}">
         </ngx-mat-file-input>
-        <mat-icon matSuffix>folder</mat-icon>
+        <mat-label><mat-icon class="mr-2">file_upload</mat-icon><span>{{ 'files.addFile' | translate }}</span></mat-label>
         <button mat-button *ngIf="!fileInput.empty" matSuffix mat-icon-button aria-label="Remove file"
           (click)="fileInput.clear($event)">
           <mat-icon>clear</mat-icon>
