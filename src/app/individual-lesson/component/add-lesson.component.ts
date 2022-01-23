@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
@@ -26,7 +26,7 @@ import { getFilesInformation } from 'src/app/file/state/file.selector';
   templateUrl: './add-lesson.component.html',
   styleUrls: ['./add-lesson.component.scss']
 })
-export class AddLessonComponent implements OnInit {
+export class AddLessonComponent implements OnInit, OnDestroy {
 
   readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
   readonly DESCRIPTION_MAX_LENGTH = DESCRIPTION_MAX_LENGTH;
@@ -148,5 +148,10 @@ export class AddLessonComponent implements OnInit {
   saveIndividualLesson() {
     const individualLessonRequestBody: IndividualLessonRequestBody = transformAddIndividualLessonFormToIndividualLessonRequestBody(this.addIndividualLessonForm, this.availableStudents);
     this.individualLessonStore.dispatch(IndividualLessonActions.createNewIndividualLesson({ individualLessonRequestBody }));
+  }
+
+  ngOnDestroy(): void {
+      this.ngDestroyed$.next();
+      this.ngDestroyed$.complete();
   }
 }
