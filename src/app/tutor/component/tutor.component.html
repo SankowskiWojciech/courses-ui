@@ -7,15 +7,16 @@
       *ngIf="subdomainInformation$ | async as subdomainInformation">{{subdomainInformation.name}}</span>
   </mat-toolbar>
   <mat-sidenav-container class="tutor-sidenav-container" [style.marginTop.px]="isScreenSmall ? 56 : 0">
-    <mat-sidenav #sidebarNavigation [mode]="isScreenSmall ? 'push' : 'side'" [fixedInViewport]="isScreenSmall"
+    <mat-sidenav #sidebarNavigation [mode]="isScreenSmall ? 'over' : 'side'" [fixedInViewport]="isScreenSmall"
       fixedTopGap="56" [opened]="!isScreenSmall">
       <mat-nav-list>
         <div class="subdomain-header" *ngIf="!isScreenSmall && subdomainInformation$ | async as subdomainInformation">
           {{subdomainInformation.name}}</div>
-        <a mat-list-item href="#">{{ 'tutor.calendar' | translate }}</a>
-        <a mat-list-item routerLink="lessons/individual">{{ 'tutor.individualLessons' | translate }}</a>
-        <a mat-list-item href="#">{{ 'tutor.groupLessons' | translate }}</a>
-        <a mat-list-item href="#">{{ 'tutor.profile' | translate }}</a>
+        <mat-list-item href="#"><mat-icon>calendar_month</mat-icon><a class="ml-2">{{ 'tutor.calendar' | translate }}</a></mat-list-item>
+        <mat-list-item routerLink="lessons/individual"><mat-icon>person</mat-icon><a class="ml-2">{{ 'tutor.individualLessons' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item href="#"><mat-icon>groups</mat-icon><a class="ml-2">{{ 'tutor.groupLessons' | translate }}</a></mat-list-item>
+        <mat-list-item href="#"><mat-icon>account_circle</mat-icon><a class="ml-2">{{ 'tutor.profile' | translate }}</a></mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
