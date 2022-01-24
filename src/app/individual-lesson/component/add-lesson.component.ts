@@ -150,7 +150,7 @@ export class AddLessonComponent implements OnInit, OnDestroy {
   }
 
   sortFilesAlphabetically() {
-    this.filesInformation = [...this.filesInformation].sort((file1, file2) => file1.name.localeCompare(file2.name));
+    this.filesInformation = [...this.filesInformation].sort((file1, file2) => file1.name.toLowerCase().localeCompare(file2.name.toLowerCase()));
   }
 
   saveIndividualLesson() {
