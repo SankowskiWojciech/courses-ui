@@ -72,8 +72,10 @@ export class AddLessonComponent implements OnInit, OnDestroy {
   }
 
   private filterAvailableStudents(userInputValue: string): StudentFormModel[] {
-    const filterValue = userInputValue.toLowerCase();
-    return this.availableStudents.filter(availableStudent => availableStudent.fullNameWithEmailAddress.toLowerCase().includes(filterValue));
+    if (!userInputValue) {
+      return this.availableStudents;
+    }
+    return this.availableStudents.filter(availableStudent => availableStudent.fullNameWithEmailAddress.toLowerCase().includes(userInputValue.toLowerCase()));
   }
 
   private initializeAddIndividualLessonForm(): FormGroup {
@@ -157,7 +159,7 @@ export class AddLessonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.ngDestroyed$.next();
-      this.ngDestroyed$.complete();
+    this.ngDestroyed$.next();
+    this.ngDestroyed$.complete();
   }
 }
