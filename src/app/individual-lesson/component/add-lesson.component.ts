@@ -20,6 +20,7 @@ import { ValidationMessages } from '../model/validation-messages.model';
 import { transformAddIndividualLessonFormToIndividualLessonRequestBody } from '../transformer/add-individual-lesson-form-to-individual-lesson-request-body.transformer';
 import { FileInformation } from 'src/app/file/model/file-information.model';
 import { getFilesInformation } from 'src/app/file/state/file.selector';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -30,6 +31,8 @@ export class AddLessonComponent implements OnInit, OnDestroy {
 
   readonly TITLE_MAX_LENGTH = TITLE_MAX_LENGTH;
   readonly DESCRIPTION_MAX_LENGTH = DESCRIPTION_MAX_LENGTH;
+
+  isScreenSmall: boolean;
 
   addIndividualLessonForm: FormGroup;
   availableStudents: StudentFormModel[];
@@ -43,9 +46,12 @@ export class AddLessonComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private individualLessonStore: Store<IndividualLessonState>, private router: Router,
     private route: ActivatedRoute, private translateService: TranslateService,
-    private fileStore: Store<FileState>) { }
+    private fileStore: Store<FileState>, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([Breakpoints.XSmall])
+      .pipe(takeUntil(this.ngDestroyed$))
+      .subscribe((breakpointState: BreakpointState) => this.isScreenSmall = breakpointState.matches);
     this.individualLessonStore.dispatch(IndividualLessonActions.loadIndividualLessons());
     this.individualLessonStore.dispatch(IndividualLessonActions.loadStudentsAvailableForTutor());
     this.fileStore.dispatch(FileActions.loadFilesInformation());
