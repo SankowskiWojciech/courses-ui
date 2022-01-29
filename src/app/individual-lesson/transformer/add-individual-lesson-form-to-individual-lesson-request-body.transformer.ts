@@ -7,11 +7,10 @@ import { StudentFormModel } from '../model/student-form-model.model';
 export function transformAddIndividualLessonFormToIndividualLessonRequestBody(addIndividualLessonForm: FormGroup, studentsAvailableForTutor: StudentFormModel[]): IndividualLessonRequestBody {
   return {
     title: addIndividualLessonForm.get('title').value,
-    startDateOfLesson: addIndividualLessonForm.get('lessonDates').get('lessonStartDate').value,
-    endDateOfLesson: addIndividualLessonForm.get('lessonDates').get('lessonEndDate').value,
+    startDate: addIndividualLessonForm.get('lessonDates').get('lessonStartDate').value,
+    endDate: addIndividualLessonForm.get('lessonDates').get('lessonEndDate').value,
     description: addIndividualLessonForm.get('description').value,
-    subdomainName: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
-    tutorId: localStorage.getItem(LocalStorageKeyNames.UserEmailAddress),
+    subdomainAlias: localStorage.getItem(LocalStorageKeyNames.SubdomainAlias),
     studentId: getStudentId(addIndividualLessonForm.get('student').value, studentsAvailableForTutor),
     filesIds: getFilesIds(addIndividualLessonForm.get('files').value)
   };
@@ -22,9 +21,9 @@ function getStudentId(studentFormControlValue: string, studentsAvailableForTutor
     availableStudent => availableStudent.fullNameWithEmailAddress === studentFormControlValue).emailAddress;
 }
 
-function getFilesIds(filesInformation: FileInformation[]): number[] {
+function getFilesIds(filesInformation: FileInformation[]): string[] {
   if (filesInformation && filesInformation.length) {
-    return filesInformation.map(fileInformation => fileInformation.fileId);
+    return filesInformation.map(fileInformation => fileInformation.id);
   }
   return null;
 }
