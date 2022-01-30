@@ -46,6 +46,9 @@
       "minDuration": "Minimalnie 1 minuta"
     },
     "newIndividualLessonsCreationSuccess": "Zajęcia utworzone poprawnie",
+    "errors": {
+      "lessonNotFound": "Nie znaleziono zajęć"
+    },
     "apiErrorMessages": {
       "lessons_dates_collision": "Zajęcia kolidują z innymi zajęciami"
     },

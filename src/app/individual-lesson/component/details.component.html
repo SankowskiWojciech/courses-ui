@@ -1,7 +1,7 @@
 <div class="container mt-4">
-  <mat-card>
+  <mat-card *ngIf="lesson">
     <mat-card-title class="text-center">{{lesson.title}}</mat-card-title>
-    <mat-card-subtitle class="text-center">{{lesson.studentFullName + ' (' + lesson.studentEmailAddress + ')'}}
+    <mat-card-subtitle class="text-center">{{lesson?.studentFullName + ' (' + lesson.studentEmailAddress + ')'}}
     </mat-card-subtitle>
     <mat-card-content>
       <mat-tab-group>
@@ -17,4 +17,5 @@
       </button>
     </mat-card-actions>
   </mat-card>
+  <p *ngIf="!lesson" class="h1 text-center">{{ 'lessons.errors.lessonNotFound' | translate }}</p>
 </div>
