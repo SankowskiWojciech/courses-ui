@@ -96,11 +96,6 @@ export class ListComponent implements OnInit, OnDestroy {
     this.store.dispatch(IndividualLessonActions.setPageProperties({ pageProperties }));
   }
 
-  redirectToLessonDetails(individualLesson: IndividualLesson) {
-    console.log(`Redirecting to lesson with id: ${individualLesson.id}`);
-    //TODO: redirect
-  }
-
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {
     const currentDate = new Date();
     return this.individualLessons.filter(individualLesson => new Date(individualLesson.endDate) >= currentDate);

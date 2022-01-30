@@ -53,7 +53,7 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="COLUMNS_TO_RENDER"></tr>
     <tr mat-row *matRowDef="let individualLesson; columns: COLUMNS_TO_RENDER;" class="individual-lesson-row"
-      (click)="redirectToLessonDetails(individualLesson)">
+      [routerLink]="[individualLesson.id]">
     </tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="handlePageEvent($event)" #paginator>
