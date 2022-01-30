@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IndividualLesson } from '../model/individual-lesson.model';
-import { animate, trigger, state, transition, style } from '@angular/animations';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -8,7 +7,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../state/individual-lesson.state';
-import { getShowFinishedLessons, getIndividualLessons, getExpandedIndividualLesson, getFilterValue, getPageProperties } from '../state/individual-lesson.selector';
+import { getShowFinishedLessons, getIndividualLessons, getFilterValue, getPageProperties } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -18,20 +17,12 @@ import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.const
 @Component({
   selector: 'courses-individual-lesson-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
-  animations: [
-    trigger('detailsExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit, OnDestroy {
 
   readonly COLUMNS_TO_RENDER = COLUMNS_TO_RENDER_FOR_LIST;
   showFinishedLessons: boolean;
-  expandedIndividualLesson: IndividualLesson | null;
   individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
   filterValue = '';
@@ -70,9 +61,6 @@ export class ListComponent implements OnInit, OnDestroy {
           this.prepareDataSource();
         }
       );
-    this.store.select(getExpandedIndividualLesson)
-      .pipe(takeUntil(this.ngDestroyed$))
-      .subscribe(expandedIndividualLesson => this.expandedIndividualLesson = expandedIndividualLesson);
   }
 
   ngOnDestroy(): void {
@@ -100,17 +88,17 @@ export class ListComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleExpandingIndividualLessonDescription(individualLesson: IndividualLesson) {
-    const expandedIndividualLesson = this.expandedIndividualLesson === individualLesson ? null : individualLesson;
-    this.store.dispatch(IndividualLessonActions.setExpandedIndividualLesson({ expandedIndividualLesson }));
-  }
-
   handlePageEvent(pageEvent: PageEvent) {
     const pageProperties: PageProperties = {
       pageSize: pageEvent.pageSize,
       pageIndex: pageEvent.pageIndex
     };
     this.store.dispatch(IndividualLessonActions.setPageProperties({ pageProperties }));
+  }
+
+  redirectToLessonDetails(individualLesson: IndividualLesson) {
+    console.log(`Redirecting to lesson with id: ${individualLesson.id}`);
+    //TODO: redirect
   }
 
   private getOnlyUnfinishedIndividualLessons(): IndividualLesson[] {

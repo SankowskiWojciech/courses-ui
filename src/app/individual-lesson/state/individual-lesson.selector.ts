@@ -18,11 +18,6 @@ export const getStudentsAvailableForTutor = createSelector(
   individualLessonState => individualLessonState.availableStudents
 );
 
-export const getExpandedIndividualLesson = createSelector(
-  getIndividualLessonFeatureState,
-  individualLessonState => individualLessonState.expandedIndividualLesson
-);
-
 export const getFilterValue = createSelector(
   getIndividualLessonFeatureState,
   individualLessonState => individualLessonState.filterValue
