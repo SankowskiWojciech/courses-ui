@@ -24,6 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { FileModule } from '../file/file.module';
 import { ScheduleLessonsComponent } from './component/schedule-lessons.component';
@@ -44,7 +46,9 @@ const ANGULAR_MATERIAL_MODULES = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatCardModule,
+  MatTabsModule
 ];
 
 const COURSES_MODULES = [

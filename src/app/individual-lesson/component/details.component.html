@@ -1,1 +1,17 @@
-<p>details works!</p>
+<div class="container mt-4">
+  <mat-card>
+    <mat-card-title class="text-center">{{lesson.title}}</mat-card-title>
+    <mat-card-subtitle class="text-center">{{lesson.studentFullName + ' (' + lesson.studentEmailAddress + ')'}}
+    </mat-card-subtitle>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="{{ 'lessons.description' | translate }}"> {{lesson.description}} </mat-tab>
+        <mat-tab label="{{ 'files.files' | translate }}">
+          <courses-file-list [filesInformation]="lesson.filesInformation"></courses-file-list>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+  </mat-card>
+</div>

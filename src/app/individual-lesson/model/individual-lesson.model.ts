@@ -1,7 +1,7 @@
 import { FileInformation } from 'src/app/file/model/file-information.model';
 
 export interface IndividualLesson {
-  id: number;
+  id: string;
   title: string;
   startDate: Date;
   endDate: Date;
