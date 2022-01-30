@@ -11,6 +11,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScheduleLessonsComponent } from '../individual-lesson/component/schedule-lessons.component';
+import { DetailsComponent } from '../individual-lesson/component/details.component';
+
+const INDIVIDUAL_LESSON_PREFIX = 'lessons/individual';
 
 const routes: Routes = [
   {
@@ -19,16 +22,20 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard],
     children: [
       {
-        path: 'lessons/individual',
+        path: INDIVIDUAL_LESSON_PREFIX,
         component: ListComponent,
       },
       {
-        path: 'lessons/individual/add',
+        path: INDIVIDUAL_LESSON_PREFIX + '/add',
         component: AddLessonComponent,
       },
       {
-        path: 'lessons/individual/schedule',
+        path: INDIVIDUAL_LESSON_PREFIX + '/schedule',
         component: ScheduleLessonsComponent,
+      },
+      {
+        path: INDIVIDUAL_LESSON_PREFIX + '/:lessonId',
+        component: DetailsComponent
       }
     ]
   }
