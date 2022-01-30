@@ -27,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { FileModule } from '../file/file.module';
 import { ScheduleLessonsComponent } from './component/schedule-lessons.component';
+import { DetailsComponent } from './component/details.component';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -51,7 +52,7 @@ const COURSES_MODULES = [
 ];
 
 @NgModule({
-  declarations: [ListComponent, AddLessonComponent, ScheduleLessonsComponent],
+  declarations: [ListComponent, AddLessonComponent, ScheduleLessonsComponent, DetailsComponent],
   imports: [
     CommonModule,
     ...ANGULAR_MATERIAL_MODULES,
