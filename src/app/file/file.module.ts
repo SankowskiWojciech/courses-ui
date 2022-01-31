@@ -15,6 +15,7 @@ import { FileListComponent } from './component/file-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -22,6 +23,10 @@ const ANGULAR_MATERIAL_MODULES = [
   MatFormFieldModule,
   MatIconModule,
   MatTooltipModule
+];
+
+const COURSES_MODULES = [
+  SharedModule
 ];
 
 @NgModule({
@@ -34,7 +39,8 @@ const ANGULAR_MATERIAL_MODULES = [
     ReactiveFormsModule,
     StoreModule.forFeature('fileState', fileReducer),
     EffectsModule.forFeature([FileEffects]),
-    TranslateModule
+    TranslateModule,
+    ...COURSES_MODULES
   ],
   exports: [
     FileUploadComponent,

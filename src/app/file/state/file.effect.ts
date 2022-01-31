@@ -3,7 +3,7 @@ import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs/operators';
-import { StatusInformationService } from 'src/app/individual-lesson/service/status-information.service';
+import { StatusInformationService } from 'src/app/shared/service/status-information.service';
 import { FileService } from '../service/file.service';
 import * as FileActions from './file.action';
 

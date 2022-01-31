@@ -8,8 +8,8 @@ import { StudentDataService } from '../service/student-data.service';
 import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StatusInformationService } from '../service/status-information.service';
 import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
+import { StatusInformationService } from 'src/app/shared/service/status-information.service';
 
 @Injectable()
 export class IndividualLessonEffects {
