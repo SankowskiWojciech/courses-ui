@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.constant';
-import { FileInformation } from '../model/file-information.model';
+import { FileInformation } from '../../shared/feature/file/model/file-information.model';
 import { FileService } from '../service/file.service';
 
 @Component({

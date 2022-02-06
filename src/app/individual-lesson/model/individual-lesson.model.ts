@@ -1,4 +1,4 @@
-import { FileInformation } from 'src/app/file/model/file-information.model';
+import { FileInformation } from 'src/app/shared/feature/file/model/file-information.model';
 
 export interface IndividualLesson {
   id: string;

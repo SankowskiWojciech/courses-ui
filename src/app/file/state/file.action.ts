@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { FileInformation } from '../model/file-information.model';
+import { FileInformation } from '../../shared/feature/file/model/file-information.model';
 
 export const uploadNewFile = createAction(
   '[File State] Upload new file',

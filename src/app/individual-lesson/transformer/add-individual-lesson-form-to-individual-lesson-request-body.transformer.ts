@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
-import { FileInformation } from 'src/app/file/model/file-information.model';
+import { FileInformation } from 'src/app/shared/feature/file/model/file-information.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { StudentFormModel } from '../model/student-form-model.model';
 
