@@ -1,14 +1,7 @@
 import { FileInformation } from 'src/app/shared/feature/file/model/file-information.model';
+import { Lesson } from 'src/app/shared/feature/lesson.model';
 
-export interface IndividualLesson {
-  id: string;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-  description: string;
-  subdomainAlias: string;
-  tutorEmailAddress: string;
+export interface IndividualLesson extends Lesson {
   studentFullName: string;
   studentEmailAddress: string;
-  filesInformation: FileInformation[];
 }
