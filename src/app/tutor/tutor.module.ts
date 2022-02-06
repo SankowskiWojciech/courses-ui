@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TutorComponent } from './component/tutor.component';
 import { AuthorizationGuard } from '../login/guard/authorization.guard';
 import { Routes, RouterModule } from '@angular/router';
-import { ListComponent } from '../individual-lesson/component/list.component';
+import { ListComponent as IndividualLessonsList } from '../individual-lesson/component/list.component';
+import { ListComponent as GroupLessonsList } from '../group-lesson/component/list.component';
 import { AddLessonComponent } from '../individual-lesson/component/add-lesson.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -14,6 +15,7 @@ import { ScheduleLessonsComponent } from '../individual-lesson/component/schedul
 import { DetailsComponent } from '../individual-lesson/component/details.component';
 
 const INDIVIDUAL_LESSON_PREFIX = 'lessons/individual';
+const GROUP_LESSON_PREFIX = 'lessons/group';
 
 const routes: Routes = [
   {
@@ -23,7 +25,7 @@ const routes: Routes = [
     children: [
       {
         path: INDIVIDUAL_LESSON_PREFIX,
-        component: ListComponent,
+        component: IndividualLessonsList,
       },
       {
         path: INDIVIDUAL_LESSON_PREFIX + '/add',
@@ -36,6 +38,10 @@ const routes: Routes = [
       {
         path: INDIVIDUAL_LESSON_PREFIX + '/:lessonId',
         component: DetailsComponent
+      },
+      {
+        path: GROUP_LESSON_PREFIX,
+        component: GroupLessonsList,
       }
     ]
   }
