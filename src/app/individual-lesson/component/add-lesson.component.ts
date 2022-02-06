@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 import { ValidationMessages } from '../model/validation-messages.model';
 import { transformAddIndividualLessonFormToIndividualLessonRequestBody } from '../transformer/add-individual-lesson-form-to-individual-lesson-request-body.transformer';
-import { FileInformation } from 'src/app/file/model/file-information.model';
+import { FileInformation } from 'src/app/shared/feature/file/model/file-information.model';
 import { getFilesInformation } from 'src/app/file/state/file.selector';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
