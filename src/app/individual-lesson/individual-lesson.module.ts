@@ -31,6 +31,7 @@ import { FileModule } from '../file/file.module';
 import { ScheduleLessonsComponent } from './component/schedule-lessons.component';
 import { DetailsComponent } from './component/details.component';
 import { SharedModule } from '../shared/shared.module';
+import { INDIVIDUAL_LESSON_FEATURE_STATE_NAME } from './constants/feature-name.constant';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -66,7 +67,7 @@ const COURSES_MODULES = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    StoreModule.forFeature('individualLessonState', individualLessonReducer),
+    StoreModule.forFeature(INDIVIDUAL_LESSON_FEATURE_STATE_NAME, individualLessonReducer),
     EffectsModule.forFeature([IndividualLessonEffects]),
     TranslateModule,
     ...COURSES_MODULES

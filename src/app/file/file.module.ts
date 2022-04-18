@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { FILE_FEATURE_STATE_NAME } from './constants/feature-name.constant';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -37,7 +38,7 @@ const COURSES_MODULES = [
     ...ANGULAR_MATERIAL_MODULES,
     MaterialFileInputModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('fileState', fileReducer),
+    StoreModule.forFeature(FILE_FEATURE_STATE_NAME, fileReducer),
     EffectsModule.forFeature([FileEffects]),
     TranslateModule,
     ...COURSES_MODULES
