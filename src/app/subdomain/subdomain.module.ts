@@ -6,14 +6,14 @@ import { StoreModule } from '@ngrx/store';
 import { subdomainReducer } from './state/subdomain.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { SubdomainEffect } from './state/subdomain.effect';
-import { SUBDOMAIN_FEATURE_NAME } from './constant/feature-name.constant';
+import { SUBDOMAIN_FEATURE_STATE_NAME } from './constant/feature-name.constant';
 
 @NgModule({
   declarations: [SubdomainComponent],
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreModule.forFeature(SUBDOMAIN_FEATURE_NAME, subdomainReducer),
+    StoreModule.forFeature(SUBDOMAIN_FEATURE_STATE_NAME, subdomainReducer),
     EffectsModule.forFeature([SubdomainEffect])
   ]
 })

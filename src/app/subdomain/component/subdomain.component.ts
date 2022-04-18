@@ -4,7 +4,7 @@ import { Subdomain } from '../model/subdomain.model';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getSubdomainInformation } from '../state/subdomain.select';
+import { getSubdomainInformation } from '../state/subdomain.selector';
 import * as SubdomainActions from '../state/subdomain.action';
 
 @Component({

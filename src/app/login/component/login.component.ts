@@ -6,10 +6,10 @@ import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.select';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as SubdomainActions from '../../subdomain/state/subdomain.action';
+import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.selector';
 
 @Component({
   templateUrl: './login.component.html',

@@ -4,10 +4,10 @@ import { Subdomain } from 'src/app/subdomain/model/subdomain.model';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.select';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import * as SubdomainActions from '../../subdomain/state/subdomain.action';
 import { takeUntil } from 'rxjs/operators';
+import { getSubdomainInformation } from 'src/app/subdomain/state/subdomain.selector';
 
 @Component({
   selector: 'courses-tutor',

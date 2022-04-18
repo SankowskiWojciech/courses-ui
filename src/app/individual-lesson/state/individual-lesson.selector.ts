@@ -1,7 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { INDIVIDUAL_LESSON_FEATURE_STATE_NAME } from '../constants/feature-name.constant';
 import { IndividualLessonState } from './individual-lesson.state';
 
-const getIndividualLessonFeatureState = createFeatureSelector<IndividualLessonState>('individualLessonState');
+const getIndividualLessonFeatureState = createFeatureSelector<IndividualLessonState>(INDIVIDUAL_LESSON_FEATURE_STATE_NAME);
 
 export const getShowFinishedLessons = createSelector(
   getIndividualLessonFeatureState,
