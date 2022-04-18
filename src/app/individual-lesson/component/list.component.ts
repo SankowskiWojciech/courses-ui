@@ -12,7 +12,7 @@ import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PageProperties } from '../model/page-properties.model';
-import { COLUMNS_TO_RENDER_FOR_LIST } from '../constants/columns-to-render.constant';
+import { COLUMNS_TO_RENDER_FOR_LIST } from 'src/app/lesson/constants/columns-to-render.constant';
 
 @Component({
   selector: 'courses-individual-lesson-list',

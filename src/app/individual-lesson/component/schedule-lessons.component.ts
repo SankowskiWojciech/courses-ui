@@ -18,8 +18,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
-import { COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY } from '../constants/columns-to-render.constant';
 import { ValidationMessages } from '../model/validation-messages.model';
+import { COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY } from 'src/app/lesson/constants/columns-to-render.constant';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
