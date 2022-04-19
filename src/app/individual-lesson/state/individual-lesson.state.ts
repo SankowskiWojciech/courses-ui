@@ -1,7 +1,7 @@
 import * as AppState from '../../state/app.state';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { Student } from '../model/student.model';
-import { PageProperties } from '../model/page-properties.model';
+import { PageProperties } from '../../lesson/model/page-properties.model';
 
 export interface State extends AppState.State {
   individualLessonState: IndividualLessonState;

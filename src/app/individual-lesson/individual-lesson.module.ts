@@ -32,6 +32,7 @@ import { ScheduleLessonsComponent } from './component/schedule-lessons.component
 import { DetailsComponent } from './component/details.component';
 import { SharedModule } from '../shared/shared.module';
 import { INDIVIDUAL_LESSON_FEATURE_STATE_NAME } from './constants/feature-name.constant';
+import { LessonModule } from '../lesson/lesson.module';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -55,7 +56,8 @@ const ANGULAR_MATERIAL_MODULES = [
 
 const COURSES_MODULES = [
   FileModule,
-  SharedModule
+  SharedModule,
+  LessonModule
 ];
 
 @NgModule({

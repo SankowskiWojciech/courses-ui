@@ -11,7 +11,7 @@ import { getShowFinishedLessons, getIndividualLessons, getFilterValue, getPagePr
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PageProperties } from '../model/page-properties.model';
+import { PageProperties } from '../../lesson/model/page-properties.model';
 import { COLUMNS_TO_RENDER_FOR_LIST } from 'src/app/lesson/constants/columns-to-render.constant';
 
 @Component({

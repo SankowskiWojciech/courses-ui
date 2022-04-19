@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { IndividualLesson } from '../model/individual-lesson.model';
 import { Student } from '../model/student.model';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
-import { PageProperties } from '../model/page-properties.model';
+import { PageProperties } from '../../lesson/model/page-properties.model';
 import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
 
 export const toggleShowingFinishedLessons = createAction(

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { IndividualLessonState } from './individual-lesson.state';
 import * as IndividualLessonActions from './individual-lesson.action';
-import { PageProperties } from '../model/page-properties.model';
+import { PageProperties } from '../../lesson/model/page-properties.model';
 
 const defaultPageProperties: PageProperties = {
   pageSize: 5,
