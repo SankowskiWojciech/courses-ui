@@ -1,3 +1,3 @@
-export enum IndividualLessonFilteringKeys {
+export enum LessonFilteringKeys {
   SubdomainAliasFilteringKey = 'subdomainAlias'
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
+import { LessonFilteringKeys } from '../../lesson/constants/lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
 import { Student } from '../model/student.model';
 import { Observable } from 'rxjs';
@@ -18,6 +18,6 @@ export class StudentDataService {
   }
 
   private getUrlWithSubdomainAliasFilter(): string {
-    return `${STUDENTS_BACKEND_URL}?${IndividualLessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
+    return `${STUDENTS_BACKEND_URL}?${LessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IndividualLesson } from '../model/individual-lesson.model';
-import { IndividualLessonFilteringKeys } from '../constants/individual-lesson-filtering-keys.constant';
+import { LessonFilteringKeys } from '../../lesson/constants/lesson-filtering-keys.constant';
 import { LocalStorageKeyNames } from 'src/app/constant/local-storage-key-names.constant';
 import { IndividualLessonRequestBody } from '../model/individual-lesson-request-body.model';
 import { IndividualLessonsScheduleRequestBody } from '../model/individual-lessons-schedule-request-body.model';
@@ -28,6 +28,6 @@ export class IndividualLessonService {
   }
 
   private getUrlWithSubdomainAliasFilter(): string {
-    return `${INDIVIDUAL_LESSONS_BACKEND_URL}?${IndividualLessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
+    return `${INDIVIDUAL_LESSONS_BACKEND_URL}?${LessonFilteringKeys.SubdomainAliasFilteringKey}=${localStorage.getItem(LocalStorageKeyNames.SubdomainAlias)}`;
   }
 }
