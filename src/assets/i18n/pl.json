@@ -30,6 +30,7 @@
     "titles": "Tytuły zajęć",
     "startDate": "Data rozpoczęcia zajęć",
     "endDate": "Data zakończenia zajęć",
+    "groupName": "Nazwa grupy",
     "studentFullName": "Imię i nazwisko studenta",
     "studentEmailAddress": "Adres e-mail studenta",
     "chooseStudent": "Wybierz studenta",

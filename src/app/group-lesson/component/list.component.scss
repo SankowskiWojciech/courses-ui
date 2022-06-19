@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+tr.group-lesson-row:hover {
+  background: whitesmoke;
+}
+
+tr.group-lesson-row:active {
+  background: #efefef;
+}
+
+.group-lesson-row td {
+  border-bottom-width: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

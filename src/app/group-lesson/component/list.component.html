@@ -1,1 +1,56 @@
-<p>list works!</p>
+<div class="d-flex flex-row justify-content-between align-items-end">
+  <div class="d-flex flex-row m-1">
+    <button mat-raised-button color="primary" class="mr-3 mb-2" mat-button [matMenuTriggerFor]="newLessonsMenu">
+      <mat-icon class="mr-2">add_circle_outline</mat-icon><span>{{ 'lessons.newLesson' | translate }}</span>
+    </button>
+    <mat-menu #newLessonsMenu="matMenu" yPosition="below">
+      <button mat-menu-item routerLink="add">
+        <mat-icon class="mr-2">add_box</mat-icon><span>{{'lessons.addLesson' | translate }}</span>
+      </button>
+      <button mat-menu-item routerLink="schedule">
+        <mat-icon class="mr-2">event</mat-icon><span>{{ 'lessons.scheduleLessons' | translate }}</span>
+      </button>
+    </mat-menu>
+    <mat-form-field>
+      <mat-label>
+        <mat-icon class="mr-2">filter_alt</mat-icon><span>{{ 'lessons.enterFilter' | translate }}</span>
+      </mat-label>
+      <input matInput (keyup)="filter()" placeholder="{{ 'lessons.filterPlaceholder' | translate }}"
+        [(ngModel)]="filterValue">
+      <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear input" (click)="clearFilter()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <mat-checkbox class="mb-2" color='primary' [checked]="showFinishedLessons" (change)="handleShowingFinishedLessons()">
+    {{ 'lessons.showFinishedLessons' | translate }}</mat-checkbox>
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="startDateOfLesson"
+    matSortDirection="asc">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.title' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let groupLesson">{{groupLesson.title}}</td>
+    </ng-container>
+    <ng-container matColumnDef="startDateOfLesson">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.startDate' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let groupLesson">
+        {{groupLesson.startDate | date: 'dd-MM-yyyy H:mm'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="endDateOfLesson">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.endDate' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let groupLesson">
+        {{groupLesson.endDate | date: 'dd-MM-yyyy H:mm'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="groupName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'lessons.groupName' | translate }}</th>
+      <td mat-cell class="cursor-pointer" *matCellDef="let groupLesson">{{groupLesson.groupName}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="COLUMNS_TO_RENDER"></tr>
+    <tr mat-row *matRowDef="let groupLesson; columns: COLUMNS_TO_RENDER;" class="group-lesson-row"
+      [routerLink]="[groupLesson.id]">
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="handlePageEvent($event)" #paginator>
+  </mat-paginator>
+</div>

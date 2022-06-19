@@ -21,7 +21,7 @@ import { COLUMNS_TO_RENDER_FOR_LIST } from 'src/app/lesson/constants/columns-to-
 })
 export class ListComponent implements OnInit, OnDestroy {
 
-  readonly COLUMNS_TO_RENDER = COLUMNS_TO_RENDER_FOR_LIST;
+  readonly COLUMNS_TO_RENDER = [...COLUMNS_TO_RENDER_FOR_LIST, 'studentFullName', 'studentEmailAddress'];
   showFinishedLessons: boolean;
   individualLessons: IndividualLesson[];
   dataSource: MatTableDataSource<IndividualLesson>;
