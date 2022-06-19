@@ -20,8 +20,10 @@ import { PageNotFoundComponent } from './error-handling/page-not-found.component
 import { ForbiddenComponent } from './error-handling/forbidden.component';
 import { UnauthorizedComponent } from './error-handling/unauthorized.component';
 import { DEFAULT_LANGUAGE } from './constant/default-language.constant';
+import { GroupLessonModule } from './group-lesson/group-lesson.module';
 
 const COURSES_MODULES = [
+  GroupLessonModule,
   IndividualLessonModule,
   TutorModule,
   LoginModule,
