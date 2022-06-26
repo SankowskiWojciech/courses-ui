@@ -30,6 +30,7 @@ import { GROUP_LESSON_FEATURE_STATE_NAME } from './constants/feature-name.consta
 import { LessonModule } from '../lesson/lesson.module';
 import { groupLessonReducer } from './state/group-lesson.reducer';
 import { GroupLessonEffects } from './state/group-lesson.effect';
+import { DetailsComponent } from './component/details.component';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatTableModule,
@@ -58,7 +59,7 @@ const COURSES_MODULES = [
 ];
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, DetailsComponent],
   imports: [
     CommonModule,
     ...ANGULAR_MATERIAL_MODULES,

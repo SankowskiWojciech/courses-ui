@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <mat-card *ngIf="lesson">
+    <mat-card-title class="text-center">{{lesson.title}}</mat-card-title>
+    <mat-card-subtitle class="text-center">{{lesson?.groupName}}
+    </mat-card-subtitle>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="{{ 'lessons.description' | translate }}"> {{lesson.description}} </mat-tab>
+        <mat-tab label="{{ 'files.files' | translate }}">
+          <courses-file-list [filesInformation]="lesson.filesInformation"></courses-file-list>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="text-primary" routerLink="../">
+        <mat-icon class="mr-2">keyboard_return</mat-icon><span>{{ 'lessons.getBackToList' | translate }}</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <p *ngIf="!lesson" class="h1 text-center">{{ 'lessons.errors.lessonNotFound' | translate }}</p>
+</div>
