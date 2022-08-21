@@ -12,7 +12,6 @@ import { State } from '../state/individual-lesson.state';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs/internal/Subject';
-import * as IndividualLessonFormValidators from '../validator/individual-lesson-new-lessons.validator';
 import { TITLE_MAX_LENGTH } from '../../lesson/constants/add-lesson-form-input-max-length.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,6 +19,8 @@ import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
 import { IndividualLessonValidationMessages } from '../model/individual-lesson-validation-messages.model';
 import { COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY } from 'src/app/lesson/constants/columns-to-render.constant';
+import { studentValidator } from '../validator/individual-lesson-new-lessons.validator';
+import { lessonDatesValidator, lessonsTitlesValidator, weekdaysFormGroupValidator, weekdayWithTimeRangesFormGroupValidator } from 'src/app/lesson/validator/new-lessons.validator';
 
 @Component({
   selector: 'courses-individual-lesson-schedule-lessons',
@@ -90,11 +91,11 @@ export class ScheduleLessonsComponent implements OnInit {
     lessonDatesFormGroup.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
-    const studentFormControl = new FormControl('', [Validators.required, IndividualLessonFormValidators.studentValidator(this.availableStudents)]);
+    const studentFormControl = new FormControl('', [Validators.required, studentValidator(this.availableStudents)]);
     studentFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.studentValidationMessage = this.getValidationMessage(studentFormControl)
     );
-    const lessonsTitlesFormControl = new FormControl('', IndividualLessonFormValidators.lessonsTitlesValidator);
+    const lessonsTitlesFormControl = new FormControl('', lessonsTitlesValidator);
     lessonsTitlesFormControl.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonsTitlesValidationMessage = this.getValidationMessage(lessonsTitlesFormControl)
     );
@@ -131,7 +132,7 @@ export class ScheduleLessonsComponent implements OnInit {
     const lessonDatesFormGroup = new FormGroup({
       lessonStartDate: lessonStartDateFormControl,
       lessonEndDate: lessonEndDateFormControl
-    }, IndividualLessonFormValidators.lessonDatesValidator);
+    }, lessonDatesValidator);
     lessonDatesFormGroup.valueChanges.subscribe(
       inputValue => this.validationMessages.lessonDatesValidationMessage = this.getValidationMessage(lessonDatesFormGroup)
     );
@@ -153,7 +154,7 @@ export class ScheduleLessonsComponent implements OnInit {
           if (checkboxValue) {
             weekdayStartTimeFormControl.setValidators(Validators.required);
             weekdayEndTimeFormControl.setValidators(Validators.required);
-            weekdayWithTimeRangesFormGroup.setValidators(IndividualLessonFormValidators.weekdayWithTimeRangesFormGroupValidator(weekday));
+            weekdayWithTimeRangesFormGroup.setValidators(weekdayWithTimeRangesFormGroupValidator(weekday));
           } else {
             weekdayWithTimeRangesFormGroup.get(`${weekday}StartTime`).setValue('');
             weekdayWithTimeRangesFormGroup.get(`${weekday}EndTime`).setValue('');
@@ -169,7 +170,7 @@ export class ScheduleLessonsComponent implements OnInit {
       return weekdayWithTimeRangesFormGroup;
     });
     this.weekdayWithTimeRangesFormGroups = weekdayWithTimeRangesFormGroups;
-    const weekdaysFormGroup = new FormGroup({}, IndividualLessonFormValidators.weekdaysFormGroupValidator(this.weekdayWithTimeRangesFormGroups));
+    const weekdaysFormGroup = new FormGroup({}, weekdaysFormGroupValidator(this.weekdayWithTimeRangesFormGroups));
     this.weekdayWithTimeRangesFormGroups.forEach(weekdayWithTimeRangesFormGroup => weekdaysFormGroup.addControl(`${Object.keys(weekdayWithTimeRangesFormGroup.controls)[0]}FormGroup`, weekdayWithTimeRangesFormGroup));
     weekdaysFormGroup.valueChanges.subscribe(input =>
       this.validationMessages.weekdaysWithTimeRangesValidationMessage = this.getValidationMessage(weekdaysFormGroup)
