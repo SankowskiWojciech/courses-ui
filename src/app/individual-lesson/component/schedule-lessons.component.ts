@@ -13,12 +13,12 @@ import { transformStudentToStudentFormModule } from '../transformer/student-to-s
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import { Subject } from 'rxjs/internal/Subject';
 import * as IndividualLessonFormValidators from '../validator/individual-lesson-new-lessons.validator';
-import { TITLE_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
+import { TITLE_MAX_LENGTH } from '../../lesson/constants/add-lesson-form-input-max-length.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
 import { transformScheduleIndividualLessonsFormToIndividualLessonsScheduleRequestBody } from '../transformer/schedule-individual-lessons-form-to-individual-lessons-schedule-request-body.transformer';
-import { ValidationMessages } from '../model/validation-messages.model';
+import { IndividualLessonValidationMessages } from '../model/individual-lesson-validation-messages.model';
 import { COLUMNS_TO_RENDER_FOR_TITLES_SUMMARY } from 'src/app/lesson/constants/columns-to-render.constant';
 
 @Component({
@@ -203,7 +203,7 @@ export class ScheduleLessonsComponent implements OnInit {
     return availableStudents;
   }
 
-  private initializeValidationMessages(): ValidationMessages {
+  private initializeValidationMessages(): IndividualLessonValidationMessages {
     return {
       titleValidationMessage: null,
       lessonDatesValidationMessage: null,

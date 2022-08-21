@@ -5,7 +5,6 @@ export interface ValidationMessages {
   lessonDatesValidationMessage: Observable<string>;
   lessonStartDateValidationMessage: Observable<string>;
   lessonEndDateValidationMessage: Observable<string>;
-  studentValidationMessage: Observable<string>;
   descriptionValidationMessage: Observable<string>;
   lessonTimesValidation: Observable<string>;
   weekdaysWithTimeRangesValidationMessage: Observable<string>;

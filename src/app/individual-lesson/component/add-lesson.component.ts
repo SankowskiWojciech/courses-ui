@@ -11,16 +11,17 @@ import { State as FileState } from '../../file/state/file.state';
 import { getStudentsAvailableForTutor, getIndividualLessons } from '../state/individual-lesson.selector';
 import * as IndividualLessonActions from '../state/individual-lesson.action';
 import * as FileActions from '../../file/state/file.action';
-import { studentValidator, lessonCollisionValidator, lessonDatesValidator } from '../validator/individual-lesson-new-lessons.validator';
+import { studentValidator } from '../validator/individual-lesson-new-lessons.validator';
 import { IndividualLesson } from '../model/individual-lesson.model';
-import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../constants/add-lesson-form-input-max-length.constant';
+import { TITLE_MAX_LENGTH, DESCRIPTION_MAX_LENGTH } from '../../lesson/constants/add-lesson-form-input-max-length.constant';
 import { TranslateService } from '@ngx-translate/core';
 import { transformStudentToStudentFormModule } from '../transformer/student-to-student-form-model.transformer';
-import { ValidationMessages } from '../model/validation-messages.model';
+import { IndividualLessonValidationMessages } from '../model/individual-lesson-validation-messages.model';
 import { transformAddIndividualLessonFormToIndividualLessonRequestBody } from '../transformer/add-individual-lesson-form-to-individual-lesson-request-body.transformer';
 import { FileInformation } from 'src/app/shared/feature/file/model/file-information.model';
 import { getFilesInformation } from 'src/app/file/state/file.selector';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { lessonCollisionValidator, lessonDatesValidator } from 'src/app/lesson/validator/new-lessons.validator';
 
 @Component({
   selector: 'courses-individual-lesson-add-lesson',
@@ -116,7 +117,7 @@ export class AddLessonComponent implements OnInit, OnDestroy {
     return addIndividualLessonForm;
   }
 
-  private initializeValidationMessages(): ValidationMessages {
+  private initializeValidationMessages(): IndividualLessonValidationMessages {
     return {
       titleValidationMessage: null,
       lessonDatesValidationMessage: null,
